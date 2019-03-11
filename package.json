@@ -1,0 +1,15 @@
+{
+    "name": "final_project",
+    "version": "1.0.0",
+    "description": "CS554 Final Project",
+    "license": "",
+    "main": "app.js",
+    "private": true,
+    "scripts": {
+        "start": "node app.js",
+        "test": "echo \"No tests attached.\"",
+        "build": "echo \"Nothing to build.\""
+    },
+    "dependencies": {
+    }
+}
