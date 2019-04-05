@@ -1,13 +1,14 @@
 
 # Final Project
 
-> Author:
->         P Athiban  
->         Chunli Liu  
->         Sumit Oberoi  
->         Davor Risteski  
->         Rohnit Shetty  
 > Class:  CS-554  
+> Authors:
+> * P Athiban
+> * Chunli Liu
+> * Sumit Oberoi
+> * Davor Risteski
+> * Rohnit Shetty
+
 
 # Compilation
 
