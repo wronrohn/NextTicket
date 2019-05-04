@@ -4,7 +4,7 @@ import React from 'react';
 /**
  * A component that creates a list of reccomendations for the user.
  */
-export default class Reccomendations extends React.Component {
+export default class Recommendations extends React.Component {
 
     render() {
         return(
