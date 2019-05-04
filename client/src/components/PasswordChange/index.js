@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { withFirebase } from "../../Firebase";
+import { withAuthorization } from "../../Session";
 
 const INITIAL_STATE = {
   passwordOne: "",
@@ -65,4 +66,4 @@ class PasswordChangeForm extends Component {
   }
 }
 
-export default withFirebase(PasswordChangeForm);
+export default withAuthorization()(withFirebase(PasswordChangeForm));
