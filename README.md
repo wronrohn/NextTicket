@@ -50,3 +50,5 @@ npm start
 ```
 
 # Works Cited & Consulted
+
+Hill, Patrick. "React Second Lecture/Firebase Auth" Computer Science 554. Stevens Institute of Technology, New Jersey. 21 Feb. 2019. Example Project.
