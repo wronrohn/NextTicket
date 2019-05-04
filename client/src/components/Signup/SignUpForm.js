@@ -1,6 +1,6 @@
 import React from "react";
 import * as CONSTANTS from "./Constants";
-
+import { Link, withRouter } from "react-router-dom";
 class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
@@ -29,9 +29,22 @@ class SignUpForm extends React.Component {
         email,
         password
       );
-      this.setState(() => ({ message: "Congratulation" }));
+      this.setState(() => {
+        return {
+          email: "",
+          password: "",
+          userName: "",
+          repeatPassword: "",
+          error: null,
+          message: null
+        };
+      });
     } catch (e) {
-      console.log(`Error ${e}`);
+      this.setState(() => {
+        return {
+          error: e
+        };
+      });
     }
   }
 
