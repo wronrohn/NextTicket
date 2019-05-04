@@ -2,15 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navigation from "./Navigation";
 import LandingPage from "./Landing";
-import SignUpPage from "./Signup";
-import SignInPage from "./SignIn";
-import MoviesPage from "./Movies";
+import SignupPage from "./Signup";
+import MovieList from "./MovieList";
 import * as ROUTES from "../constants/routes";
 
 /**
  * Main entrypoint for the client-side applicaiton.
  */
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <div className="App">
@@ -18,13 +17,12 @@ export default class App extends React.Component {
           <div>
             <Navigation />
             <hr />
-            <Route exact path={ROUTES.LANDING} component={LandingPage} />
-            <Route exact path={ROUTES.SIGNIN} component={SignInPage} />
-            <Route exact path={ROUTES.SIGNUP} component={SignUpPage} />
-            <Route exact path={ROUTES.MOVIES} component={MoviesPage} />
+            <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
           </div>
         </Router>
       </div>
     );
   }
 }
+
+export default App;
