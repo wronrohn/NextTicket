@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import SignOutButton from "../Signout";
 import { AuthUserContext } from "../../Session";
-import PasswordChange from "../PasswordChange";
 const Navigation = ({ authUser }) => (
   <AuthUserContext.Consumer>
     {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
@@ -37,6 +36,9 @@ const NavigationNonAuth = () => (
     </li>
     <li>
       <Link to={ROUTES.SIGNUP}>Sign Up</Link>
+    </li>
+    <li>
+      <Link to={ROUTES.PASSWORD_FORGET}>ForgotPassword</Link>
     </li>
   </ul>
 );
