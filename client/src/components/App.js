@@ -18,6 +18,7 @@ class App extends React.Component {
             <Navigation />
             <hr />
             <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
+            <Route exact path={ROUTES.MOVIES} component={MovieList} />
           </div>
         </Router>
       </div>
