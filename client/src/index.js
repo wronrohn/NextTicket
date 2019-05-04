@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
 import Firebase, { FirebaseContext } from "./Firebase";
-
+import { AuthUserContext } from "./Session";
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <App />
