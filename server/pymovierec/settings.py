@@ -23,5 +23,5 @@ REDIS_RECEIVE="movie_request"
 REDIS_PUBLISH="movie_result"
 
 def __dump_settings():
-    print("verbose: {}, r_http: {}, r_port {}, r_scope {}"
-          .format(VERBOSE, REDIS_URL, REDIS_PORT, REDIS_SCOPE))
+    print("verbose: {}, r_http: {}, r_port {}, r_receive {}, r_publish {}"
+          .format(VERBOSE, REDIS_URL, REDIS_PORT, REDIS_RECEIVE, REDIS_PUBLISH))
