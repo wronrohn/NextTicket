@@ -4,18 +4,45 @@
 Initalize the movie recommendation module.
 
 :author:    Davor Risteski
-:version:	05.07.2019
+:version:	05.08.2019
 """
 
 import argparse
+import signal
+import sys
+import time
 import engine
+import pubsub
 import settings as G
+
+def _exit(sig=None, frame=None):
+    """
+    Interrupt handler.
+    """
+    print("Recommendation engine exiting...")
+    sys.exit(0)
 
 def _daemonize():
     """
     Daemonizes the module. Uses pub/sub Redis schema.
     """
-    print("Daemonize.")
+    try:
+        print("Persisting process...")
+        signal.signal(signal.SIGINT, _exit)
+
+        if(G.VERBOSE):
+            print("Building engine...")
+        en = engine.Engine()
+
+        if(G.VERBOSE):
+            print("Building wrapper...")
+        ps = pubsub.Wrapper(en)
+        
+        while True:
+            ps.heartbeat()
+            time.sleep(10)
+    except KeyboardInterrupt:
+        _exit()
 
 def _single(movie):
     """
@@ -57,9 +84,6 @@ def main():
                         help="Set the port to use when connecting to Redis")
 
     a = parser.parse_args()
-
-
-    #args.outdir[0] if type(args.outdir) == list else args.outdir
 
     G.VERBOSE    = a.verbose
     G.REDIS_URL  = a.url[0]  if type(a.url) == list else a.url

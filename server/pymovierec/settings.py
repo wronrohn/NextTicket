@@ -11,13 +11,16 @@ Package global variables.
 VERBOSE=False
 
 """The http url to use when connecting to Redis."""
-REDIS_URL="http://localhost"
+REDIS_URL="127.0.0.1"
 
 """The port to use when connecting to Redis."""
 REDIS_PORT=6379
 
-"""Scope to use for Redis pub/sub."""
-REDIS_SCOPE="movierec"
+"""Scope to use when receiving requests from Redis."""
+REDIS_RECEIVE="movie_request"
+
+"""Scope to use when transmiting results back to Redis. """
+REDIS_PUBLISH="movie_result"
 
 def __dump_settings():
     print("verbose: {}, r_http: {}, r_port {}, r_scope {}"
