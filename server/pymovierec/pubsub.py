@@ -14,6 +14,11 @@ class Wrapper:
     """
 
     def __init__(self, engine):
+        """
+        Initializes the Wrapper by creating a Redis connection.
+
+        :engine:    A ready recommendation engine to use.
+        """
         self.client = redis.StrictRedis(
             host=G.REDIS_URL,
             port=G.REDIS_PORT,
@@ -24,6 +29,22 @@ class Wrapper:
         self.engine = engine
 
     def heartbeat(self):
+        """
+        Checks for new messages on the server. Messages are expected to be in
+        the form of `REC: <movie>, <movie>, ... <movie>` (without quotes).
+
+        One or more movies can follow the codeword `REC:` the script is armored
+        around white spaces and will (probably) not crash around unexpected
+        input.
+
+        Results are pushed back to redis using `client.set(<movie>, <recommendations>)`.
+
+        After a result is generated the application will emit an event as
+        `client.publish(movie_result, <movie>)` where the channel name `movie_result`
+        is defined in the global settings.
+
+        Responses may be retrieved from the Redis server using `client.get(<movie>)`.
+        """
         if(G.VERBOSE):
             print("Checking for new requests...")
 
@@ -49,20 +70,23 @@ class Wrapper:
 
                 if(G.VERBOSE):
                     print("Generating a new set of recommendations.")
-                    print("Working on:", end=" ")
+                    print("Working on:")
 
                 # For each request
                 for mov in request:
                     # May have whitespaces.
                     movie = mov.strip()
                     if(G.VERBOSE):
-                        print(movie, end=" ")
-                    # Get recommendataions
-                    result = self.engine.getRecommendation(movie, json=True)
-                    # Push recommendations to redis
-                    self.client.set(movie, result)
-                    # Push message notifying that changes have taken place.
-                    self.client.publish(G.REDIS_PUBLISH, movie)
+                        print("    ", movie)
+                    try:
+                        # Get recommendataions
+                        result = self.engine.getRecommendation(movie, json=True)
+                        # Push recommendations to redis
+                        self.client.set(movie, result)
+                        # Push message notifying that changes have taken place.
+                        self.client.publish(G.REDIS_PUBLISH, movie)
+                    except:
+                        print("Could not generate a recommendation for:", movie)
 
                 if(G.VERBOSE):
                     print()
