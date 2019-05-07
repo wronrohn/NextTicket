@@ -1,6 +1,6 @@
 
 const proc = require('child_process');
-const server = require('./movierecJS');
+const server = require('./movierecjs');
 
 /**
  * Entrypoint for the server applicaiton.
