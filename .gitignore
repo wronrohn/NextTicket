@@ -25,3 +25,7 @@ yarn-error.log*
 # notes
 notes/
 NOTES/
+
+# Pycache
+__pycache__/
+**/__pycache__/**
