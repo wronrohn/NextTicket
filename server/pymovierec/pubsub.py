@@ -30,8 +30,15 @@ class Wrapper:
 
     def heartbeat(self):
         """
-        Checks for new messages on the server. Messages are expected to be in
-        the form of `REC: <movie>, <movie>, ... <movie>` (without quotes).
+        Checks for new messages on the server.
+
+        The application expects all requests to be given through the channel
+        `movie_request` which is defined in the global settings. Requesting
+        processes can ask for recommendations using a command like
+        `client.publish(movie_request, 'REC: Sicario, Superman, Batman')`.
+
+        Messages are expected to be in the form of
+        `REC: <movie>, <movie>, ... <movie>` (without quotes).
 
         One or more movies can follow the codeword `REC:` the script is armored
         around white spaces and will (probably) not crash around unexpected
