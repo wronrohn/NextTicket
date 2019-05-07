@@ -1,0 +1,17 @@
+{
+  "name": "cs554finalproject-sever",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CS554 Final Project Server",
+  "license": "",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"No tests attached.\"",
+    "build": "echo \"Nothing to build.\""
+  },
+  "dependencies": {
+        "bluebird": "^3.5.3",
+        "express": "^4.16.4",
+        "redis": "^2.8.0"
+  }
+}

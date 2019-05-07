@@ -1,8 +1,8 @@
 {
-  "name": "cs554finalproject",
+  "name": "cs554finalproject-client",
   "version": "0.1.0",
   "private": true,
-  "description": "CS554 Final Project",
+  "description": "CS554 Final Project Client",
   "license": "",
   "dependencies": {
     "firebase": "^5.11.0",
