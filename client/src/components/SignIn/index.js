@@ -25,7 +25,7 @@ class SignInFormBase extends Component {
     super(props);
     this.state = { ...INITIAL_STATE };
     this.onSubmit = this.onSubmit.bind(this);
-    //this.onChange = this.onChange.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   async onSubmit(event) {
