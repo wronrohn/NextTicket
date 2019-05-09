@@ -46,3 +46,7 @@ code {
     transform: rotate(360deg);
   }
 }
+
+.vertical-center {
+  vertical-align: middle;
+}

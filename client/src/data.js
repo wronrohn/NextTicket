@@ -20,7 +20,7 @@ const movies = [
     category: "Action",
     movie: "The French Connection",
     title: "The French Connection (1971)",
-    rating: 10,
+    rating: 5,
     genre: "Crime",
     subgenre: "Police Detective Film",
     theme: "Tough Guys,Adrenaline Rush",
