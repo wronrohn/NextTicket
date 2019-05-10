@@ -24,6 +24,20 @@ let exportedMethods = {
       return "task does not exist with that ID";
     }
   },
+  async getMovieByMovieId(movieId) {
+    if (movieId && movieId != null) {
+      const movieCollection = await tasks();
+      const movie = await movieCollection.findOne({
+        movieid: movieId
+      });
+      if (!movie) {
+        return "task does not exist";
+      }
+      return movie;
+    } else {
+      return "task does not exist with that ID";
+    }
+  },
 
   async addToWatchList(movieId, uid) {
 
@@ -92,4 +106,11 @@ let exportedMethods = {
 }
 
 
+
+// async function test() {
+//   let x = await exportedMethods.getMovieByMovieId(2)
+//   console.log(x)
+//   return 0;
+// }
+// test()
 module.exports = exportedMethods;
