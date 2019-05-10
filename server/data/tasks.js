@@ -12,19 +12,52 @@ let exportedMethods = {
   },
 
   async getMovieById(movieId) {
-    if(taskId && taskId != null) {
+    if(movieId && movieId != null) {
       const taskCollection = await tasks();
-      const task = await taskCollection.findOne({ _id: taskId });
+      const task = await taskCollection.findOne({ _id: movieId });
       if(!task) {
         return "task does not exist";
       }
       return task;
     } else {
-      return "User does not exist with that ID";
+      return "task does not exist with that ID";
     }
+  },
+
+  async addToWatchList(movieId, uid){
+    
+    const taskCollection = await tasks();
+    let movieObj = await this.getMovieById(movieId);
+    
+    let updatedInf ={}
+    try{
+      if (!movieObj['watchlist']) {
+        movieObj.watchlist = [uid];
+        updatedInf = await taskCollection.updateOne({
+          _id: movieId
+        }, {
+          $set: movieObj
+        })
+      } else {
+        movieObj["watchlist"].push(uid)
+        updatedInf = await taskCollection.updateOne({
+          _id: movieId
+        }, {
+          $set: movieObj
+        })
+      }
+    } catch(e){
+      throw e;
+    }
+
+    
+    
+    
+    return updatedInf
   }
 
   
 };
+
 
 module.exports = exportedMethods;
