@@ -3,31 +3,53 @@ const router = express.Router();
 const data = require("../data");
 const taskData = data.tasks;
 const uuid = require("node-uuid");
+const request = require('request-promise');
 
 
-router.get("/:id", async (req, res) => {
-  try {
-    const task = await taskData.getTaskById(req.params.id);
-    res.json(task);
-  } catch (e) {
-    res.status(404).json({ message: "Post not found" });
-  }
-});
-
-router.post("/wishlist/", async (req, res) => {
+router.post("/watchlist/", async (req, res) => {
   try {
     requestData = req.body;
     if(!requestData.uid && !requestData.movieid) {
       throw "Provide uid or Movie id";
     }
     let movie = await taskData.addToWatchList(requestData.movieid, requestData.uid);
+    let inMovie = {
+      "movie" : movie.movie
+    }
+
+    var options = {
+      method: 'POST',
+      uri: 'http://localhost:5000/postdata',
+      body: inMovie,
+      json: true // Automatically stringifies the body to JSON
+    };
+
+    var result = {
+      "success" : false
+    }
+    let recomendedMovies = [];
+
+    var sendrequest = await request(options)
+    .then( async function (parsedBody) {
+      result.success = true;
+      let recommededIds = Object.keys(parsedBody).map(item => (parseInt(item)));
+      for (let i = 0; i < recommededIds.length; i++) {
+        let recMovie = await taskData.getMovieByMovieId(recommededIds[i]);
+        recomendedMovies.push(recMovie);
+      }
+      console.log(recomendedMovies);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+
     res.json(movie);
   } catch (error) {
     res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
 });
 
-router.put("/wishlist/", async (req, res) => {
+router.put("/watchlist/", async (req, res) => {
   try {
     const requestData = req.body;
     if(!requestData.uid && !requestData.movieid) {
@@ -37,58 +59,10 @@ router.put("/wishlist/", async (req, res) => {
     res.json(movieData);
 
   } catch (error) {
-    res.status(500).json({ error: "Oops! Exception caught.", message: error.message });
-  }
-});
-
-
-router.patch("/:id", async (req, res) => {
-  try {
-    let updatedData = req.body;
-    let id = req.params.id;
-    taskItem = await taskData.updateTaskByPatch(updatedData, id);
-    res.json(taskItem);
-  } catch (error) {
     res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
 });
 
-router.put("/:id", async (req, res) => {
-  try {
-    let updatedData = req.body;
-    let id = req.params.id;
-    taskItem = await taskData.updateTask(updatedData, id);
-    res.json(taskItem);
-  } catch (error) {
-    res.status(500).json({ error: "Oops! Exception caught.", message: error });
-  }
-});
-
-router.post("/:id/comments", async (req, res) => {
-  try {
-    let commentData = req.body;
-    let taskId = req.params.id;
-    const newComment = await taskData.addCommentToTask(taskId, commentData);
-    res.json(newComment);
-  } catch (error) {
-    res.status(500).json({ error: "Oops! Exception caught.", message: error });
-  }
-});
-
-router.delete("/:taskId/:commentId", async (req, res) => {
-  try {
-    // commentsUpdated = await taskData.deleteComment(req.params.taskId, req.params.commentId);
-    flag = await taskData.deleteComment(req.params.taskId, req.params.commentId);
-    if(flag) {
-      const task = await taskData.getTaskById(req.params.taskId);
-      res.json(task);
-    } else {
-      throw "Something wrong happened";
-    }
-  } catch (error) {
-    res.status(500).json({ error: "Oops! Exception caught.", message: error });
-  }
-});
 
 
 router.post("/", async (req, res) => {
