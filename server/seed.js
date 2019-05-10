@@ -29,7 +29,6 @@ const main = async () => {
     }
     // await db.dropDatabase();
     console.log("Seeding database is done!");
-    db.movies_database.createIndex({ title: "text" });
     await db.serverConfig.close();
   });
 };

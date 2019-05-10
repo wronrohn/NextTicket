@@ -1,60 +1,27 @@
 import React from "react";
 import movies from "../data";
-import PropTypes from 'prop-types'
-import SpeechRecognition from 'react-speech-recognition'
+import Movie from "./Movie";
 
-
-const options={
-  autoStart: false,
-  continuous: false
-}
-const propTypes = {
-  // Props injected by SpeechRecognition
-  transcript: PropTypes.string,
-  startListening: PropTypes.func,
-  resetTranscript: PropTypes.func,
-  browserSupportsSpeechRecognition: PropTypes.bool
-};
-
-const MovieList = ({
-  transcript,
-  startListening,
-  browserSupportsSpeechRecognition}) => {
-  if (!browserSupportsSpeechRecognition) {
-    return null;
-  }
-
-  return (
-    <div>
-      
-    <div>
-    <div>
-      
-      <link rel="stylesheet" href="style.css" />
-      <form>
-      <input type="text" placeholder="Search.." size="55" id="search"/> 
-      <button type="submit"><i className="fa fa-search" ></i></button>
-      <button  type="submit" id="mic" onClick={startListening}><i className="fa fa-microphone"></i></button>
-      </form>
-
-      <span>{transcript}</span>
-    </div>
-
-    
-
-    
-
-    
-    
+const MovieList = () => (
+  <div className="container">
+    <form className="form-inline mt-5 row no-gutters">
+      <label className="sr-only" htmlFor="search">
+        Search
+      </label>
+      <input
+        type="text"
+        className="form-control mb-2 mr-sm-2"
+        id="search"
+        placeholder="Search All Movies"
+      />
+      <button type="submit" class="btn btn-primary mb-2">
+        Search
+      </button>
+    </form>
+    {movies.map(movie => (
+      <Movie key={movie.index} {...movie} />
+    ))}
   </div>
-    </div>
-  );
-};
+);
 
-  
-    
-  
-
-MovieList.propTypes = propTypes;
-
-export default SpeechRecognition(options)(MovieList);
+export default MovieList;
