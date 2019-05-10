@@ -13,7 +13,9 @@ let exportedMethods = {
   async getMovieById(movieId) {
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
-      const movie = await movieCollection.findOne({ _id: movieId });
+      const movie = await movieCollection.findOne({
+        _id: movieId
+      });
       if (!movie) {
         return "task does not exist";
       }
@@ -30,22 +32,22 @@ let exportedMethods = {
 
     let updatedInf = {}
     try {
-      if (!movieObj['watchlist']) {
+      if (!movieObj['watchlist'] || movie["watchlist"].length == 0) {
         movieObj.watchlist = [uid];
         updatedInf = await taskCollection.updateOne({
           _id: movieId
         }, {
-            $set: movieObj
-          })
+          $set: movieObj
+        })
       } else {
-        if(!movieObj["watchlist"].includes(uid)) {
+        if (!movieObj["watchlist"].includes(uid)) {
           console.log("got it here");
           movieObj["watchlist"].push(uid)
           updatedInf = await taskCollection.updateOne({
             _id: movieId
           }, {
-              $set: movieObj
-            })
+            $set: movieObj
+          })
         }
       }
     } catch (e) {
@@ -56,23 +58,38 @@ let exportedMethods = {
   },
 
   async removeWatchlist(uid, movieId) {
-    if (uid && movieId) {
-      let movie = await this.getMovieById(movieId);
-      if (movie.watchlist) {
-        if(!movie["watchlist"].includes(uid)) {
+    const taskCollection = await tasks();
+    try {
+      if (uid && movieId) {
+
+        let movie = await this.getMovieById(movieId);
+        
+        if (movie.watchlist) {
+          if (movie["watchlist"].includes(uid)) {
+            //console.log("I am here")
+            movie.watchlist = movie["watchlist"].filter(item => item !== uid);
+            if(movie["watchlist"].length == 0){
+              movie["inWatchList"] = false;
+            }
+            updatedInf = await taskCollection.updateOne({
+              _id: movieId
+            }, {
+              $set: movie
+            })
+          }
+          
           
         }
-        console.log("watchlist exists in the JSON");
+        movie.inWatchList = false;
+        return movie;
+      } else {
+        throw "Invalid uid or movieId";
       }
-      movie.inWatchList = false;
-      return movie;
-    } else {
-      throw "Invalid uid or movieId";
+    } catch (e) {
+      throw (e)
     }
   }
-
-
-};
+}
 
 
 module.exports = exportedMethods;
