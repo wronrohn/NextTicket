@@ -43,10 +43,12 @@ let exportedMethods = {
 
     const taskCollection = await tasks();
     let movieObj = await this.getMovieById(movieId);
-
+    //console.log(movieObj)
     let updatedInf = {}
     try {
-      if (!movieObj['watchlist'] || movie["watchlist"].length == 0) {
+      console.log(movieObj["watchlist"].length)
+      if (!movieObj['watchlist'] || movieObj["watchlist"].length == 0) {
+        console.log("HEre on top")
         movieObj.watchlist = [uid];
         updatedInf = await taskCollection.updateOne({
           _id: movieId
@@ -65,6 +67,8 @@ let exportedMethods = {
         }
       }
     } catch (e) {
+      console.log("hello")
+      console.log(e)
       throw e;
     }
     movieObj.inWatchList = true;
@@ -77,12 +81,12 @@ let exportedMethods = {
       if (uid && movieId) {
 
         let movie = await this.getMovieById(movieId);
-        
+
         if (movie.watchlist) {
           if (movie["watchlist"].includes(uid)) {
             //console.log("I am here")
             movie.watchlist = movie["watchlist"].filter(item => item !== uid);
-            if(movie["watchlist"].length == 0){
+            if (movie["watchlist"].length == 0) {
               movie["inWatchList"] = false;
             }
             updatedInf = await taskCollection.updateOne({
@@ -91,8 +95,8 @@ let exportedMethods = {
               $set: movie
             })
           }
-          
-          
+
+
         }
         movie.inWatchList = false;
         return movie;
@@ -100,6 +104,7 @@ let exportedMethods = {
         throw "Invalid uid or movieId";
       }
     } catch (e) {
+      
       throw (e)
     }
   }
