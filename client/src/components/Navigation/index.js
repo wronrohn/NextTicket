@@ -10,26 +10,32 @@ const Navigation = ({ authUser }) => (
 );
 
 const NavigationAuth = () => (
-  <nav className="navbar sticky-top navbar-dark">
-    <ul>
-      <li>
-        <Link to={ROUTES.LANDING}>Landing</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.MOVIES}>Movies</Link>
-      </li>
-      <li>
-        <Link to={ROUTES.CHANGE_PASSWORD}>Update Password</Link>
-      </li>
-      <li>
-        <SignOutButton />
-      </li>
-    </ul>
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <Link className="navbar-brand" to={ROUTES.LANDING}>
+      Next Ticket
+    </Link>
+    <div className="collapse navbar-collapse">
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item">
+          <Link to={ROUTES.MOVIES} className="nav-link">
+            Movies
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to={ROUTES.CHANGE_PASSWORD} className="nav-link">
+            Update Password
+          </Link>
+        </li>
+        <li className="nav-item">
+          <SignOutButton />
+        </li>
+      </ul>
+    </div>
   </nav>
 );
 
 const NavigationNonAuth = () => (
-  <nav className="navbar sticky-top navbar-dark">
+  <nav className="navbar navbar-dark bg-dark">
     <ul>
       <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
