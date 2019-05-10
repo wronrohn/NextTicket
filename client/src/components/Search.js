@@ -1,20 +1,21 @@
+import React from "react";
 
-import React from 'react';
-
-/**
- * A search widget component.
- */
-export default class Search extends React.Component {
-
-    render() {
-        return(
-            <div>
-                <form action="/search">
-                    <input type="text" placeholder="Search.." name="search" />
-                    <button type="submit">go</button>
-                </form>
-            </div>
-        );
-    }
-
-}
+const Search = () => (
+  <form className="mt-5 row no-gutters">
+    <div className="input-group">
+      <label className="sr-only" htmlFor="search">
+        Search
+      </label>
+      <input
+        type="text"
+        className="form-control mb-2 mr-sm-2"
+        id="search"
+        placeholder="Search All Movies"
+      />
+      <button type="submit" class="btn btn-primary mb-2">
+        Search
+      </button>
+    </div>
+  </form>
+);
+export default Search;
