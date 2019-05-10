@@ -50,3 +50,17 @@ code {
 .vertical-center {
   vertical-align: middle;
 }
+
+body {
+  background-color: #272729;
+}
+
+.btn-primary,
+.btn-primary:hover {
+  background-color: #e60023;
+  border-color: #e60023;
+}
+
+.navbar {
+  background-color: #1dcf9a;
+}
