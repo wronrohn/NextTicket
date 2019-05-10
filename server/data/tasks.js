@@ -102,11 +102,7 @@ let exportedMethods = {
       throw (e)
     }
   },
-  async getAllMovies() {
-    const taskCollection = await tasks();
-    const movies = taskCollection.find({}).toArray();
-    return movies
-  },
+  
 
 
   async getWatchlistByUser(uid) {
@@ -131,8 +127,24 @@ let exportedMethods = {
     return movies;
 
   },
+  async getAllMovies() {
+    const taskCollection = await tasks();
+    const movies = taskCollection.find({}).toArray();
+    return movies
+  },
 
-
+  async findMoviesInWhichTitleContains(text){
+    let taskCollection = tasks();
+    let movies = await this.getAllMovies()
+    console.log(movies)
+    movies = movies.map(movie => {
+      if (movie.title.toLowerCase().includes(text)){
+        return movie;
+      }
+    }).filter(movie => movie)
+    console.log(movies)
+    return movies
+  },
 
   /**
    * Retrieves a user's watchlist using their uuid.
