@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import SpeechToText from "./SpeechToText";
 
 class Search extends Component {
-  constructor() {}
+  constructor(props) {
+    super(props);
+    this.onFinalTranscript = this.onFinalTranscript.bind(this);
+  }
+  onFinalTranscript(transcript) {
+    console.log(`Final Transcript ${transcript}`);
+  }
   render() {
     return (
       <form className="mt-5 row no-gutters">
@@ -16,10 +22,10 @@ class Search extends Component {
             id="search"
             placeholder="Search All Movies"
           />
-          <button type="submit" class="btn btn-primary mb-2">
+          <button type="submit" className="btn btn-primary mb-2">
             Search
           </button>
-          <SpeechToText />
+          <SpeechToText onFinalTranscript={this.onFinalTranscript} />
         </div>
       </form>
     );
