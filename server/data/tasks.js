@@ -121,8 +121,6 @@ let exportedMethods = {
     movies = movies.map(item => {
       if (item["watchlist"]) {
         if (item["watchlist"].includes(uid)) {
-          console.log(item)
-          console.log("USERID ++++++++++++++++++++" +uid)
           return item
         }
       }
