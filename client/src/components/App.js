@@ -16,6 +16,7 @@ import PasswordForgetPage from "./ForgetPassword";
 const App = () => (
   <Router>
     <div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
       <Navigation />
       <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
       <Route exact path={ROUTES.MOVIES} component={MovieList} />
