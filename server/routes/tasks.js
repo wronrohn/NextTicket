@@ -14,12 +14,33 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  var hi = {
-    "j":"l"
+router.post("/wishlist/", async (req, res) => {
+  try {
+    requestData = req.body;
+    if(!requestData.uid && !requestData.movieid) {
+      throw "Provide uid or Movie id";
+    }
+    let movie = await taskData.addToWatchList(requestData.movieid, requestData.uid);
+    res.json(movie);
+  } catch (error) {
+    res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
-  res.json(hi);
 });
+
+router.put("/wishlist/", async (req, res) => {
+  try {
+    const requestData = req.body;
+    if(!requestData.uid && !requestData.movieid) {
+      throw "Provide uid or Movie id";
+    }
+    let movieData = await taskData.removeWatchlist(requestData.uid, requestData.movieid);
+    res.json(movieData);
+
+  } catch (error) {
+    res.status(500).json({ error: "Oops! Exception caught.", message: error });
+  }
+});
+
 
 router.patch("/:id", async (req, res) => {
   try {
