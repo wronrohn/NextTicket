@@ -3,15 +3,6 @@ const tasks = mongoCollections.tasks;
 const uuid = require("node-uuid");
 
 let exportedMethods = {
-  async findMoviesInWhichTitleContains(text) {
-    const movieCollection = await tasks();
-    movieCollection.createIndex({ title: "text" });
-    const movies = await movieCollection
-      .find({ $text: { $search: `${text}` } })
-      .toArray();
-    console.log(`Movies ${movies}`);
-    return movies;
-  },
   async addMovie(task) {
     const movieCollection = await tasks();
     const movieInserted = await movieCollection.insertOne(task);
@@ -21,50 +12,104 @@ let exportedMethods = {
 
   async getMovieById(movieId) {
     if (movieId && movieId != null) {
-      const taskCollection = await tasks();
-      const task = await taskCollection.findOne({ _id: movieId });
-      if (!task) {
+      const movieCollection = await tasks();
+      const movie = await movieCollection.findOne({
+        _id: movieId
+      });
+      if (!movie) {
         return "task does not exist";
       }
-      return task;
+      return movie;
+    } else {
+      return "task does not exist with that ID";
+    }
+  },
+  async getMovieByMovieId(movieId) {
+    if (movieId && movieId != null) {
+      const movieCollection = await tasks();
+      const movie = await movieCollection.findOne({
+        movieid: movieId
+      });
+      if (!movie) {
+        return "task does not exist";
+      }
+      return movie;
     } else {
       return "task does not exist with that ID";
     }
   },
 
-  async addToWatchList(movieId, uid) {
-    const taskCollection = await tasks();
-    let movieObj = await this.getMovieById(movieId);
+  async addToWatchList(movieid, uid) {
 
-    let updatedInf = {};
+    const taskCollection = await tasks();
+    let movieObj = await this.getMovieById(movieid);
+    let updatedInf = {}
     try {
-      if (!movieObj["watchlist"]) {
+      if (!movieObj['watchlist'] || movieObj["watchlist"].length == 0) {
         movieObj.watchlist = [uid];
-        updatedInf = await taskCollection.updateOne(
-          {
-            _id: movieId
-          },
-          {
-            $set: movieObj
-          }
-        );
+        updatedInf = await taskCollection.updateOne({
+          _id: movieid
+        }, {
+          $set: movieObj
+        })
       } else {
-        movieObj["watchlist"].push(uid);
-        updatedInf = await taskCollection.updateOne(
-          {
+        if (!movieObj["watchlist"].includes(uid)) {
+          movieObj["watchlist"].push(uid)
+          updatedInf = await taskCollection.updateOne({
             _id: movieId
-          },
-          {
+          }, {
             $set: movieObj
-          }
-        );
+          })
+        }
       }
     } catch (e) {
       throw e;
     }
+    movieObj.inWatchList = true;
+    return movieObj;
+  },
 
-    return updatedInf;
+  async removeWatchlist(uid, movieId) {
+    const taskCollection = await tasks();
+    try {
+      if (uid && movieId) {
+
+        let movie = await this.getMovieById(movieId);
+
+        if (movie.watchlist) {
+          if (movie["watchlist"].includes(uid)) {
+            //console.log("I am here")
+            movie.watchlist = movie["watchlist"].filter(item => item !== uid);
+            if (movie["watchlist"].length == 0) {
+              movie["inWatchList"] = false;
+            }
+            updatedInf = await taskCollection.updateOne({
+              _id: movieId
+            }, {
+              $set: movie
+            })
+          }
+
+
+        }
+        movie.inWatchList = false;
+        return movie;
+      } else {
+        throw "Invalid uid or movieId";
+      }
+    } catch (e) {
+      
+      throw (e)
+    }
   }
-};
+}
 
+
+
+// async function test() {
+//   let x = await exportedMethods.getMovieByMovieId(2)
+//   console.log(x)
+//   return 0;
+// }
+// test()
 module.exports = exportedMethods;
