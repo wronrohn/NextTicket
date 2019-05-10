@@ -7,6 +7,19 @@ const request = require('request-promise');
 const recommendFunction = require('./recommend');
 
 
+router.get("/watchlist/", async (req, res) => {
+  try {
+    let requestData = req.body;
+    if(!requestData.uid) {
+      throw "Provide uid or Movie id";
+    }
+    let watchlistMovies = await taskData.getWatchlistByUser(requestData.uid);
+    console.log(watchlistMovies);
+    res.json(requestData);
+  } catch (error) {
+    res.status(500).json({"error" : error});
+  }
+});
 
 router.post("/watchlist/", async (req, res) => {
   try {
@@ -29,15 +42,18 @@ router.post("/watchlist/", async (req, res) => {
     var result = {
       "success" : false
     }
-    let recomendedMovies = [];
+    let recomendedMovies = {
+      uid: requestData.uid,
+      recomendations: [] 
+    };
 
     var sendrequest = await request(options)
     .then( async function (parsedBody) {
       result.success = true;
-      let recommededIds = Object.keys(parsedBody).map(item => (parseInt(item)));
-      for (let i = 0; i < recommededIds.length; i++) {
-        let recMovie = await taskData.getMovieByMovieId(recommededIds[i]);
-        recomendedMovies.push(recMovie);
+      let r_ids = Object.keys(parsedBody).map(item => (parseInt(item)));
+      for (let i = 0; i < r_ids.length; i++) {
+        let recMovie = await taskData.getMovieByMovieId(r_ids[i]);
+        recomendedMovies.recomendations.push(recMovie);
       }
       console.log(recomendedMovies);
     })

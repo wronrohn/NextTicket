@@ -102,6 +102,17 @@ let exportedMethods = {
       throw (e)
     }
   },
+  async getWatchlistByUser(uid) {
+    if(! uid) {
+      throw "No user id given"
+    }
+    console.log("calleddd sss");
+    const taskCollection = await tasks();
+    const watchlistCollection = await taskCollection.find({watchlist: {$exists: true}});
+    console.log(watchlistCollection.toArray());
+    return watchlistCollection;
+
+  },
 
 
 
