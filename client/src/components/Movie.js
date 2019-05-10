@@ -23,6 +23,9 @@ const Movie = ({ title, category, rating, genre }) => (
             readonly={true}
             initialRating={rating}
           />
+          <button className="card-text btn btn-primary">
+            Add to Watch list
+          </button>
         </div>
       </div>
     </div>
