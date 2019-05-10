@@ -19,9 +19,12 @@ class SpeechToTextButton extends Component {
   }
   onClickSpeech(event) {
     event.preventDefault();
-    !this.state.isListening
-      ? this.props.startListening()
-      : this.props.stopListening();
+    if (!this.state.isListening) {
+      this.props.resetTranscript();
+      this.props.startListening();
+    } else {
+      this.props.stopListening();
+    }
     this.setState((state, _) => ({
       isListening: !state.isListening
     }));
@@ -47,4 +50,4 @@ class SpeechToTextButton extends Component {
   }
 }
 
-export default SpeechRecognition(SpeechToTextButton);
+export default SpeechRecognition({ autoStart: false })(SpeechToTextButton);
