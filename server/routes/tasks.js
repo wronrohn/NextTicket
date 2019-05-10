@@ -4,6 +4,8 @@ const data = require("../data");
 const taskData = data.tasks;
 const uuid = require("node-uuid");
 const request = require('request-promise');
+const recommendFunction = require('./recommend');
+
 
 
 router.post("/watchlist/", async (req, res) => {
@@ -85,27 +87,27 @@ router.post("/", async (req, res) => {
     Object.keys(reqObj).forEach(function(key) {
       if(key == "title"){
         if(typeof reqObj[key] !==  "string") {
-         throw "Improper title provided"; 
+         throw "Improper title provided";
         }
       }
       if(key == "description"){
         if(typeof reqObj[key] !==  "string") {
-         throw "Improper description provided"; 
+         throw "Improper description provided";
         }
       }
       if(key == "hoursEstimated"){
         if(typeof reqObj[key] !==  "number") {
-         throw "Improper hoursEstimated provided"; 
+         throw "Improper hoursEstimated provided";
         }
       }
       if(key == "completed"){
         if(typeof reqObj[key] !==  "boolean") {
-         throw "Improper completed provided "; 
+         throw "Improper completed provided ";
         }
       }
       if(key == "comments"){
         if(typeof reqObj[key] !==  "object") {
-         throw "Improper comments provided"; 
+         throw "Improper comments provided";
         } else {
           for (let i=0; i<reqObj[key].length; i++) {
             reqObj[key][i]['id'] = uuid.v4();
@@ -139,6 +141,9 @@ router.post("/", async (req, res) => {
   }
 });
 
-
+/**
+ * Wire up recommendation route.
+ */
+router.post('/recommendations/', recommendFunction);
 
 module.exports = router;

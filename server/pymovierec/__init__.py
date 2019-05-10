@@ -15,19 +15,28 @@ import engine
 import pubsub
 import settings as G
 
+run_proc = True
+
 def _exit(sig=None, frame=None):
     """
     Interrupt handler.
     """
-    print("Recommendation engine exiting...")
-    sys.exit(0)
+    global run_proc
+    if(run_proc):
+        print()
+        print("Recommendation engine exiting...")
+        print("Finishing one last run, so we can exit gracefully.")
+    run_proc = False
+    # sys.exit(0)
 
 def _daemonize():
     """
     Daemonizes the module. Uses pub/sub Redis schema.
     """
+    global run_proc
     try:
         print("Persisting process...")
+        signal.signal(signal.SIGTERM, _exit)
         signal.signal(signal.SIGINT, _exit)
 
         if(G.VERBOSE):
@@ -37,8 +46,8 @@ def _daemonize():
         if(G.VERBOSE):
             print("Building wrapper...")
         ps = pubsub.Wrapper(en)
-        
-        while True:
+
+        while run_proc:
             ps.heartbeat()
             time.sleep(10)
     except KeyboardInterrupt:
