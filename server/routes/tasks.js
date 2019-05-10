@@ -7,17 +7,18 @@ const request = require('request-promise');
 const recommendFunction = require('./recommend');
 
 
-router.get("/watchlist/", async (req, res) => {
+router.get("/watchlist/:id", async (req, res) => {
   try {
-    let requestData = req.body;
-    if(!requestData.uid) {
+    let requestData = req.params;
+
+    if(!requestData.id) {
       throw "Provide uid or Movie id";
     }
-    let watchlistMovies = await taskData.getWatchlistByUser(requestData.uid);
-    console.log(watchlistMovies);
+    let watchlistMovies = await taskData.getWatchlistByUser(requestData.id);
+    //console.log(watchlistMovies);
     res.json(requestData);
   } catch (error) {
-    res.status(500).json({"error" : error});
+    res.status(500).json({"error" : error.message});
   }
 });
 
