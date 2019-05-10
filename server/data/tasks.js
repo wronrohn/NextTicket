@@ -39,25 +39,21 @@ let exportedMethods = {
     }
   },
 
-  async addToWatchList(movieId, uid) {
+  async addToWatchList(movieid, uid) {
 
     const taskCollection = await tasks();
-    let movieObj = await this.getMovieById(movieId);
-    //console.log(movieObj)
+    let movieObj = await this.getMovieById(movieid);
     let updatedInf = {}
     try {
-      console.log(movieObj["watchlist"].length)
       if (!movieObj['watchlist'] || movieObj["watchlist"].length == 0) {
-        console.log("HEre on top")
         movieObj.watchlist = [uid];
         updatedInf = await taskCollection.updateOne({
-          _id: movieId
+          _id: movieid
         }, {
           $set: movieObj
         })
       } else {
         if (!movieObj["watchlist"].includes(uid)) {
-          console.log("got it here");
           movieObj["watchlist"].push(uid)
           updatedInf = await taskCollection.updateOne({
             _id: movieId
@@ -67,8 +63,6 @@ let exportedMethods = {
         }
       }
     } catch (e) {
-      console.log("hello")
-      console.log(e)
       throw e;
     }
     movieObj.inWatchList = true;
