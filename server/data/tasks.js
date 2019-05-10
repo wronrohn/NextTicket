@@ -24,7 +24,7 @@ let exportedMethods = {
       return "task does not exist with that ID";
     }
   },
-  async getMovieByMovieId(movieId) {            // XXX: This method is the same as getMovieById above.
+  async getMovieByMovieId(movieId) { // XXX: This method is the same as getMovieById above.
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
       const movie = await movieCollection.findOne({
@@ -45,7 +45,7 @@ let exportedMethods = {
     let movieObj = await this.getMovieById(movieid);
     let updatedInf = {}
     try {
-      if ( ! movieObj['watchlist'] || movieObj["watchlist"].length == 0) {
+      if (!movieObj['watchlist'] || movieObj["watchlist"].length == 0) {
         movieObj.watchlist = [uid];
         updatedInf = await taskCollection.updateOne({
           _id: movieid
@@ -102,42 +102,63 @@ let exportedMethods = {
       throw (e)
     }
   },
+  async getAllMovies() {
+    const taskCollection = await tasks();
+    const movies = taskCollection.find({}).toArray();
+    return movies
+  },
+
+
   async getWatchlistByUser(uid) {
-    if(! uid) {
+    if (!uid) {
       throw "No user id given"
     }
-    console.log("calleddd sss");
+    let userWatchlist = []
     const taskCollection = await tasks();
-    const watchlistCollection = await taskCollection.find({watchlist: {$exists: true}});
-    console.log(watchlistCollection.toArray());
-    return watchlistCollection;
+
+    let movies = await this.getAllMovies()
+
+    movies = movies.map(item => {
+      if (item["watchlist"]) {
+        if (item["watchlist"].includes(uid)) {
+          console.log(item)
+          console.log("USERID ++++++++++++++++++++" +uid)
+          return item
+        }
+      }
+    }).filter(item => item !== undefined)
+
+    //console.log(movies)
+
+    return movies;
 
   },
 
 
 
-    /**
-     * Retrieves a user's watchlist using their uuid.
-     * @param {string} uid  A user's uuid in the system.
-     */
-    async findUserWatchlist(uid) {
-        if ( ! uid) {
-            throw new Error("No user id given.");
-        }
-
-        const collection = await tasks();
-
-        // XXX: AFAIK there is no method to actually find a user's watchlist.
-        //      The return type should be of array: [ movie, movie, movie ].
-        let watchlist = await collection.findOne( { _id: uid });
-
-        if (watchlist) {
-            return watchlist;
-        }
-        else {
-            return [];
-        }
+  /**
+   * Retrieves a user's watchlist using their uuid.
+   * @param {string} uid  A user's uuid in the system.
+   */
+  async findUserWatchlist(uid) {
+    if (!uid) {
+      throw new Error("No user id given.");
     }
+
+    const collection = await tasks();
+
+    // XXX: AFAIK there is no method to actually find a user's watchlist.
+    //      The return type should be of array: [ movie, movie, movie ].
+    let watchlist = await collection.findOne({
+      _id: uid
+    });
+
+    if (watchlist) {
+      return watchlist;
+    } else {
+      return [];
+    }
+  }
 
 }
 
