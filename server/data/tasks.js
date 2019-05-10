@@ -3,8 +3,16 @@ const tasks = mongoCollections.tasks;
 const uuid = require("node-uuid");
 
 let exportedMethods = {
-  async addMovie(task)
-  {
+  async findMoviesInWhichTitleContains(text) {
+    const movieCollection = await tasks();
+    movieCollection.createIndex({ title: "text" });
+    const movies = await movieCollection
+      .find({ $text: { $search: `${text}` } })
+      .toArray();
+    console.log(`Movies ${movies}`);
+    return movies;
+  },
+  async addMovie(task) {
     const movieCollection = await tasks();
     const movieInserted = await movieCollection.insertOne(task);
     const movieId = movieInserted.insertedId;
@@ -12,10 +20,10 @@ let exportedMethods = {
   },
 
   async getMovieById(movieId) {
-    if(movieId && movieId != null) {
+    if (movieId && movieId != null) {
       const taskCollection = await tasks();
       const task = await taskCollection.findOne({ _id: movieId });
-      if(!task) {
+      if (!task) {
         return "task does not exist";
       }
       return task;
@@ -24,40 +32,39 @@ let exportedMethods = {
     }
   },
 
-  async addToWatchList(movieId, uid){
-    
+  async addToWatchList(movieId, uid) {
     const taskCollection = await tasks();
     let movieObj = await this.getMovieById(movieId);
-    
-    let updatedInf ={}
-    try{
-      if (!movieObj['watchlist']) {
+
+    let updatedInf = {};
+    try {
+      if (!movieObj["watchlist"]) {
         movieObj.watchlist = [uid];
-        updatedInf = await taskCollection.updateOne({
-          _id: movieId
-        }, {
-          $set: movieObj
-        })
+        updatedInf = await taskCollection.updateOne(
+          {
+            _id: movieId
+          },
+          {
+            $set: movieObj
+          }
+        );
       } else {
-        movieObj["watchlist"].push(uid)
-        updatedInf = await taskCollection.updateOne({
-          _id: movieId
-        }, {
-          $set: movieObj
-        })
+        movieObj["watchlist"].push(uid);
+        updatedInf = await taskCollection.updateOne(
+          {
+            _id: movieId
+          },
+          {
+            $set: movieObj
+          }
+        );
       }
-    } catch(e){
+    } catch (e) {
       throw e;
     }
 
-    
-    
-    
-    return updatedInf
+    return updatedInf;
   }
-
-  
 };
-
 
 module.exports = exportedMethods;
