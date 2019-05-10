@@ -37,7 +37,7 @@ router.put("/wishlist/", async (req, res) => {
     res.json(movieData);
 
   } catch (error) {
-    res.status(500).json({ error: "Oops! Exception caught.", message: error });
+    res.status(500).json({ error: "Oops! Exception caught.", message: error.message });
   }
 });
 
