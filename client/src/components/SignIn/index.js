@@ -7,10 +7,9 @@ import * as CONSTANTS from "./Constants";
 import { PasswordForgetLink } from "../ForgetPassword";
 
 const SignInPage = () => (
-  <div>
-    <h1>Sign In</h1>
+  <div className="container bg-light contentCenter w-50 rounded-lg">
     <SignInForm />
-    <PasswordForgetLink />
+    <PasswordForgetLink className="p-5 m-5" />
   </div>
 );
 
@@ -34,7 +33,7 @@ class SignInFormBase extends Component {
     try {
       await this.props.firebase.signInWithEmailAndPassword(email, password);
       this.setState({ ...INITIAL_STATE });
-      this.props.history.push(ROUTES.MOVIES);
+      this.props.history.push(ROUTES.LANDING);
     } catch (error) {
       this.setState({ error });
     }
@@ -48,29 +47,54 @@ class SignInFormBase extends Component {
     const { email, password, error } = this.state;
     const isInvalid = password === "" || email === "";
     return (
-      <form onSubmit={this.onSubmit}>
-        <label htmlFor={CONSTANTS.FORMFIELDEMAIL}>Email</label>
-        <input
-          name={CONSTANTS.FORMFIELDEMAIL}
-          id={CONSTANTS.FORMFIELDEMAIL}
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name={CONSTANTS.FORMFIELDPASSWORD}
-          value={password}
-          id={CONSTANTS.FORMFIELDPASSWORD}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Login
-        </button>
-        “ {error && <p>{error.message}</p>}
-      </form>
+      <div className="col-md-8 offset-md-2 mt-5">
+        <h1 className="m-4 text-center">Welcome to Next Ticket</h1>
+        <h2 className="m-5 text-center">Sign In with your existing details</h2>
+        <form className="mt-4 mb-5" onSubmit={this.onSubmit}>
+          <div className="form-group">
+            <label
+              className="text-white sr-only"
+              htmlFor={CONSTANTS.FORMFIELDEMAIL}
+            >
+              Email
+            </label>
+            <input
+              name={CONSTANTS.FORMFIELDEMAIL}
+              id={CONSTANTS.FORMFIELDEMAIL}
+              value={email}
+              onChange={this.onChange}
+              type="text"
+              class="form-control form-control-lg mb-4"
+              placeholder="Email Address"
+            />
+          </div>
+          <div className="form-group">
+            <label
+              className="text-white sr-only"
+              htmlFor={CONSTANTS.FORMFIELDPASSWORD}
+            >
+              Password
+            </label>
+            <input
+              name={CONSTANTS.FORMFIELDPASSWORD}
+              value={password}
+              id={CONSTANTS.FORMFIELDPASSWORD}
+              onChange={this.onChange}
+              type="password"
+              class="form-control form-control-lg"
+              placeholder="Password"
+            />
+          </div>
+          <button
+            className="btn btn-primary mb-2 mt-3 form-control form-control-lg"
+            disabled={isInvalid}
+            type="submit"
+          >
+            Login
+          </button>
+          {error && <p>{error.message}</p>}
+        </form>
+      </div>
     );
   }
 }

@@ -13,7 +13,7 @@ let exportedMethods = {
     const movieCollection = await tasks();
     movieCollection.createIndex({ title: "text" });
     const movies = await movieCollection
-      .find({ $text: { $search: `${text}` } })
+      .find({ $text: { $search: { $regex: `/${text}/` } } })
       .toArray();
     console.log(`Movies ${movies}`);
     return movies;
@@ -42,17 +42,6 @@ let exportedMethods = {
   },
 
   async getRecommendedMovies(movie, requestData) {
-    // const user = {
-    //   name: 'redis-json',
-    //   age: 25,
-    //   address: {
-    //     doorNo: '12B',
-    //     locality: 'pentagon',
-    //     pincode: 123456
-    //   },
-    //   cars: ['BMW 520i', 'Audo A8']
-    // }
-
     let inMovie = {
       movie: movie
     };
@@ -80,7 +69,6 @@ let exportedMethods = {
           let recMovie = await exportedMethods.getMovieByMovieId(r_ids[i]);
           recomendedMovies.recomendations.push(recMovie);
         }
-        // console.log(recomendedMovies);
         await jsonCache.set(requestData.uid, recomendedMovies.recomendations);
         const response = await jsonCache.get(requestData.uid);
         console.log(response);
@@ -95,8 +83,16 @@ let exportedMethods = {
       throw "Invalid User Id";
     }
     const response = await jsonCache.get(userId);
+    var responseArray = [];
     if (response) {
-      return response;
+      for (key in response) {
+        if (response.hasOwnProperty(key)) {
+          // console.log(key + " -> " + response[key]);
+          response[key].inWatchList = true;
+          responseArray.push(response[key]);
+        }
+      }
+      return responseArray;
     }
   },
 

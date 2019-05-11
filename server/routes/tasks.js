@@ -29,7 +29,7 @@ router.get("/recommendation/:id", async (req, res) => {
     let r_moviesJSON = await taskData.getRecommendedMoviesByUserId(
       requestData.id
     );
-    console.log(r_moviesJSON);
+    // console.log(r_moviesJSON);
     res.json(r_moviesJSON);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -46,8 +46,8 @@ router.post("/watchlist/", async (req, res) => {
       requestData.movieid,
       requestData.uid
     );
-    await taskData.getRecommendedMovies(movie.movie, requestData);
     res.json(movie);
+    await taskData.getRecommendedMovies(movie.movie, requestData);
   } catch (error) {
     res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
