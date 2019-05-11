@@ -14,11 +14,13 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "ioredis": "^4.9.3",
     "jsonfile": "^5.0.0",
     "mongodb": "^3.2.4",
     "node-redis-pubsub": "^4.0.0",
     "node-uuid": "^1.4.8",
     "redis": "^2.8.0",
+    "redis-json": "^2.2.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   }
