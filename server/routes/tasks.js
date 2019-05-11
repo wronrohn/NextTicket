@@ -5,6 +5,8 @@ const taskData = data.tasks;
 const uuid = require("node-uuid");
 const request = require("request-promise");
 const recommendFunction = require("./recommend");
+const redis = require('redis');
+const client = redis.createClient();
 
 /**
  * Gets Watchilst by User-id 
@@ -18,6 +20,8 @@ router.get("/watchlist/:id", async (req, res) => {
       throw "Provide uid or Movie id";
     }
     let watchlistMovies = await taskData.getWatchlistByUser(requestData.id);
+    // let userWatchListArray = await taskData.findUserWatchlist(requestData.id);
+    // console.log(userWatchListArray);
     res.json(watchlistMovies);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -38,6 +42,12 @@ router.get("/recommendation/:id", async (req, res) => {
     let r_moviesJSON = await taskData.getRecommendedMoviesByUserId(
       requestData.id
     );
+    client.on('connect', function () {
+      console.log("Connected to Redis...");
+    });
+    client.get('Batman', function(err, reply) {
+      console.log(reply);
+    });
     res.json(r_moviesJSON);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -48,6 +58,8 @@ router.get("/recommendation/:id", async (req, res) => {
  * Post Watchlist by User-id
  * @param {uid : UserID, movieid: MovieId}
  */
+
+// router.post("/watchlist/:uid", recommendFunction.recommendations);
 
 router.post("/watchlist/", async (req, res) => {
   try {
@@ -60,7 +72,8 @@ router.post("/watchlist/", async (req, res) => {
       requestData.uid
     );
     res.json(movie);
-    await taskData.getRecommendedMovies(movie.movie, requestData);
+    // await taskData.getRecommendedMovies(movie.movie, requestData);
+    await recommendFunction(requestData.uid);
   } catch (error) {
     res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
