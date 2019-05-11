@@ -53,4 +53,4 @@ class SpeechToTextButton extends Component {
   }
 }
 
-export default SpeechRecognition(SpeechToTextButton);
+export default SpeechRecognition({ autoStart: false })(SpeechToTextButton);

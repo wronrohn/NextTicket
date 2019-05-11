@@ -52,15 +52,19 @@ code {
 }
 
 body {
-  background-color: #272729;
+  background-color: #13171b;
 }
 
 .btn-primary,
 .btn-primary:hover {
-  background-color: #e60023;
-  border-color: #e60023;
+  background-color: #01b01f;
+  border-color: #01b01f;
 }
 
 .navbar {
   background-color: #1dcf9a;
+}
+
+.card {
+  background-color: #445567;
 }

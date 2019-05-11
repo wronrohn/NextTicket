@@ -10,6 +10,7 @@ import PasswordChange from "./PasswordChange";
 import PasswordForgetPage from "./ForgetPassword";
 import Home from "./Home";
 import { AuthUserContext } from "../Session";
+import MovieDescription from "./MovieDescription";
 /**
  * Main entrypoint for the client-side applicaiton.
  */
@@ -17,7 +18,10 @@ import { AuthUserContext } from "../Session";
 const App = () => (
   <Router>
     <div>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
       <Navigation />
       <AuthUserContext.Consumer>
         {authUser =>
@@ -35,6 +39,7 @@ const App = () => (
         path={ROUTES.PASSWORD_FORGET}
         component={PasswordForgetPage}
       />
+      <Route exact path={ROUTES.SPECIFIC_MOVIE} component={MovieDescription} />
     </div>
   </Router>
 );
