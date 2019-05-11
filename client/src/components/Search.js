@@ -41,6 +41,7 @@ class Search extends Component {
   onFinalTranscript(transcript) {
     console.log(`Final Transcript ${transcript}`);
   }
+
   render() {
     const { searchValue, searchResults } = this.state;
     return (

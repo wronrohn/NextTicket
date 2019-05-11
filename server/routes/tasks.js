@@ -3,68 +3,70 @@ const router = express.Router();
 const data = require("../data");
 const taskData = data.tasks;
 const uuid = require("node-uuid");
-const request = require('request-promise');
-const recommendFunction = require('./recommend');
-
-
+const request = require("request-promise");
+const recommendFunction = require("./recommend");
 
 router.get("/watchlist/:id", async (req, res) => {
   try {
     let requestData = req.params;
 
-    if(!requestData.id) {
+    if (!requestData.id) {
       throw "Provide uid or Movie id";
     }
     let watchlistMovies = await taskData.getWatchlistByUser(requestData.id);
     console.log(watchlistMovies);
     res.json(requestData);
   } catch (error) {
-    res.status(500).json({"error" : error.message});
+    res.status(500).json({ error: error.message });
   }
 });
 
 router.post("/watchlist/", async (req, res) => {
   try {
     requestData = req.body;
-    if(!requestData.uid && !requestData.movieid) {
+    if (!requestData.uid && !requestData.movieid) {
       throw "Provide uid or Movie id";
     }
-    let movie = await taskData.addToWatchList(requestData.movieid, requestData.uid);
+    let movie = await taskData.addToWatchList(
+      requestData.movieid,
+      requestData.uid
+    );
     let inMovie = {
-      "movie" : movie.movie
-    }
+      movie: movie.movie
+    };
 
     var options = {
-      method: 'POST',
-      uri: 'http://localhost:5000/postdata',
+      method: "POST",
+      uri: "http://localhost:5000/postdata",
       body: inMovie,
       json: true // Automatically stringifies the body to JSON
     };
 
     var result = {
-      "success" : false
-    }
+      success: false
+    };
     let recomendedMovies = {
       uid: requestData.uid,
-      recomendations: [] 
+      recomendations: []
     };
 
     var sendrequest = await request(options)
-    .then( async function (parsedBody) {
-      result.success = true;
-      let r_ids = Object.keys(parsedBody).map(item => (parseInt(item)));
-      for (let i = 0; i < r_ids.length; i++) {
-        let recMovie = await taskData.getMovieByMovieId(r_ids[i]);
-        recomendedMovies.recomendations.push(recMovie);
-      }
-      console.log(recomendedMovies);
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+      .then(async function(parsedBody) {
+        result.success = true;
+        let r_ids = Object.keys(parsedBody).map(item => parseInt(item));
+        for (let i = 0; i < r_ids.length; i++) {
+          let recMovie = await taskData.getMovieByMovieId(r_ids[i]);
+          recomendedMovies.recomendations.push(recMovie);
+        }
+        console.log(recomendedMovies);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
 
     res.json(movie);
   } catch (error) {
+    console.log(`Error ${error}`);
     res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
 });
@@ -72,18 +74,18 @@ router.post("/watchlist/", async (req, res) => {
 router.put("/watchlist/", async (req, res) => {
   try {
     const requestData = req.body;
-    if(!requestData.uid && !requestData.movieid) {
+    if (!requestData.uid && !requestData.movieid) {
       throw "Provide uid or Movie id";
     }
-    let movieData = await taskData.removeWatchlist(requestData.uid, requestData.movieid);
+    let movieData = await taskData.removeWatchlist(
+      requestData.uid,
+      requestData.movieid
+    );
     res.json(movieData);
-
   } catch (error) {
     res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
 });
-
-
 
 // router.post("/", async (req, res) => {
 //   try {
@@ -95,11 +97,9 @@ router.put("/watchlist/", async (req, res) => {
 //     if(!("hoursEstimated" in reqObj)) {throw "hoursEstimated is not defined."}
 //     if(!("completed" in reqObj)) {throw "completed is not defined."}
 
-
 //     if(!("comments" in reqObj)) {
 //       reqObj.comments = []
 //     }
-
 
 //     // Check every key are in proper type and not empty
 //     Object.keys(reqObj).forEach(function(key) {
@@ -162,6 +162,6 @@ router.put("/watchlist/", async (req, res) => {
 /**
  * Wire up recommendation route.
  */
-router.post('/recommendations/', recommendFunction);
+router.post("/recommendations/", recommendFunction);
 
 module.exports = router;
