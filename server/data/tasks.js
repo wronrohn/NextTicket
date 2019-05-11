@@ -71,7 +71,7 @@ let exportedMethods = {
         }
         await jsonCache.set(requestData.uid, recomendedMovies.recomendations);
         const response = await jsonCache.get(requestData.uid);
-        console.log(response);
+        // console.log(response);
       })
       .catch(function(err) {
         console.log(err);
