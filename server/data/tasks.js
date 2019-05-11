@@ -69,7 +69,7 @@ let exportedMethods = {
           movieObj["watchlist"].push(uid);
           updatedInf = await taskCollection.updateOne(
             {
-              _id: movieId
+              _id: movieid
             },
             {
               $set: movieObj
@@ -78,6 +78,7 @@ let exportedMethods = {
         }
       }
     } catch (e) {
+      console.log(`Error in mongo ${e}`);
       throw e;
     }
     movieObj.inWatchList = true;
