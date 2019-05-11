@@ -27,7 +27,7 @@ class Search extends Component {
     const { searchValue } = this.state;
     event.preventDefault();
     let seachMovies = await this.axiosInstance.get(`/search/${searchValue}`);
-    console.log(`Search Movies ${seachMovies}`);
+    console.log(`Search Movies ${JSON.stringify(seachMovies)}`);
   }
 
   onFinalTranscript(transcript) {
