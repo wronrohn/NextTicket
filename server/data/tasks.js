@@ -201,11 +201,7 @@ let exportedMethods = {
         }
       }
     }).filter(item => item !== undefined)
-
-    //console.log(movies)
-
     return movies;
-
   },
   async getAllMovies() {
     const taskCollection = await tasks();
