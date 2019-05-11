@@ -6,6 +6,10 @@ const uuid = require("node-uuid");
 const request = require("request-promise");
 const recommendFunction = require("./recommend");
 
+/**
+ * Gets Watchilst by User-id 
+ * @param :id -> uid
+ */
 router.get("/watchlist/:id", async (req, res) => {
   try {
     let requestData = req.params;
@@ -20,6 +24,11 @@ router.get("/watchlist/:id", async (req, res) => {
   }
 });
 
+/**
+ * Get Recomendation by User-id
+ * @param :id -> uid
+ */
+
 router.get("/recommendation/:id", async (req, res) => {
   try {
     let requestData = req.params;
@@ -29,12 +38,16 @@ router.get("/recommendation/:id", async (req, res) => {
     let r_moviesJSON = await taskData.getRecommendedMoviesByUserId(
       requestData.id
     );
-    // console.log(r_moviesJSON);
     res.json(r_moviesJSON);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+/**
+ * Post Watchlist by User-id
+ * @param {uid : UserID, movieid: MovieId}
+ */
 
 router.post("/watchlist/", async (req, res) => {
   try {
@@ -46,12 +59,17 @@ router.post("/watchlist/", async (req, res) => {
       requestData.movieid,
       requestData.uid
     );
-    await taskData.getRecommendedMovies(movie.movie, requestData);
     res.json(movie);
+    await taskData.getRecommendedMovies(movie.movie, requestData);
   } catch (error) {
     res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
 });
+
+/**
+ * PUT route - to delete movie from watchlist
+ * @param {uid: userID, movieid: movieId}
+ */
 
 router.put("/watchlist/", async (req, res) => {
   try {
