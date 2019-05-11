@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SpeechToText from "./SpeechToText";
 import axios from "axios";
 import MovieList from "./MovieList";
+import Network from "./Network";
 
 class Search extends Component {
   constructor(props) {
@@ -14,9 +15,7 @@ class Search extends Component {
     this.onFinalTranscript = this.onFinalTranscript.bind(this);
     this.onSearchFieldChange = this.onSearchFieldChange.bind(this);
     this.onSubmittingSearch = this.onSubmittingSearch.bind(this);
-    this.axiosInstance = axios.create({
-      baseURL: "http://localhost:3000/api"
-    });
+    this.network = new Network();
   }
 
   onSearchFieldChange(event) {
@@ -28,12 +27,10 @@ class Search extends Component {
   async onSubmittingSearch(event) {
     const { searchValue } = this.state;
     event.preventDefault();
-    let seachMoviesData = await this.axiosInstance.get(
-      `/search/${searchValue}`
-    );
-    if (seachMoviesData && seachMoviesData.data) {
+    let searchMovies = await this.network.getSearchResultForText(searchValue);
+    if (searchMovies) {
       this.setState({
-        searchResults: seachMoviesData.data
+        searchResults: searchMovies
       });
     }
   }
