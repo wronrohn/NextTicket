@@ -14,8 +14,23 @@ router.get("/watchlist/:id", async (req, res) => {
       throw "Provide uid or Movie id";
     }
     let watchlistMovies = await taskData.getWatchlistByUser(requestData.id);
-    console.log(watchlistMovies);
-    res.json(requestData);
+    res.json(watchlistMovies);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/recommendation/:id", async (req, res) => {
+  try {
+    let requestData = req.params;
+    if (!requestData.id) {
+      throw "Provide uid or Movie id";
+    }
+    let r_moviesJSON = await taskData.getRecommendedMoviesByUserId(
+      requestData.id
+    );
+    console.log(r_moviesJSON);
+    res.json(r_moviesJSON);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -31,42 +46,9 @@ router.post("/watchlist/", async (req, res) => {
       requestData.movieid,
       requestData.uid
     );
-    let inMovie = {
-      movie: movie.movie
-    };
-
-    var options = {
-      method: "POST",
-      uri: "http://localhost:5000/postdata",
-      body: inMovie,
-      json: true // Automatically stringifies the body to JSON
-    };
-
-    var result = {
-      success: false
-    };
-    let recomendedMovies = {
-      uid: requestData.uid,
-      recomendations: []
-    };
-
-    var sendrequest = await request(options)
-      .then(async function(parsedBody) {
-        result.success = true;
-        let r_ids = Object.keys(parsedBody).map(item => parseInt(item));
-        for (let i = 0; i < r_ids.length; i++) {
-          let recMovie = await taskData.getMovieByMovieId(r_ids[i]);
-          recomendedMovies.recomendations.push(recMovie);
-        }
-        console.log(recomendedMovies);
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
-
+    await taskData.getRecommendedMovies(movie.movie, requestData);
     res.json(movie);
   } catch (error) {
-    console.log(`Error ${error}`);
     res.status(500).json({ error: "Oops! Exception caught.", message: error });
   }
 });
