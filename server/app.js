@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const proc = require("child_process");
 const configRoutes = require("./routes");
+var cors = require('cors')
+
 
 /**
  * Entrypoint for the server applicaiton.
@@ -23,7 +25,7 @@ const pymovierec = proc.spawn(python, ["./pymovierec", "--verbose"], {
   stdio: [process.stdin, process.stdout, process.stderr]
 });
 const app = express();
-
+app.use(cors())
 /**
  * Cleans up a stale daemon.
  */
