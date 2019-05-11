@@ -10,6 +10,15 @@ let exportedMethods = {
     return await this.getMovieById(movieId);
   },
 
+  async findMoviesInWhichTitleContains(text) {
+    const movieCollection = await tasks();
+    movieCollection.createIndex({ title: "text" });
+    const movies = await movieCollection
+      .find({ $text: { $search: `${text}` } })
+      .toArray();
+    return movies;
+  },
+
   async getMovieById(movieId) {
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
@@ -24,8 +33,8 @@ let exportedMethods = {
       return "task does not exist with that ID";
     }
   },
-
-  async getMovieByMovieId(movieId) { // XXX: This method is the same as getMovieById above.
+  async getMovieByMovieId(movieId) {
+    // XXX: This method is the same as getMovieById above.
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
       const movie = await movieCollection.findOne({
@@ -45,7 +54,6 @@ let exportedMethods = {
     let movieObj = await this.getMovieById(movieid);
     let updatedInf = {};
     try {
-
       if (!movieObj["watchlist"] || movieObj["watchlist"].length == 0) {
         movieObj.watchlist = [uid];
         updatedInf = await taskCollection.updateOne(
@@ -117,6 +125,7 @@ let exportedMethods = {
     const taskCollection = await tasks();
 
     let movies = await this.getAllMovies();
+
     movies = movies
       .map(item => {
         if (item["watchlist"]) {
@@ -138,12 +147,17 @@ let exportedMethods = {
   },
 
   async findMoviesInWhichTitleContains(text) {
-    const movieCollection = await tasks();
-    movieCollection.createIndex({ title: "text" });
-    const movies = await movieCollection
-      .find({ $text: { $search: `${text}` } })
-      .toArray();
-    console.log(`Movies ${movies}`);
+    let taskCollection = tasks();
+    let movies = await this.getAllMovies();
+    console.log(movies);
+    movies = movies
+      .map(movie => {
+        if (movie.title.toLowerCase().includes(text)) {
+          return movie;
+        }
+      })
+      .filter(movie => movie);
+    console.log(movies);
     return movies;
   },
 
@@ -157,61 +171,6 @@ let exportedMethods = {
     }
 
     const collection = await tasks();
-=======
-  /**
-   * Retrieves a user's watchlist using their uuid.
-   * @param {string} uid  A user's uuid in the system.
-   */
-  async findUserWatchlist(uid) {
-    if (!uid) {
-      throw new Error("No user id given.");
-    }
-
-    const collection = await tasks();
-
-    // XXX: AFAIK there is no method to actually find a user's watchlist.
-    //      The return type should be of array: [ movie, movie, movie ].
-    let watchlist = await collection.findOne({
-      _id: uid
-    });
-
-    if (watchlist) {
-      return watchlist;
-    } else {
-      return [];
-    }
-  },
-  async getAllMovies() {
-    const taskCollection = await tasks();
-    const movies = taskCollection.find({}).toArray();
-    return movies
-  },
-  async findMoviesInWhichTitleContains(text) {
-    const movieCollection = await tasks();
-    movieCollection.createIndex({ title: "text" });
-    const movies = await movieCollection
-      .find({ $text: { $search: `${text}` } })
-      .toArray();
-    console.log(`Movies ${movies}`);
-    return movies;
-  },
-}
-//   async findMoviesInWhichTitleContains(text) {
-//     let taskCollection = tasks();
-//     let movies = await this.getAllMovies()
-//     console.log(movies)
-//     movies = movies.map(movie => {
-//       if (movie.title.toLowerCase().includes(text)) {
-//         return movie;
-//       }
-//     }).filter(movie => movie)
-//     console.log(movies)
-//     return movies
-//   },
-
-
-
-
 
     // XXX: AFAIK there is no method to actually find a user's watchlist.
     //      The return type should be of array: [ movie, movie, movie ].

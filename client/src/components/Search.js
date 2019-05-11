@@ -11,6 +11,7 @@ class Search extends Component {
     super(props);
     this.onFinalTranscript = this.onFinalTranscript.bind(this);
     this.onSearchFieldChange = this.onSearchFieldChange.bind(this);
+    this.onSubmittingSearch = this.onSubmittingSearch.bind(this);
     this.axiosInstance = axios.create({
       baseURL: "http://localhost:3000/api"
     });
@@ -18,13 +19,13 @@ class Search extends Component {
 
   onSearchFieldChange(event) {
     this.setState({
-      value: event.target.value
+      searchValue: event.target.value
     });
   }
 
   async onSubmittingSearch(event) {
-    event.preventDefault();
     const { searchValue } = this.state;
+    event.preventDefault();
     let seachMovies = await this.axiosInstance.get(`/search/${searchValue}`);
     console.log(`Search Movies ${seachMovies}`);
   }
@@ -33,7 +34,7 @@ class Search extends Component {
     console.log(`Final Transcript ${transcript}`);
   }
   render() {
-    const { searchValue: value } = this.state;
+    const { searchValue } = this.state;
     return (
       <form className="mt-5 row no-gutters">
         <div className="input-group">
@@ -44,7 +45,8 @@ class Search extends Component {
             type="text"
             className="form-control mb-2 mr-sm-2"
             id="search"
-            value={value}
+            value={searchValue}
+            onChange={this.onSearchFieldChange}
             placeholder="Search All Movies"
           />
           <button
