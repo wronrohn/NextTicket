@@ -146,21 +146,6 @@ let exportedMethods = {
     return movies;
   },
 
-  async findMoviesInWhichTitleContains(text) {
-    let taskCollection = tasks();
-    let movies = await this.getAllMovies();
-    console.log(movies);
-    movies = movies
-      .map(movie => {
-        if (movie.title.toLowerCase().includes(text)) {
-          return movie;
-        }
-      })
-      .filter(movie => movie);
-    console.log(movies);
-    return movies;
-  },
-
   /**
    * Retrieves a user's watchlist using their uuid.
    * @param {string} uid  A user's uuid in the system.
