@@ -15,6 +15,7 @@ class Search extends Component {
     this.onFinalTranscript = this.onFinalTranscript.bind(this);
     this.onSearchFieldChange = this.onSearchFieldChange.bind(this);
     this.onSubmittingSearch = this.onSubmittingSearch.bind(this);
+    this.performSearch = this.performSearch.bind(this);
     this.network = new Network();
   }
 
@@ -27,7 +28,11 @@ class Search extends Component {
   async onSubmittingSearch(event) {
     const { searchValue } = this.state;
     event.preventDefault();
-    let searchMovies = await this.network.getSearchResultForText(searchValue);
+    await this.performSearch(searchValue);
+  }
+
+  async performSearch(text) {
+    let searchMovies = await this.network.getSearchResultForText(text);
     if (searchMovies) {
       this.setState({
         searchResults: searchMovies
@@ -36,7 +41,18 @@ class Search extends Component {
   }
 
   onFinalTranscript(transcript) {
-    console.log(`Final Transcript ${transcript}`);
+    console.log(transcript);
+    const transcriptWordArray = transcript.toLowerCase().split(" ");
+    const indexOfSearch = transcriptWordArray.indexOf("search");
+    if (indexOfSearch >= 0) {
+      const nextVal = transcriptWordArray[indexOfSearch + 1];
+      if (nextVal) {
+        this.setState({
+          searchValue: nextVal
+        });
+        this.performSearch(nextVal);
+      }
+    }
   }
 
   render() {

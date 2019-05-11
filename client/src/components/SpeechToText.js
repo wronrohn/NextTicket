@@ -31,9 +31,7 @@ class SpeechToTextButton extends Component {
       startListening();
     } else {
       stopListening();
-      {
-        finalTranscript && onFinalTranscript(finalTranscript);
-      }
+      finalTranscript && onFinalTranscript(finalTranscript);
     }
     this.setState((state, _) => ({
       isListening: !state.isListening
@@ -41,11 +39,7 @@ class SpeechToTextButton extends Component {
   }
 
   render() {
-    const {
-      browserSupportsSpeechRecognition,
-      finalTranscript,
-      onFinalTranscript
-    } = this.props;
+    const { browserSupportsSpeechRecognition } = this.props;
     if (!browserSupportsSpeechRecognition) {
       return null;
     }
