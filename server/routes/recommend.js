@@ -18,13 +18,15 @@ bluebird.promisifyAll(redis.Multi.prototype);
  * A route that will handle GET '/recommendations/:uid' using pubsub and Redis.
  */
 
-async function recommendations(req, res) {
+//async function recommendations(req, res) {
+async function recommendations(uid) {
+    console.log("indsde the recomm " + uid);
     // Return the recommendations for the given UID.
     // (Use the uid to look up watchlist and the cache to get recommendations.)
     try {
-        let uid = req.body.uid;
+        //let uid = req.body.uid;
         if( ! uid) {
-            res.status(500).json( { error: "400 - No UID Given" } );
+            // res.status(500).json( { error: "400 - No UID Given" } );
         }
 
         let results = [];
@@ -34,8 +36,12 @@ async function recommendations(req, res) {
         let movieData = await data.tasks.findUserWatchlist(uid);
 
         // 2. For each item in watchlist:
-        for(elem in movieData) {
-
+        
+        // }
+        // for(elem in movieData) {
+        for (let i = 0; i < movieData.length; i++) {
+            const elem = movieData[i];
+            console.log("movie : ", elem);
             // See what recommendations are on Redis.
             let resolvedData = await client.getAsync(elem);
             resolvedData = JSON.parse(resolvedData);
@@ -57,14 +63,15 @@ async function recommendations(req, res) {
             // Python module requires that requests start with this code-word.
             let reqString = "REC: "
             reqString = reqString + missing.join(",");
+            console.log(reqString);
             pubsub.emit("send-message", { message: reqString });
         }
 
         // 4. Return whatever was ready at the time of the request.
-        res.status(200).json( results );
+        // res.status(200).json( results );
     }
     catch (error) {
-        res.status(500).json( { error: "500 - " + error.message });
+        // res.status(500).json( { error: "500 - " + error.message });
     }
 
 }
