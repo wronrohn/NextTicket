@@ -1,7 +1,7 @@
 import React from "react";
 import Rating from "react-rating";
-const Movie = ({ title, category, rating, genre }) => (
-  <div className="card mt-3 shadow-lg">
+const Movie = ({ title, category, rating, genre, theme }) => (
+  <div className="card mt-4">
     <div className="row no-gutters">
       <div className="col-auto">
         <img
@@ -14,7 +14,7 @@ const Movie = ({ title, category, rating, genre }) => (
         <div className="align-self-center ml-2">
           <div className="card-block px-2">
             <h2 className="card-title">{title}</h2>
-            <p className="card-text">Genre:{genre}</p>
+            <p className="card-text">Theme:{theme}</p>
             <p className="card-text">Category:{category}</p>
             <Rating
               start={0}
