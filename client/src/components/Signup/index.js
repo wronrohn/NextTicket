@@ -34,11 +34,8 @@ class SignUpFormBase extends React.Component {
   async onSubmit(event) {
     const { email, password } = this.state;
     event.preventDefault();
+    await this.props.firebase.createUserWithEmailAndPassword(email, password);
     try {
-      let authUser = await this.props.firebase.createUserWithEmailAndPassword(
-        email,
-        password
-      );
       this.setState(() => {
         return {
           email: "",
@@ -49,7 +46,7 @@ class SignUpFormBase extends React.Component {
           message: null
         };
       });
-      this.props.history.push(ROUTES.LANDING);
+      this.props.history.push(ROUTES.HOME);
     } catch (e) {
       this.setState(() => {
         return {
