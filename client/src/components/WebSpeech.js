@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import SpeechRecognition from 'react-speech-recognition'
 
 
+
 const options ={
   
   continuous: false
@@ -13,6 +14,7 @@ const propTypes = {
   transcript: PropTypes.string,
   startListening: PropTypes.func,
   resetTranscript: PropTypes.func,
+  abortListening: PropTypes.func,
   browserSupportsSpeechRecognition: PropTypes.bool
 };
 
@@ -20,17 +22,22 @@ const SpeechSearch =  ({
    transcript,
    resetTranscript,
    startListening,
+   abortListening,
    browserSupportsSpeechRecognition
    }) => {
+     
      if (!browserSupportsSpeechRecognition) {
        return null;
      }
      return(
 
-      
-      
-        /* { value of the transcript is in the "{transcript}" } */ 
-      <button type="submit" id="mic" onClick={{startListening} }><i className="fa fa-microphone"></i></button>
+      <div>
+      {abortListening} 
+        
+      <button type="none" id="mic" onClick={startListening}><i className="fa fa-microphone"></i></button>
+      <input type="text" value={transcript}></input>
+      </div>
+       
       
       
     
