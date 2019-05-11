@@ -49,7 +49,7 @@ class SignUpFormBase extends React.Component {
           message: null
         };
       });
-      this.props.history.push(ROUTES.MOVIES);
+      this.props.history.push(ROUTES.LANDING);
     } catch (e) {
       this.setState(() => {
         return {

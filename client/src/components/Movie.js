@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Rating from "react-rating";
 import { Link } from "react-router-dom";
+import { AuthUserContext } from "../Session";
+import Network from "./Network";
 class Movie extends Component {
   constructor(props) {
     super(props);
@@ -9,12 +11,24 @@ class Movie extends Component {
       movie: props
     };
     this.watchlistButtonClicked = this.watchlistButtonClicked.bind(this);
+    this.network = new Network();
   }
 
-  watchlistButtonClicked() {}
+  async watchlistButtonClicked(userID) {
+    const { _id: movieID } = this.state.movie;
+    const movie = await this.network.addMovieToWatchList(userID, movieID);
+    this.setState({ movie: movie });
+  }
 
   render() {
-    const { title, category, rating, theme, _id: id } = this.state.movie;
+    const {
+      title,
+      category,
+      rating,
+      theme,
+      _id: id,
+      inWatchList
+    } = this.state.movie;
     return (
       <div
         style={{
@@ -49,9 +63,24 @@ class Movie extends Component {
                       initialRating={rating}
                     />
                   </div>
-                  <button className="btn btn-primary mt-3 ml-2">
-                    Add to Watch list
-                  </button>
+                  <AuthUserContext.Consumer>
+                    {authUser => {
+                      if (inWatchList) {
+                        return (
+                          <button
+                            className="btn btn-primary mt-3 ml-2"
+                            onClick={() => {
+                              this.watchlistButtonClicked(authUser.uid);
+                            }}
+                          >
+                            Add to Watch list
+                          </button>
+                        );
+                      } else {
+                        return <p>This movie is in your watchlist</p>;
+                      }
+                    }}
+                  </AuthUserContext.Consumer>
                 </div>
               </div>
             </div>
