@@ -32,6 +32,7 @@ const App = () => (
           )
         }
       </AuthUserContext.Consumer>
+      <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
       <Route exact path={ROUTES.SIGNIN} component={SignInPage} />
       <Route exact path={ROUTES.CHANGE_PASSWORD} component={PasswordChange} />
       <Route
