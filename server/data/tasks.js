@@ -24,7 +24,8 @@ let exportedMethods = {
       return "task does not exist with that ID";
     }
   },
-  async getMovieByMovieId(movieId) { // XXX: This method is the same as getMovieById above.
+  async getMovieByMovieId(movieId) {
+    // XXX: This method is the same as getMovieById above.
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
       const movie = await movieCollection.findOne({
@@ -40,26 +41,31 @@ let exportedMethods = {
   },
 
   async addToWatchList(movieid, uid) {
-
     const taskCollection = await tasks();
     let movieObj = await this.getMovieById(movieid);
-    let updatedInf = {}
+    let updatedInf = {};
     try {
-      if (!movieObj['watchlist'] || movieObj["watchlist"].length == 0) {
+      if (!movieObj["watchlist"] || movieObj["watchlist"].length == 0) {
         movieObj.watchlist = [uid];
-        updatedInf = await taskCollection.updateOne({
-          _id: movieid
-        }, {
-          $set: movieObj
-        })
+        updatedInf = await taskCollection.updateOne(
+          {
+            _id: movieid
+          },
+          {
+            $set: movieObj
+          }
+        );
       } else {
         if (!movieObj["watchlist"].includes(uid)) {
-          movieObj["watchlist"].push(uid)
-          updatedInf = await taskCollection.updateOne({
-            _id: movieId
-          }, {
-            $set: movieObj
-          })
+          movieObj["watchlist"].push(uid);
+          updatedInf = await taskCollection.updateOne(
+            {
+              _id: movieId
+            },
+            {
+              $set: movieObj
+            }
+          );
         }
       }
     } catch (e) {
@@ -73,7 +79,6 @@ let exportedMethods = {
     const taskCollection = await tasks();
     try {
       if (uid && movieId) {
-
         let movie = await this.getMovieById(movieId);
 
         if (movie.watchlist) {
@@ -83,14 +88,15 @@ let exportedMethods = {
             if (movie["watchlist"].length == 0) {
               movie["inWatchList"] = false;
             }
-            updatedInf = await taskCollection.updateOne({
-              _id: movieId
-            }, {
-              $set: movie
-            })
+            updatedInf = await taskCollection.updateOne(
+              {
+                _id: movieId
+              },
+              {
+                $set: movie
+              }
+            );
           }
-
-
         }
         movie.inWatchList = false;
         return movie;
@@ -98,52 +104,47 @@ let exportedMethods = {
         throw "Invalid uid or movieId";
       }
     } catch (e) {
-
-      throw (e)
+      throw e;
     }
   },
-  
-
 
   async getWatchlistByUser(uid) {
     if (!uid) {
-      throw "No user id given"
+      throw "No user id given";
     }
-    let userWatchlist = []
+    let userWatchlist = [];
     const taskCollection = await tasks();
 
-    let movies = await this.getAllMovies()
+    let movies = await this.getAllMovies();
 
-    movies = movies.map(item => {
-      if (item["watchlist"]) {
-        if (item["watchlist"].includes(uid)) {
-          return item
+    movies = movies
+      .map(item => {
+        if (item["watchlist"]) {
+          if (item["watchlist"].includes(uid)) {
+            return item;
+          }
         }
-      }
-    }).filter(item => item !== undefined)
+      })
+      .filter(item => item !== undefined);
 
     //console.log(movies)
 
     return movies;
-
   },
   async getAllMovies() {
     const taskCollection = await tasks();
     const movies = taskCollection.find({}).toArray();
-    return movies
+    return movies;
   },
 
-  async findMoviesInWhichTitleContains(text){
-    let taskCollection = tasks();
-    let movies = await this.getAllMovies()
-    console.log(movies)
-    movies = movies.map(movie => {
-      if (movie.title.toLowerCase().includes(text)){
-        return movie;
-      }
-    }).filter(movie => movie)
-    console.log(movies)
-    return movies
+  async findMoviesInWhichTitleContains(text) {
+    const movieCollection = await tasks();
+    movieCollection.createIndex({ title: "text" });
+    const movies = await movieCollection
+      .find({ $text: { $search: `${text}` } })
+      .toArray();
+    console.log(`Movies ${movies}`);
+    return movies;
   },
 
   /**
@@ -169,10 +170,7 @@ let exportedMethods = {
       return [];
     }
   }
-
-}
-
-
+};
 
 // async function test() {
 //   let x = await exportedMethods.getMovieByMovieId(2)
