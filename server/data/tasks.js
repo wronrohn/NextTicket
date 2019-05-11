@@ -1,22 +1,29 @@
 const mongoCollections = require("../config/mongoCollections");
 const tasks = mongoCollections.tasks;
 const uuid = require("node-uuid");
+const request = require("request-promise");
+const Redis = require("ioredis");
+const JSONCache = require("redis-json");
+const redis = new Redis();
+
+const jsonCache = new JSONCache(redis, { prefix: "cache:" });
 
 let exportedMethods = {
-  async addMovie(task) {
-    const movieCollection = await tasks();
-    const movieInserted = await movieCollection.insertOne(task);
-    const movieId = movieInserted.insertedId;
-    return await this.getMovieById(movieId);
-  },
-
   async findMoviesInWhichTitleContains(text) {
     const movieCollection = await tasks();
     movieCollection.createIndex({ title: "text" });
     const movies = await movieCollection
       .find({ $text: { $search: `${text}` } })
       .toArray();
+    console.log(`Movies ${movies}`);
     return movies;
+  },
+
+  async addMovie(task) {
+    const movieCollection = await tasks();
+    const movieInserted = await movieCollection.insertOne(task);
+    const movieId = movieInserted.insertedId;
+    return await this.getMovieById(movieId);
   },
 
   async getMovieById(movieId) {
@@ -33,6 +40,66 @@ let exportedMethods = {
       return "task does not exist with that ID";
     }
   },
+
+  async getRecommendedMovies(movie, requestData) {
+    // const user = {
+    //   name: 'redis-json',
+    //   age: 25,
+    //   address: {
+    //     doorNo: '12B',
+    //     locality: 'pentagon',
+    //     pincode: 123456
+    //   },
+    //   cars: ['BMW 520i', 'Audo A8']
+    // }
+
+    let inMovie = {
+      movie: movie
+    };
+
+    var options = {
+      method: "POST",
+      uri: "http://localhost:5000/postdata",
+      body: inMovie,
+      json: true // Automatically stringifies the body to JSON
+    };
+
+    var result = {
+      success: false
+    };
+    let recomendedMovies = {
+      uid: requestData.uid,
+      recomendations: []
+    };
+
+    var sendrequest = await request(options)
+      .then(async function(parsedBody) {
+        result.success = true;
+        let r_ids = Object.keys(parsedBody).map(item => parseInt(item));
+        for (let i = 0; i < r_ids.length; i++) {
+          let recMovie = await exportedMethods.getMovieByMovieId(r_ids[i]);
+          recomendedMovies.recomendations.push(recMovie);
+        }
+        // console.log(recomendedMovies);
+        await jsonCache.set(requestData.uid, recomendedMovies.recomendations);
+        const response = await jsonCache.get(requestData.uid);
+        console.log(response);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  },
+
+  async getRecommendedMoviesByUserId(userId) {
+    if (!userId) {
+      throw "Invalid User Id";
+    }
+    const response = await jsonCache.get(userId);
+    if (response) {
+      return response;
+    }
+  },
+
   async getMovieByMovieId(movieId) {
     // XXX: This method is the same as getMovieById above.
     if (movieId && movieId != null) {
@@ -69,7 +136,7 @@ let exportedMethods = {
           movieObj["watchlist"].push(uid);
           updatedInf = await taskCollection.updateOne(
             {
-              _id: movieId
+              _id: movieid
             },
             {
               $set: movieObj
@@ -135,9 +202,6 @@ let exportedMethods = {
         }
       })
       .filter(item => item !== undefined);
-
-    //console.log(movies)
-
     return movies;
   },
   async getAllMovies() {
@@ -147,20 +211,14 @@ let exportedMethods = {
   },
 
   async findMoviesInWhichTitleContains(text) {
-    let taskCollection = tasks();
-    let movies = await this.getAllMovies();
-    console.log(movies);
-    movies = movies
-      .map(movie => {
-        if (movie.title.toLowerCase().includes(text)) {
-          return movie;
-        }
-      })
-      .filter(movie => movie);
-    console.log(movies);
+    const movieCollection = await tasks();
+    movieCollection.createIndex({ title: "text" });
+    const movies = await movieCollection
+      .find({ $text: { $search: `${text}` } })
+      .toArray();
+    console.log(`Movies ${movies}`);
     return movies;
   },
-
   /**
    * Retrieves a user's watchlist using their uuid.
    * @param {string} uid  A user's uuid in the system.
