@@ -1,8 +1,26 @@
 const mongoCollections = require("../config/mongoCollections");
 const tasks = mongoCollections.tasks;
 const uuid = require("node-uuid");
+const request = require('request-promise');
+const Redis = require('ioredis');
+const JSONCache = require('redis-json');
+const redis = new Redis();
+
+
+const jsonCache = new JSONCache(redis, { prefix: 'cache:' });
 
 let exportedMethods = {
+
+  async findMoviesInWhichTitleContains(text) {
+    const movieCollection = await tasks();
+    movieCollection.createIndex({ title: "text" });
+    const movies = await movieCollection
+      .find({ $text: { $search: `${text}` } })
+      .toArray();
+    console.log(`Movies ${movies}`);
+    return movies;
+  },
+  
   async addMovie(task) {
     const movieCollection = await tasks();
     const movieInserted = await movieCollection.insertOne(task);
@@ -24,6 +42,68 @@ let exportedMethods = {
       return "task does not exist with that ID";
     }
   },
+
+  async getRecommendedMovies(movie, requestData) {
+    // const user = {
+    //   name: 'redis-json',
+    //   age: 25,
+    //   address: {
+    //     doorNo: '12B',
+    //     locality: 'pentagon',
+    //     pincode: 123456
+    //   },
+    //   cars: ['BMW 520i', 'Audo A8']
+    // }
+
+
+
+    let inMovie = {
+      "movie": movie
+    }
+
+    var options = {
+      method: 'POST',
+      uri: 'http://localhost:5000/postdata',
+      body: inMovie,
+      json: true // Automatically stringifies the body to JSON
+    };
+
+    var result = {
+      "success": false
+    }
+    let recomendedMovies = {
+      uid: requestData.uid,
+      recomendations: []
+    };
+
+    var sendrequest = await request(options)
+      .then(async function (parsedBody) {
+        result.success = true;
+        let r_ids = Object.keys(parsedBody).map(item => (parseInt(item)));
+        for (let i = 0; i < r_ids.length; i++) {
+          let recMovie = await exportedMethods.getMovieByMovieId(r_ids[i]);
+          recomendedMovies.recomendations.push(recMovie);
+        }
+        // console.log(recomendedMovies);
+        await jsonCache.set(requestData.uid, recomendedMovies.recomendations);
+        const response = await jsonCache.get(requestData.uid);
+        console.log(response);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  },
+
+  async getRecommendedMoviesByUserId(userId) {
+    if(!userId) {
+      throw "Invalid User Id";
+    }
+    const response = await jsonCache.get(userId);
+    if(response) {
+      return response;
+    }
+  },
+
   async getMovieByMovieId(movieId) { // XXX: This method is the same as getMovieById above.
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
@@ -50,16 +130,16 @@ let exportedMethods = {
         updatedInf = await taskCollection.updateOne({
           _id: movieid
         }, {
-          $set: movieObj
-        })
+            $set: movieObj
+          })
       } else {
         if (!movieObj["watchlist"].includes(uid)) {
           movieObj["watchlist"].push(uid)
           updatedInf = await taskCollection.updateOne({
-            _id: movieId
+            _id: movieid
           }, {
-            $set: movieObj
-          })
+              $set: movieObj
+            })
         }
       }
     } catch (e) {
@@ -86,8 +166,8 @@ let exportedMethods = {
             updatedInf = await taskCollection.updateOne({
               _id: movieId
             }, {
-              $set: movie
-            })
+                $set: movie
+              })
           }
 
 
