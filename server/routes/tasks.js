@@ -15,8 +15,7 @@ router.get("/watchlist/:id", async (req, res) => {
       throw "Provide uid or Movie id";
     }
     let watchlistMovies = await taskData.getWatchlistByUser(requestData.id);
-    console.log(watchlistMovies);
-    res.json(requestData);
+    res.json(watchlistMovies);
   } catch (error) {
     res.status(500).json({"error" : error.message});
   }
