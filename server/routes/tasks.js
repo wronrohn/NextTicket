@@ -69,6 +69,21 @@ router.put("/watchlist/", async (req, res) => {
   }
 });
 
+//Don't delete creared by Sumit
+router.get("/:id", async (req, res) => {
+  try {
+    let requestData = req.params;
+    if (!requestData.id) {
+      throw "Provide uid or Movie id";
+    }
+    let r_moviesJSON = await taskData.getMovieByMovieId(requestData.id);
+    console.log(r_moviesJSON);
+    res.json(r_moviesJSON);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // router.post("/", async (req, res) => {
 //   try {
 //     reqObj = req.body;

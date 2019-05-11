@@ -5,7 +5,6 @@ const taskData = data.tasks;
 
 router.get("/:text", async (req, res) => {
   try {
-    console.log(`Here I come`);
     const movies = await taskData.findMoviesInWhichTitleContains(
       req.params.text
     );

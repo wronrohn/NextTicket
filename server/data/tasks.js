@@ -105,7 +105,7 @@ let exportedMethods = {
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
       const movie = await movieCollection.findOne({
-        movieid: movieId
+        _id: movieId
       });
       if (!movie) {
         return "task does not exist";
