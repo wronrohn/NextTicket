@@ -11,7 +11,7 @@ const Navigation = () => (
 
 const NavigationAuth = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <Link className="navbar-brand" to={ROUTES.HOME}>
+    <Link className="navbar-brand" to={ROUTES.LANDING}>
       Next Ticket
     </Link>
     <button
