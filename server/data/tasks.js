@@ -80,7 +80,6 @@ let exportedMethods = {
           let recMovie = await exportedMethods.getMovieByMovieId(r_ids[i]);
           recomendedMovies.recomendations.push(recMovie);
         }
-        // console.log(recomendedMovies);
         await jsonCache.set(requestData.uid, recomendedMovies.recomendations);
         const response = await jsonCache.get(requestData.uid);
         console.log(response);
@@ -95,8 +94,16 @@ let exportedMethods = {
       throw "Invalid User Id";
     }
     const response = await jsonCache.get(userId);
+    var responseArray = [];
     if (response) {
-      return response;
+      for(key in response) {
+        if (response.hasOwnProperty(key)) {
+          // console.log(key + " -> " + response[key]);
+          response[key].inWatchList = true;
+          responseArray.push(response[key]);
+        }
+      }
+      return responseArray;
     }
   },
 
