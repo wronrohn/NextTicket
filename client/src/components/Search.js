@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SpeechToText from "./SpeechToText";
-import axios from "axios";
 import MovieList from "./MovieList";
 import Network from "./Network";
 

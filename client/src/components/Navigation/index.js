@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import SignOutButton from "../Signout";
 import { AuthUserContext } from "../../Session";
-const Navigation = ({ authUser }) => (
+const Navigation = () => (
   <AuthUserContext.Consumer>
     {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
   </AuthUserContext.Consumer>
@@ -11,7 +11,7 @@ const Navigation = ({ authUser }) => (
 
 const NavigationAuth = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <Link className="navbar-brand" to={ROUTES.LANDING}>
+    <Link className="navbar-brand" to={ROUTES.HOME}>
       Next Ticket
     </Link>
     <button
