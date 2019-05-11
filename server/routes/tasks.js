@@ -7,7 +7,14 @@ const request = require('request-promise');
 const recommendFunction = require('./recommend');
 
 
-
+router.get("/", async(req, res) =>{
+  try{
+    let moviesArray = await taskData.getAllMovies()
+    res.json(moviesArray); 
+  }catch(e){
+    res.status(500).json({"Error": e})
+  }
+})
 router.post("/watchlist/", async (req, res) => {
   try {
     requestData = req.body;
