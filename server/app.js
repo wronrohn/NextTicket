@@ -19,11 +19,12 @@ var cors = require('cors')
  *          - USE CAUTION WHEN RUNNING ON WINDOWS/MAC -
  */
 
-const isLinux = process.platform === "linux";
-const python = isLinux ? "python3" : "python3"; // python3 is Linux only
-const pymovierec = proc.spawn(python, ["./pymovierec", "--verbose"], {
-  stdio: [process.stdin, process.stdout, process.stderr]
-});
+const isLinux    = process.platform === "linux";
+const python     = isLinux ? 'python3' : 'python3'; // python3 is Linux only
+const pymovierec = proc.spawn(
+    python, ["./pymovierec", "--verbose"],
+    {stdio: [process.stdin, process.stdout, process.stderr]}
+);
 const app = express();
 app.use(cors())
 /**
