@@ -132,3 +132,7 @@ body {
     margin: 0px;
   }
 }
+.content-align-left
+{
+  text-align: right;
+}
