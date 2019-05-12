@@ -35,3 +35,4 @@ client-bad/
 
 # Temporarily? Ignore Static Image Assets
 server/static/images/**
+!server/static/images/a_placeholder.svg
