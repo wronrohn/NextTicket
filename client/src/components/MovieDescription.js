@@ -11,13 +11,15 @@ class MovieDescription extends Component {
     this.network = new Network();
   }
   async componentDidMount() {
-    const movie = await this.network.getMovieWithId(
-      "b24453b6-55dc-47c3-b7b1-3e2331ef9043"
-    );
-    console.log(`movie ${JSON.stringify(movie)}`);
-    this.setState({
-      movie: movie
-    });
+    const { location } = this.props;
+    if (location) {
+      const pathName = location.pathname;
+      const movieID = pathName.substr(pathName.lastIndexOf("/") + 1);
+      const movie = await this.network.getMovieWithId(movieID);
+      this.setState({
+        movie: movie
+      });
+    }
   }
   render() {
     const { movie } = this.state;
