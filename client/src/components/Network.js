@@ -27,7 +27,7 @@ class Network {
     }
   }
 
-  async addMovieToWatchList(uid, movieID) {
+  async addMovieToWatchList(movieID, uid) {
     let watchListedMovieData = await this.axiosInstance.post(
       "/movies/watchlist/",
       {
