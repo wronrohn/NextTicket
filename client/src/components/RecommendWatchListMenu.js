@@ -1,12 +1,40 @@
 import React from "react";
+import { AuthUserContext } from "../Session";
 
-const RecommendWatchListMenu = () => (
+const RecommendWatchListMenu = ({
+  onWatchListTapped,
+  onRecomemndationTapped
+}) => (
   <ul>
     <li>
-      <button>Recommended Movies</button>
+      <AuthUserContext.Consumer>
+        {authUser => {
+          return (
+            <button
+              onClick={e => {
+                onRecomemndationTapped(authUser.uid);
+              }}
+            >
+              Recommended Movies
+            </button>
+          );
+        }}
+      </AuthUserContext.Consumer>
     </li>
     <li>
-      <button>Recommended Movies</button>
+      <AuthUserContext.Consumer>
+        {authUser => {
+          return (
+            <button
+              onClick={e => {
+                onWatchListTapped(authUser.uid);
+              }}
+            >
+              Watch List Tapped
+            </button>
+          );
+        }}
+      </AuthUserContext.Consumer>
     </li>
   </ul>
 );

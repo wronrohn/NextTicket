@@ -19,35 +19,56 @@ class Network {
       return seachMoviesData.data;
     }
   }
-  async getMovieFromMovieName(name){
-    let searchData = await this.axiosInstance.get(`/movies/name/?text=${name}`)
-    console.log(searchData)
-    if(searchData && searchData.data){
-      return searchData.data
+  async getMovieFromMovieName(name) {
+    let searchData = await this.axiosInstance.get(`/movies/name/?text=${name}`);
+    console.log(searchData);
+    if (searchData && searchData.data) {
+      return searchData.data;
     }
   }
 
-  async addMovieToWatchList(movieID, uid) {
-    let watchListedMovieData = await this.axiosInstance.post("/movies/watchlist/", {
-      movieid: movieID,
-      uid: uid
-    });
+  async addMovieToWatchList(uid, movieID) {
+    let watchListedMovieData = await this.axiosInstance.post(
+      "/movies/watchlist/",
+      {
+        movieid: movieID,
+        uid: uid
+      }
+    );
     if (watchListedMovieData && watchListedMovieData.data) {
       return watchListedMovieData.data;
     }
   }
   async removeMovieFromWatchlist(uid, movieID) {
-    let watchListedMovieData = await this.axiosInstance.put("/movies/watchlist/", {
-      movieid: movieID,
-      uid: uid
-    });
+    let watchListedMovieData = await this.axiosInstance.put(
+      "/movies/watchlist/",
+      {
+        movieid: movieID,
+        uid: uid
+      }
+    );
     if (watchListedMovieData && watchListedMovieData.data) {
       return watchListedMovieData.data;
     }
   }
-  
+
+  async getWatchListForUser(uid) {
+    let watchListData = await this.axiosInstance.get(
+      `/movies/watchlist/${uid}`
+    );
+    if (watchListData && watchListData.data) {
+      return watchListData.data;
+    }
+  }
+
+  async getRecommendedMoviesForUser(uid) {
+    let recommData = await this.axiosInstance.get(
+      `/movies/recommendation/${uid}`
+    );
+    if (recommData && recommData.data) {
+      return recommData.data;
+    }
+  }
 }
-
-
 
 export default Network;
