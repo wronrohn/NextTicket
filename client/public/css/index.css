@@ -88,3 +88,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.start-btn
+{
+  margin: 0px 15px;
+}
