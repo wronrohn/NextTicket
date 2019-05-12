@@ -9,15 +9,16 @@ const withAuthentication = Component => {
       super(props);
 
       this.state = {
-        authUser: null
+        authUser: null,
+        isLoading: true
       };
     }
 
     componentDidMount() {
       this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
         authUser
-          ? this.setState({ authUser })
-          : this.setState({ authUser: null });
+          ? this.setState({ authUser, isLoading: false })
+          : this.setState({ authUser: null, isLoading: false });
       });
     }
 
@@ -26,6 +27,9 @@ const withAuthentication = Component => {
     }
 
     render() {
+      if (this.state.isLoading) {
+        return <div>Loading .... </div>;
+      }
       return (
         <AuthUserContext.Provider value={this.state.authUser}>
           <Component {...this.props} />
