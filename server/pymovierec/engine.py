@@ -41,7 +41,7 @@ class Engine:
         self.cosine_sim2  = cosine_similarity( self.count_matrix, self.count_matrix )
         self.indices      = pandas.Series( self.metadata.index, index=self.metadata['movie'] ).drop_duplicates()
 
-    def getRecommendation(self, movie, take = 3, json=False):
+    def getRecommendation(self, movie, take = 11, json=False):
         """
         Retrieves a recommendation for a single movie.
 
