@@ -29,3 +29,6 @@ NOTES/
 # Pycache
 __pycache__/
 **/__pycache__/**
+
+# Temporarily? Ignore Static Image Assets
+server/static/**

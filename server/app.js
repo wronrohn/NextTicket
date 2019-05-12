@@ -2,7 +2,21 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const proc = require("child_process");
 const configRoutes = require("./routes");
-var cors = require('cors')
+var cors = require('cors');
+const redis = require('redis');
+const bluebird = require("bluebird");
+
+
+const client = redis.createClient();
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
+
+client.on('connect', function () {
+    console.log("Connected to Redis...");
+});
+
+
 
 
 /**
