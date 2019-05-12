@@ -4,7 +4,7 @@
 Initalize the movie recommendation module.
 
 :author:    Davor Risteski
-:version:	05.08.2019
+:version:	05.13.2019
 """
 
 import argparse
@@ -14,6 +14,7 @@ import time
 import engine
 import pubsub
 import settings as G
+from util import decorated_print as print
 
 run_proc = True
 
@@ -23,9 +24,8 @@ def _exit(sig=None, frame=None):
     """
     global run_proc
     if(run_proc):
-        print()
         print("Recommendation engine exiting...")
-        print("Finishing one last run, so we can exit gracefully.")
+        print("Finishing one last run so we can exit gracefully.")
     run_proc = False
     # sys.exit(0)
 
@@ -46,6 +46,8 @@ def _daemonize():
         if(G.VERBOSE):
             print("Building wrapper...")
         ps = pubsub.Wrapper(en)
+
+        print("Ready. Waiting for requests...")
 
         while run_proc:
             ps.heartbeat()
