@@ -57,7 +57,11 @@ class Search extends Component {
       
      try{
       let resultData = await this.network.addMovieToWatchList(movieData._id, uid)
+      console.log(resultData)
+      
       alert("Added to watchlist")
+      return resultData
+      
      }catch(e){
        alert("Please try again. Couldn't get you accurately!")
      }
@@ -82,8 +86,7 @@ class Search extends Component {
        }
     } else {
       alert("Please try again. Couldn't get you accurately!")
-      
-      
+
       
       
     }
