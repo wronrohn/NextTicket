@@ -42,8 +42,8 @@ class Movie extends Component {
         }}
       >
         <div className="card mt-4">
-          <div className="row no-gutters">
-            <div className="col-md-4 mr-3">
+          <div className="col-md-4">
+            <div className="img-wrapper">
               <img
                 src="https://www.flightjournal.com/wp-content/uploads/2011/12/P-40flight.jpg"
                 alt="Placehoder"
