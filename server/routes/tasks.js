@@ -114,7 +114,7 @@ router.get("/:id", async (req, res) => {
     if (!requestData.id) {
       throw "Provide uid or Movie id";
     }
-    let r_moviesJSON = await taskData.getMovieByMovieId(requestData.id);
+    let r_moviesJSON = await taskData.getMoviesByID(requestData.id);
     console.log(r_moviesJSON);
     res.json(r_moviesJSON);
   } catch (error) {

@@ -6,17 +6,23 @@ import Network from "./Network";
 class Movie extends Component {
   constructor(props) {
     super(props);
-    console.log(props.movie);
     this.state = {
       movie: props
     };
     this.watchlistButtonClicked = this.watchlistButtonClicked.bind(this);
+    this.removeFromWatchList = this.removeFromWatchList.bind(this);
     this.network = new Network();
   }
 
   async watchlistButtonClicked(userID) {
     const { _id: movieID } = this.state.movie;
     const movie = await this.network.addMovieToWatchList(userID, movieID);
+    this.setState({ movie: movie });
+  }
+
+  async removeFromWatchList(userID) {
+    const { _id: movieID } = this.state.movie;
+    const movie = await this.network.removeMovieFromWatchlist(userID, movieID);
     this.setState({ movie: movie });
   }
 
@@ -27,7 +33,8 @@ class Movie extends Component {
       rating,
       theme,
       _id: id,
-      inWatchList
+      inWatchList,
+      watchlist
     } = this.state.movie;
     console.log(`In watchlist ${inWatchList}`);
     return (
@@ -36,21 +43,21 @@ class Movie extends Component {
           boxShadow: "5px 5px 5px 5px rgba(0,0,0,0.5)"
         }}
       >
-        <Link
-          to={`/movie/${id}`}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <div className="card mt-4">
-            <div className="row no-gutters">
-              <div className="col-auto">
-                <img
-                  src="http://via.placeholder.com/250x250"
-                  className="img-fluid"
-                  alt="Placehoder"
-                />
-              </div>
-              <div className="d-flex align-self-center">
-                <div className="align-self-center ml-2">
+        <div className="card mt-4">
+          <div className="row no-gutters">
+            <div className="col-auto">
+              <img
+                src="http://via.placeholder.com/250x250"
+                className="img-fluid"
+                alt="Placehoder"
+              />
+            </div>
+            <div className="d-flex align-self-center">
+              <div className="align-self-center ml-2">
+                <Link
+                  to={`/movie/${id}`}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
                   <div className="card-block px-2">
                     <h2 className="card-title">{title}</h2>
                     <p className="card-text">Theme:{theme}</p>
@@ -64,30 +71,42 @@ class Movie extends Component {
                       initialRating={rating}
                     />
                   </div>
+                </Link>
 
-                  <AuthUserContext.Consumer>
-                    {authUser => {
-                      if (!inWatchList) {
-                        return (
-                          <button
-                            className="btn btn-primary mt-3 ml-2"
-                            onClick={e => {
-                              this.watchlistButtonClicked(authUser.uid);
-                            }}
-                          >
-                            Add to Watch list
-                          </button>
-                        );
-                      } else {
-                        return <p>This movie is in your watchlist</p>;
-                      }
-                    }}
-                  </AuthUserContext.Consumer>
-                </div>
+                <AuthUserContext.Consumer>
+                  {authUser => {
+                    if (
+                      inWatchList ||
+                      (watchlist && watchlist.includes(authUser.uid))
+                    ) {
+                      return (
+                        <button
+                          className="btn btn-primary mt-3 ml-2"
+                          onClick={e => {
+                            this.removeFromWatchList(authUser.uid);
+                          }}
+                        >
+                          Remove from Watchlist
+                        </button>
+                      );
+                    } else {
+                      return (
+                        <button
+                          className="btn btn-primary mt-3 ml-2"
+                          onClick={e => {
+                            this.watchlistButtonClicked(authUser.uid);
+                          }}
+                        >
+                          Add to Watch list
+                        </button>
+                      );
+                    }
+                  }}
+                </AuthUserContext.Consumer>
               </div>
             </div>
           </div>
-        </Link>
+        </div>
       </div>
     );
   }

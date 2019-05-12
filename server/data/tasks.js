@@ -121,6 +121,22 @@ let exportedMethods = {
     }
   },
 
+  async getMoviesByID(id) {
+    if (id && id != null) {
+      const movieCollection = await tasks();
+      const movie = await movieCollection.findOne({
+        _id: id
+      });
+      console.log(movie);
+      if (!movie) {
+        return "task does not exist";
+      }
+      return movie;
+    } else {
+      return "task does not exist with that ID";
+    }
+  },
+
   async addToWatchList(movieid, uid) {
     const taskCollection = await tasks();
     let movieObj = await this.getMovieById(movieid);
