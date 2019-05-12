@@ -49,14 +49,14 @@ class Search extends Component {
       });
     }
   }
-  async performAdd(name,uid){
+  async performAdd(uid,name){
     let movieData = await this.network.getMovieFromMovieName(name)
     console.log(movieData)
     if(movieData){
       console.log(this.authUser)
       
      try{
-      let resultData = await this.network.addMovieToWatchList(movieData._id, uid)
+      let resultData = await this.network.addMovieToWatchList(uid, movieData._id)
       console.log(resultData)
       
       alert("Added to watchlist")
@@ -108,7 +108,7 @@ class Search extends Component {
       transcriptWordArray.shift();
       let movieName = transcriptWordArray.join(" ");
       console.log(movieName);
-      this.performAdd(movieName, uid);
+      this.performAdd(uid, movieName);
     } else if (transcript.includes("remove")) {
       transcriptWordArray.shift();
       console.log(transcriptWordArray);
