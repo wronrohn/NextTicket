@@ -4,6 +4,7 @@ import os
 import json
 import pandas
 import settings as G
+from util import decorated_print as print
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import linear_kernel, cosine_similarity
 
@@ -12,7 +13,7 @@ class Engine:
     Represents a trained engine to use when classifying.
 
     :author:    Davor Risteski
-    :version:   05.08.2019
+    :version:   05.13.2019
     """
 
     def __init__(self):
