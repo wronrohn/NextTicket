@@ -32,10 +32,10 @@ The following commands can be used to install dependencies for the server:
 
 ```
 npm install
-pip install pandas numpy scipy scikit-learn argparse redis
+pip install -r requirements.txt
 ```
 
-__Note that `pip` and `npm` must be run separately.__
+__Note that `pip` and `npm` must be run separately as they depend on the end user's platform - as noted above `pip` must either be `pip3` or an alias for `pip3`.__
 
 ## Compilation
 
