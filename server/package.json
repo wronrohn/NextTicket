@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js",
     "test": "echo \"No tests attached.\"",
-    "build": "echo \"Nothing to build.\""
+    "pip": "pip3 install -r ./pymovierec/requirements.txt"
   },
   "dependencies": {
     "bluebird": "^3.5.3",
