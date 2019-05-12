@@ -3,7 +3,7 @@ import Search from "../Search";
 import MovieList from "../MovieList";
 import RecommendWatchListMenu from "../RecommendWatchListMenu";
 
-import { withAuthorization } from "../../Session";
+import { withAuthorization, AuthUserContext } from "../../Session";
 import { withFirebase } from "../../Firebase";
 import Network from "../Network";
 
@@ -34,6 +34,15 @@ class Home extends Component {
       });
     }
   }
+  async componentDidMount() {
+    const { uid: currentUserUID } = this.props.firebase.auth.currentUser;
+    console.log(this.props.firebase.auth.currentUser.uid);
+    if (currentUserUID) {
+      console.log(`HEre`);
+      this.onRecomemndationTapped(currentUserUID);
+    }
+  }
+
   async performSearch(text) {
     const searchMovies = await this.network.getSearchResultForText(text);
     if (searchMovies) {
