@@ -49,16 +49,18 @@ class Movie extends Component {
                 alt="Placehoder"
               />
             </div>
-            <div className="col-md-8">
+            <div className="col-md-8 movie-details-wrapper">
               <div className="align-self-center ml-2">
                 <Link
                   to={`/movie/${id}`}
                   style={{ textDecoration: "none", color: "black" }}
                 >
-                  <div className="card-block px-2">
+                  <div className="card-block">
                     <h2 className="card-title movie-title">{title}</h2>
                     <p className="card-text movie-theme">Theme:{theme}</p>
-                    <p className="card-text movie-category">Category:{category}</p>
+                    <p className="card-text movie-category">
+                      Category:{category}
+                    </p>
                     <Rating
                       start={0}
                       stop={10}

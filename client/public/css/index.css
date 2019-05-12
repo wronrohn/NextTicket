@@ -38,6 +38,11 @@ code {
   color: #61dafb;
 }
 
+.movie-details-wrapper {
+  padding: 0px;
+  margin: -10px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -96,8 +101,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.start-btn
-{
+.start-btn {
   margin: 0px 15px;
 }
 .movie-title {
@@ -115,9 +119,16 @@ body {
   align-items: center;
 }
 .wishlist-cta-btn {
-  margin: 10px;
+  margin: 2px;
 }
 
-.btn-primary.focus, .btn-primary:focus {
+.btn-primary.focus,
+.btn-primary:focus {
   box-shadow: 0 0 0 0.2rem #01b01f;
+}
+@media screen and (max-width: 767px) {
+  .movie-details-wrapper {
+    padding: 20px;
+    margin: 0px;
+  }
 }
