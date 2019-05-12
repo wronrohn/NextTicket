@@ -2,7 +2,7 @@ import axios from "axios";
 class Network {
   constructor() {
     this.axiosInstance = axios.create({
-      baseURL: "http://localhost:3000/api"
+      baseURL: "http://localhost:3001/api"
     });
     this.getSearchResultForText = this.getSearchResultForText.bind(this);
   }
