@@ -41,36 +41,53 @@ class Search extends Component {
     await this.props.performSearch(searchValue);
   }
 
-  async performAdd(name, uid) {
-    let movieData = await this.network.getMovieFromMovieName(name);
-    console.log(movieData);
-    if (movieData) {
-      console.log(this.authUser);
-      let resultData = await this.network.addMovieToWatchList(
-        uid,
-        movieData._id
-      );
-      if (resultData) {
-        alert("Watchlist added");
-        return resultData;
-      } else {
-        alert("Try again. Couldn't find movie");
-      }
+  async performSearch(text) {
+    let searchMovies = await this.network.getSearchResultForText(text);
+    if (searchMovies) {
+      this.setState({
+        searchResults: searchMovies
+      });
+    }
+  }
+  async performAdd(name,uid){
+    let movieData = await this.network.getMovieFromMovieName(name)
+    console.log(movieData)
+    if(movieData){
+      console.log(this.authUser)
+      
+     try{
+      let resultData = await this.network.addMovieToWatchList(movieData._id, uid)
+      alert("Added to watchlist")
+     }catch(e){
+       alert("Please try again. Couldn't get you accurately!")
+     }
+      
+      
     }
   }
 
   async performRemove(name, uid) {
     let movieData = await this.network.getMovieFromMovieName(name);
     if (movieData) {
-      let resultData = await this.network.removeMovieFromWatchlist(
-        uid,
-        movieData._id
-      );
-      alert("Removed from watchlist");
-      return resultData;
+      
+      
+       try {
+         let resultData = await this.network.removeMovieFromWatchlist(uid, movieData._id)
+         alert("Removed from watchlist")
+         return resultData
+         
+
+       } catch (e) {
+         alert("Please try again. Couldn't get you accurately!")
+       }
     } else {
-      alert("Removing failed");
+      alert("Please try again. Couldn't get you accurately!")
+      
+      
+      
+      
     }
+   
   }
 
   onFinalTranscript(transcript, uid) {
