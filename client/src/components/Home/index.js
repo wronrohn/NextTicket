@@ -11,7 +11,10 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: []
+      movies: [],
+      searchText: "",
+      recommendation: true,
+      watchList: false
     };
     this.onWatchListTapped = this.onWatchListTapped.bind(this);
     this.onRecomemndationTapped = this.onRecomemndationTapped.bind(this);
@@ -22,7 +25,10 @@ class Home extends Component {
     const watchList = await this.network.getWatchListForUser(uid);
     if (watchList) {
       this.setState({
-        movies: watchList
+        movies: watchList,
+        searchText: "",
+        recommendation: false,
+        watchList: true
       });
     }
   }
@@ -30,7 +36,10 @@ class Home extends Component {
     const recomMovies = await this.network.getRecommendedMoviesForUser(uid);
     if (recomMovies) {
       this.setState({
-        movies: recomMovies
+        movies: recomMovies,
+        searchText: "",
+        recommendation: true,
+        watchList: false
       });
     }
   }
@@ -38,7 +47,6 @@ class Home extends Component {
     const { uid: currentUserUID } = this.props.firebase.auth.currentUser;
     console.log(this.props.firebase.auth.currentUser.uid);
     if (currentUserUID) {
-      console.log(`HEre`);
       this.onRecomemndationTapped(currentUserUID);
     }
   }
@@ -47,18 +55,23 @@ class Home extends Component {
     const searchMovies = await this.network.getSearchResultForText(text);
     if (searchMovies) {
       this.setState({
-        movies: searchMovies
+        movies: searchMovies,
+        searchText: text,
+        recommendation: false,
+        watchList: false
       });
     }
   }
   render() {
-    const { movies } = this.state;
+    const { movies, searchText, recommendation, watchList } = this.state;
     return (
       <div className="container">
-        <Search performSearch={this.performSearch} />
+        <Search performSearch={this.performSearch} searchText={searchText} />
         <RecommendWatchListMenu
           onWatchListTapped={this.onWatchListTapped}
           onRecomemndationTapped={this.onRecomemndationTapped}
+          recommendation={recommendation}
+          watchList={watchList}
         />
         {movies && <MovieList movies={movies} />}
       </div>

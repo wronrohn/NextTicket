@@ -8,6 +8,7 @@ router.get("/:text", async (req, res) => {
     const movies = await taskData.findMoviesInWhichTitleContains(
       req.params.text
     );
+
     res.json(movies);
   } catch (e) {
     console.log(`Error ${e}`);

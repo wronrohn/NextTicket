@@ -6,9 +6,11 @@ import { AuthUserContext } from "../Session";
 class Search extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      searchValue: "",
-      uid: null
+      searchValue: props.searchText ? props.searchText : "",
+      uid: null,
+      transcript: ""
     };
     super(props);
     this.onFinalTranscript = this.onFinalTranscript.bind(this);
@@ -21,6 +23,16 @@ class Search extends Component {
     this.setState({
       searchValue: event.target.value
     });
+  }
+
+  componentWillReceiveProps(props) {
+    const { searchText } = props;
+    console.log(searchText);
+    if (searchText !== undefined) {
+      this.setState({
+        searchValue: searchText
+      });
+    }
   }
 
   async onSubmittingSearch(event) {
@@ -49,7 +61,6 @@ class Search extends Component {
 
   async performRemove(name, uid) {
     let movieData = await this.network.getMovieFromMovieName(name);
-    console.log(movieData);
     if (movieData) {
       let resultData = await this.network.removeMovieFromWatchlist(
         uid,
@@ -63,8 +74,6 @@ class Search extends Component {
   }
 
   onFinalTranscript(transcript, uid) {
-    console.log("here");
-    console.log(transcript);
     let transcriptWordArray = transcript.toLowerCase().split(" ");
     if (transcript.includes("search")) {
       transcriptWordArray.shift();
@@ -90,7 +99,9 @@ class Search extends Component {
   }
 
   render() {
+    console.log("render search");
     const { searchValue } = this.state;
+    console.log(`Search val ${searchValue}`);
     return (
       <div>
         <form className="mt-5 row no-gutters">
