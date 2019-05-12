@@ -1,7 +1,7 @@
 import React from "react";
 import * as CONSTANTS from "./Constants";
 import { withFirebase } from "../../Firebase";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import { compose } from "recompose";
 

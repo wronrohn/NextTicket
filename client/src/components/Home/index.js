@@ -6,6 +6,7 @@ import RecommendWatchListMenu from "../RecommendWatchListMenu";
 import { withAuthorization } from "../../Session";
 import { withFirebase } from "../../Firebase";
 import Network from "../Network";
+import Error from "../Error";
 
 class Home extends Component {
   constructor(props) {
@@ -48,7 +49,8 @@ class Home extends Component {
       movies: recomMovies,
       searchText: "",
       recommendation: true,
-      watchList: false
+      watchList: false,
+      error: null
     });
   }
   async componentDidMount() {
@@ -60,18 +62,29 @@ class Home extends Component {
   }
 
   async performSearch(text) {
-    const searchMovies = await this.network.getSearchResultForText(text);
-    if (searchMovies) {
+    try {
+      const searchMovies = await this.network.getSearchResultForText(text);
+      if (searchMovies) {
+        this.setState({
+          movies: searchMovies,
+          searchText: text,
+          recommendation: false,
+          watchList: false,
+          error: null
+        });
+      }
+    } catch (e) {
       this.setState({
-        movies: searchMovies,
+        movies: [],
         searchText: text,
         recommendation: false,
-        watchList: false
+        watchList: false,
+        error: e
       });
     }
   }
   render() {
-    const { movies, searchText, recommendation, watchList } = this.state;
+    const { movies, searchText, recommendation, watchList, error } = this.state;
     return (
       <div className="container">
         <Search performSearch={this.performSearch} searchText={searchText} />
@@ -81,6 +94,12 @@ class Home extends Component {
           recommendation={recommendation}
           watchlist={watchList}
         />
+        {error &&
+          (error.message ? (
+            <Error message={error.message} />
+          ) : (
+            <Error message={`Something bad happened`} />
+          ))}
         {movies && (
           <MovieList
             movies={movies}
