@@ -56,7 +56,8 @@ body {
 }
 
 .btn-primary,
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:disabled {
   background-color: #01b01f;
   border-color: #01b01f;
 }
@@ -67,4 +68,11 @@ body {
 
 .card {
   background-color: #445567;
+}
+
+.contentCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

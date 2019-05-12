@@ -2,22 +2,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const proc = require("child_process");
 const configRoutes = require("./routes");
-var cors = require('cors');
-const redis = require('redis');
+var cors = require("cors");
+const redis = require("redis");
 const bluebird = require("bluebird");
-
 
 const client = redis.createClient();
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
-client.on('connect', function () {
-    console.log("Connected to Redis...");
+client.on("connect", function() {
+  console.log("Connected to Redis...");
 });
-
-
-
 
 /**
  * Entrypoint for the server applicaiton.
@@ -33,14 +29,13 @@ client.on('connect', function () {
  *          - USE CAUTION WHEN RUNNING ON WINDOWS/MAC -
  */
 
-const isLinux    = process.platform === "linux";
-const python     = isLinux ? 'python3' : 'python3'; // python3 is Linux only
-const pymovierec = proc.spawn(
-    python, ["./pymovierec", "--verbose"],
-    {stdio: [process.stdin, process.stdout, process.stderr]}
-);
+const isLinux = process.platform === "linux";
+const python = isLinux ? "python3" : "python3"; // python3 is Linux only
+const pymovierec = proc.spawn(python, ["./pymovierec", "--verbose"], {
+  stdio: [process.stdin, process.stdout, process.stderr]
+});
 const app = express();
-app.use(cors())
+app.use(cors());
 /**
  * Cleans up a stale daemon.
  */
