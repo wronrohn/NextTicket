@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const proc = require("child_process");
 const configRoutes = require("./routes");
-var cors = require("cors");
+const cors = require("cors");
 const redis = require("redis");
 const bluebird = require("bluebird");
 
@@ -37,6 +37,7 @@ const pymovierec = proc.spawn(python, ["./pymovierec", "--verbose"], {
 });
 const app = express();
 app.use(cors());
+
 /**
  * Cleans up a stale daemon.
  */
@@ -50,13 +51,6 @@ function cleanup() {
 // Python Module
 //
 
-// Sync.
-// console.log(pymovierec.stdout.toString());
-
-// Async.
-// pymovierec.stdout.on('data', (data) => {
-//     console.log(data.toString());
-// });
 process.on("SIGINT", cleanup);
 process.on("SIGTERM", cleanup);
 
