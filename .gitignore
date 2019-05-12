@@ -30,5 +30,8 @@ NOTES/
 __pycache__/
 **/__pycache__/**
 
+# Dave made a client and it's badder than yours!
+client-bad/
+
 # Temporarily? Ignore Static Image Assets
-server/static/**
+server/static/images/**
