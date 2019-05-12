@@ -8,16 +8,7 @@ import * as ROUTES from "../constants/routes";
 
 const withAuthorization = (condition = authUser => !!authUser) => Component => {
   class WithAuthorization extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        isLoading: false
-      };
-    }
     componentDidMount() {
-      this.setState({
-        isLoading: true
-      });
       this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
         this.setState({
           isLoading: false
@@ -33,9 +24,6 @@ const withAuthorization = (condition = authUser => !!authUser) => Component => {
     }
 
     render() {
-      if (this.state.isLoading) {
-        return <p>Loading ....</p>;
-      }
       return (
         <AuthUserContext.Consumer>
           {authUser =>
