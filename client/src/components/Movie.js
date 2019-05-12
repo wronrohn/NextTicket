@@ -33,10 +33,8 @@ class Movie extends Component {
       rating,
       theme,
       _id: id,
-      inWatchList,
       watchlist
     } = this.state.movie;
-    console.log(`In watchlist ${inWatchList}`);
     return (
       <div
         style={{
@@ -75,10 +73,7 @@ class Movie extends Component {
 
                 <AuthUserContext.Consumer>
                   {authUser => {
-                    if (
-                      inWatchList ||
-                      (watchlist && watchlist.includes(authUser.uid))
-                    ) {
+                    if (watchlist && watchlist.includes(authUser.uid)) {
                       return (
                         <button
                           className="btn btn-primary mt-3 ml-2"

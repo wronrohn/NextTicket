@@ -6,8 +6,9 @@ import { AuthUserContext } from "../Session";
 class Search extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      searchValue: "",
+      searchValue: props.searchText ? props.searchText : "",
       uid: null
     };
     super(props);
@@ -21,6 +22,17 @@ class Search extends Component {
     this.setState({
       searchValue: event.target.value
     });
+  }
+
+  componentWillReceiveProps(props) {
+    console.log(`props ${JSON.stringify(props)}`);
+    const { searchText } = props;
+    console.log(searchText);
+    if (searchText !== undefined) {
+      this.setState({
+        searchValue: searchText
+      });
+    }
   }
 
   async onSubmittingSearch(event) {
@@ -90,7 +102,9 @@ class Search extends Component {
   }
 
   render() {
+    console.log("render search");
     const { searchValue } = this.state;
+    console.log(`Search val ${searchValue}`);
     return (
       <div>
         <form className="mt-5 row no-gutters">
