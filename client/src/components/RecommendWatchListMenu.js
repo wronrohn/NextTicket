@@ -5,9 +5,16 @@ class RecommendWatchListMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recommendation: true,
-      watchlist: false
+      recommendation: props.recommendation,
+      watchlist: props.watchlist
     };
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      recommendation: props.recommendation,
+      watchlist: props.watchlist
+    });
   }
 
   render() {
