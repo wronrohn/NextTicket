@@ -82,17 +82,25 @@ let exportedMethods = {
     if (!userId) {
       throw "Invalid User Id";
     }
+    const responseNew = await jsonCache.get("Batman");
+    console.log("Response New");
+    console.log(responseNew);
     const response = await jsonCache.get(userId);
-    var responseArray = [];
     if (response) {
-      for (key in response) {
-        if (response.hasOwnProperty(key)) {
-          // console.log(key + " -> " + response[key]);
-          response[key].inWatchList = true;
-          responseArray.push(response[key]);
+      console.log(response);
+      var responseArray = [];
+      if (response) {
+        for (key in response) {
+          if (response.hasOwnProperty(key)) {
+            // console.log(key + " -> " + response[key]);
+            response[key].inWatchList = true;
+            responseArray.push(response[key]);
+          }
         }
+        return responseArray;
+      } else {
+        return [];
       }
-      return responseArray;
     }
   },
 
@@ -101,8 +109,9 @@ let exportedMethods = {
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
       const movie = await movieCollection.findOne({
-        _id: movieId
+        movieid: movieId
       });
+      console.log(movie);
       if (!movie) {
         return "task does not exist";
       }
@@ -224,16 +233,20 @@ let exportedMethods = {
       throw new Error("No user id given.");
     }
 
-    const collection = await tasks();
+    let movies = await this.getAllMovies();
 
-    // XXX: AFAIK there is no method to actually find a user's watchlist.
-    //      The return type should be of array: [ movie, movie, movie ].
-    let watchlist = await collection.findOne({
-      _id: uid
-    });
-
-    if (watchlist) {
-      return watchlist;
+    movies = movies
+      .map(item => {
+        if (item["watchlist"]) {
+          if (item["watchlist"].includes(uid)) {
+            return item.movie;
+          }
+        }
+      })
+      .filter(item => item !== undefined);
+    // console.log(movies);
+    if (movies) {
+      return movies;
     } else {
       return [];
     }
