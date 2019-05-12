@@ -24,13 +24,14 @@ const App = () => (
       />
       <Navigation />
       <AuthUserContext.Consumer>
-        {authUser =>
-          authUser ? (
+        {authUser => {
+          console.log(`Auth User${authUser}`);
+          return authUser ? (
             <Route exact path={ROUTES.LANDING} component={Home} />
           ) : (
             <Route exact path={ROUTES.LANDING} component={SignupPage} />
-          )
-        }
+          );
+        }}
       </AuthUserContext.Consumer>
       <Route exact path={ROUTES.HOME} component={Home} />
       <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
