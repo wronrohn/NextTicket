@@ -9,7 +9,8 @@ class Search extends Component {
 
     this.state = {
       searchValue: props.searchText ? props.searchText : "",
-      uid: null
+      uid: null,
+      transcript: ""
     };
     super(props);
     this.onFinalTranscript = this.onFinalTranscript.bind(this);
@@ -61,7 +62,6 @@ class Search extends Component {
 
   async performRemove(name, uid) {
     let movieData = await this.network.getMovieFromMovieName(name);
-    console.log(movieData);
     if (movieData) {
       let resultData = await this.network.removeMovieFromWatchlist(
         uid,
@@ -75,8 +75,6 @@ class Search extends Component {
   }
 
   onFinalTranscript(transcript, uid) {
-    console.log("here");
-    console.log(transcript);
     let transcriptWordArray = transcript.toLowerCase().split(" ");
     if (transcript.includes("search")) {
       transcriptWordArray.shift();
