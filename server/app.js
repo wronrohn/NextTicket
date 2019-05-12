@@ -29,8 +29,9 @@ client.on("connect", function() {
  *          - USE CAUTION WHEN RUNNING ON WINDOWS/MAC -
  */
 
-const isLinux = process.platform === "linux";
-const python = isLinux ? "python3" : "python3"; // python3 is Linux only
+// Correct Python command is `py` in Windows but `python3` in Linux/Mac.
+const isWin = process.platform === "win32";
+const python = isWin ? "py" : "python3";
 const pymovierec = proc.spawn(python, ["./pymovierec", "--verbose"], {
   stdio: [process.stdin, process.stdout, process.stderr]
 });
