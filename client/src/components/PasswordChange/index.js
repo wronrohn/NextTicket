@@ -41,27 +41,35 @@ class PasswordChangeForm extends Component {
     const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <div className="col-md-8 offset-md-2 mt-5">
+          <form className="mt-4 mb-5" onSubmit={this.onSubmit}>
         <input
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
           type="password"
           placeholder="New Password"
+          class="form-control form-control-lg"
         />
+        <br />
         <input
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
           type="password"
           placeholder="Confirm New Password"
+          class="form-control form-control-lg"
         />
-        <button disabled={isInvalid} type="submit">
+        <br />
+        <button className="btn btn-primary mb-2 mt-3 form-control form-control-lg" disabled={isInvalid} type="submit">
           Reset My Password
         </button>
 
         {error && <p>{error.message}</p>}
       </form>
+
+      </div>
+      
     );
   }
 }
