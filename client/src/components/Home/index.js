@@ -19,6 +19,7 @@ class Home extends Component {
     this.onWatchListTapped = this.onWatchListTapped.bind(this);
     this.onRecomemndationTapped = this.onRecomemndationTapped.bind(this);
     this.performSearch = this.performSearch.bind(this);
+    this.removeFromWatchList = this.removeFromWatchList.bind(this);
     this.network = new Network();
   }
   async onWatchListTapped(uid) {
@@ -31,6 +32,9 @@ class Home extends Component {
         watchList: true
       });
     }
+  }
+  async removeFromWatchList(uid) {
+    await this.onWatchListTapped(uid);
   }
   async onRecomemndationTapped(uid) {
     let recomMovies = [];
@@ -77,7 +81,12 @@ class Home extends Component {
           recommendation={recommendation}
           watchlist={watchList}
         />
-        {movies && <MovieList movies={movies} />}
+        {movies && (
+          <MovieList
+            movies={movies}
+            removeFromWatchList={this.removeFromWatchList}
+          />
+        )}
       </div>
     );
   }

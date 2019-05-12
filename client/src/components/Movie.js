@@ -11,6 +11,7 @@ class Movie extends Component {
     };
     this.watchlistButtonClicked = this.watchlistButtonClicked.bind(this);
     this.removeFromWatchList = this.removeFromWatchList.bind(this);
+
     this.network = new Network();
   }
 
@@ -23,6 +24,7 @@ class Movie extends Component {
   async removeFromWatchList(userID) {
     const { _id: movieID } = this.state.movie;
     const movie = await this.network.removeMovieFromWatchlist(userID, movieID);
+    await this.props.removeFromWatchList(userID);
     this.setState({ movie: movie });
   }
 
