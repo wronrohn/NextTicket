@@ -93,7 +93,7 @@ class SignUpFormBase extends React.Component {
               id={CONSTANTS.FORMFIELDUSERNAME}
               placeholder="Enter UserName"
               value={userName}
-              class="form-control form-control-lg mb-4"
+              className="form-control form-control-lg mb-4"
               onChange={this.onFormFieldChange}
             />
             <label
@@ -108,7 +108,7 @@ class SignUpFormBase extends React.Component {
               id={CONSTANTS.FORMFIELDEMAIL}
               placeholder="Enter Email"
               value={email}
-              class="form-control form-control-lg mb-4"
+              className="form-control form-control-lg mb-4"
               onChange={this.onFormFieldChange}
             />
             <label
@@ -123,7 +123,7 @@ class SignUpFormBase extends React.Component {
               placeholder="Enter your password"
               id={CONSTANTS.FORMFIELDPASSWORD}
               value={password}
-              class="form-control form-control-lg"
+              className="form-control form-control-lg"
               onChange={this.onFormFieldChange}
             />
             <br />
@@ -139,7 +139,7 @@ class SignUpFormBase extends React.Component {
               placeholder="Re-enter your password"
               id={CONSTANTS.FORMFIELDREPEATPASSWORD}
               value={repeatPassword}
-              class="form-control form-control-lg"
+              className="form-control form-control-lg"
               onChange={this.onFormFieldChange}
             />
             <br />
