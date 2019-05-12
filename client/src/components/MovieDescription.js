@@ -38,12 +38,13 @@ class MovieDescription extends Component {
           <div className="row">
             <div className="offset-2 col-8 mt-3 text-white">
               <h1 className="display-4">{title}</h1>
-              <div className="row">
-                <p>
-                  Genre: {genre} {subgenre && ` - ${subgenre}`}
-                </p>
-                {theme && <p>Theme:{theme}</p>}
-              </div>
+              <p>
+                Genre: {genre} {subgenre && ` - ${subgenre}`}
+              </p>
+              {theme && <p>Theme: {theme}</p>}
+              <button className="btn btn-primary wishlist-cta-btn">
+                Add to Watch list
+              </button>
               {description && <h2>Description</h2>}
               <p className="lead">{description}</p>
             </div>
