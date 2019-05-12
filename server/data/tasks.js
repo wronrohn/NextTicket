@@ -105,7 +105,6 @@ let exportedMethods = {
   },
 
   async getMovieByMovieId(movieId) {
-    
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
       const movie = await movieCollection.findOne({
@@ -129,7 +128,7 @@ let exportedMethods = {
       });
       console.log(movie);
       if (!movie) {
-        return "task does not exist";
+        throw "task does not exist";
       }
       return movie;
     } else {
@@ -170,10 +169,9 @@ let exportedMethods = {
     } catch (e) {
       throw e;
     }
-    
+
     return movieObj;
   },
-
 
   async removeWatchlist(uid, movieId) {
     const taskCollection = await tasks();
@@ -188,7 +186,7 @@ let exportedMethods = {
             if (movie["watchlist"].length == 0) {
               movie["inWatchList"] = false;
             }
-            
+
             updatedInf = await taskCollection.updateOne(
               {
                 _id: movieId
@@ -199,7 +197,7 @@ let exportedMethods = {
             );
           }
         }
-        
+
         return movie;
       } else {
         throw "Invalid uid or movieId";
@@ -272,13 +270,16 @@ let exportedMethods = {
     }
   },
 
-  async getMovieByMovieName(name){
+  async getMovieByMovieName(name) {
     if (name && name != null) {
       const movieCollection = await tasks();
-      name = name.split(" ").map(string => {
-        return string.charAt(0).toUpperCase() + string.slice(1)
-      }).join(" ")
-      console.log(name)
+      name = name
+        .split(" ")
+        .map(string => {
+          return string.charAt(0).toUpperCase() + string.slice(1);
+        })
+        .join(" ");
+      console.log(name);
       const movie = await movieCollection.findOne({
         movie: name
       });
