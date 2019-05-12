@@ -105,7 +105,7 @@ let exportedMethods = {
   },
 
   async getMovieByMovieId(movieId) {
-    // XXX: This method is the same as getMovieById above.
+    
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
       const movie = await movieCollection.findOne({
@@ -128,6 +128,7 @@ let exportedMethods = {
     try {
       if (!movieObj["watchlist"] || movieObj["watchlist"].length == 0) {
         movieObj.watchlist = [uid];
+        movieObj["inWatchList"] = true;
         updatedInf = await taskCollection.updateOne(
           {
             _id: movieid
@@ -139,6 +140,7 @@ let exportedMethods = {
       } else {
         if (!movieObj["watchlist"].includes(uid)) {
           movieObj["watchlist"].push(uid);
+          movieObj["inWatchList"] = true;
           updatedInf = await taskCollection.updateOne(
             {
               _id: movieid
@@ -152,9 +154,10 @@ let exportedMethods = {
     } catch (e) {
       throw e;
     }
-    movieObj.inWatchList = true;
+    
     return movieObj;
   },
+
 
   async removeWatchlist(uid, movieId) {
     const taskCollection = await tasks();
@@ -165,10 +168,11 @@ let exportedMethods = {
         if (movie.watchlist) {
           if (movie["watchlist"].includes(uid)) {
             //console.log("I am here")
-            movie.watchlist = movie["watchlist"].filter(item => item !== uid);
+            movie.watchlist = movie["watchlist"].filter(item => item != uid);
             if (movie["watchlist"].length == 0) {
               movie["inWatchList"] = false;
             }
+            
             updatedInf = await taskCollection.updateOne(
               {
                 _id: movieId
@@ -179,7 +183,7 @@ let exportedMethods = {
             );
           }
         }
-        movie.inWatchList = false;
+        
         return movie;
       } else {
         throw "Invalid uid or movieId";
@@ -249,6 +253,25 @@ let exportedMethods = {
       return movies;
     } else {
       return [];
+    }
+  },
+
+  async getMovieByMovieName(name){
+    if (name && name != null) {
+      const movieCollection = await tasks();
+      name = name.split(" ").map(string => {
+        return string.charAt(0).toUpperCase() + string.slice(1)
+      }).join(" ")
+      console.log(name)
+      const movie = await movieCollection.findOne({
+        movie: name
+      });
+      if (!movie) {
+        return "task does not exist";
+      }
+      return movie;
+    } else {
+      return "task does not exist with that ID";
     }
   }
 };
