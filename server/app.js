@@ -14,8 +14,6 @@ bluebird.promisifyAll(redis.Multi.prototype);
 client.on("connect", function() {
   console.log("Connected to Redis...");
 });
-app = express();
-app.use(cors());
 
 /**
  * Entrypoint for the server applicaiton.
