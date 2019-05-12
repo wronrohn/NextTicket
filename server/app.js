@@ -32,7 +32,7 @@ client.on("connect", function() {
 // Correct Python command is `py` in Windows but `python3` in Linux/Mac.
 const isWin = process.platform === "win32";
 const python = isWin ? "py" : "python3";
-const pymovierec = proc.spawn(python, ["./pymovierec", "--verbose"], {
+const pymovierec = proc.spawn(python, ["./pymovierec"], {
   stdio: [process.stdin, process.stdout, process.stderr]
 });
 const app = express();
