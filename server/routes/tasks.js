@@ -2,14 +2,13 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const taskData = data.tasks;
-const uuid = require("node-uuid");
-const request = require("request-promise");
+
 const recommendFunction = require("./recommend");
-const redis = require('redis');
+const redis = require("redis");
 const client = redis.createClient();
 
 /**
- * Gets Watchilst by User-id 
+ * Gets Watchilst by User-id
  * @param :id -> uid
  */
 router.get("/watchlist/:id", async (req, res) => {
@@ -35,20 +34,29 @@ router.get("/watchlist/:id", async (req, res) => {
 
 router.get("/recommendation/:id", async (req, res) => {
   try {
-    let requestData = req.params;
-    if (!requestData.id) {
-      throw "Provide uid or Movie id";
+    const uid = req.params.id;
+    if (!uid) {
+      throw "uid - not given";
     }
-    let r_moviesJSON = await taskData.getRecommendedMoviesByUserId(
-      requestData.id
-    );
-    client.on('connect', function () {
+    let recomendedMovieArray = [];
+    let userWatchListArray = await taskData.findUserWatchlist(uid);
+    client.on("connect", function() {
       console.log("Connected to Redis...");
     });
-    client.get('Batman', function(err, reply) {
-      console.log(reply);
-    });
-    res.json(r_moviesJSON);
+    for (let i = 0; i < userWatchListArray.length; i++) {
+      let recomendedMovies = await client.getAsync(userWatchListArray[i]);
+      let r_movie_ids = Object.keys(JSON.parse(recomendedMovies)).map(item =>
+        parseInt(item)
+      );
+      for (let j = 0; j < r_movie_ids.length; j++) {
+        const movieId = r_movie_ids[j];
+        console.log(movieId);
+        let movieData = await taskData.getMovieByMovieId(movieId);
+        movieData.inWatchList = true;
+        recomendedMovieArray.push(movieData);
+      }
+    }
+    res.json(recomendedMovieArray);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -72,7 +80,6 @@ router.post("/watchlist/", async (req, res) => {
       requestData.uid
     );
     res.json(movie);
-    // await taskData.getRecommendedMovies(movie.movie, requestData);
     await recommendFunction(requestData.uid);
   } catch (error) {
     res.status(500).json({ error: "Oops! Exception caught.", message: error });

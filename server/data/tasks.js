@@ -13,7 +13,7 @@ let exportedMethods = {
     const movieCollection = await tasks();
     movieCollection.createIndex({ title: "text" });
     const movies = await movieCollection
-      .find({ $text: { $search: `${text}` } })
+      .find({ $text: { $search: { $regex: `/${text}/` } } })
       .toArray();
     console.log(`Movies ${movies}`);
     return movies;
@@ -42,17 +42,6 @@ let exportedMethods = {
   },
 
   async getRecommendedMovies(movie, requestData) {
-    // const user = {
-    //   name: 'redis-json',
-    //   age: 25,
-    //   address: {
-    //     doorNo: '12B',
-    //     locality: 'pentagon',
-    //     pincode: 123456
-    //   },
-    //   cars: ['BMW 520i', 'Audo A8']
-    // }
-
     let inMovie = {
       movie: movie
     };
@@ -97,11 +86,11 @@ let exportedMethods = {
     console.log("Response New");
     console.log(responseNew);
     const response = await jsonCache.get(userId);
-    if(response) {
+    if (response) {
       console.log(response);
       var responseArray = [];
       if (response) {
-        for(key in response) {
+        for (key in response) {
           if (response.hasOwnProperty(key)) {
             // console.log(key + " -> " + response[key]);
             response[key].inWatchList = true;
@@ -120,8 +109,9 @@ let exportedMethods = {
     if (movieId && movieId != null) {
       const movieCollection = await tasks();
       const movie = await movieCollection.findOne({
-        _id: movieId
+        movieid: movieId
       });
+      console.log(movie);
       if (!movie) {
         return "task does not exist";
       }
@@ -254,7 +244,7 @@ let exportedMethods = {
         }
       })
       .filter(item => item !== undefined);
-      // console.log(movies);
+    // console.log(movies);
     if (movies) {
       return movies;
     } else {

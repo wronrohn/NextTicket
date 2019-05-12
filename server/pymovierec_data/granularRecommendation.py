@@ -9,9 +9,7 @@ from flask import Response
 app = Flask(__name__)
 
 @app.route('/postdata', methods = ['POST'])
-def postdata():
-
-    data = request.json
+def postdata(movie):
 
     # Load Movies Metadata
     filePath = "movie10k.csv"
