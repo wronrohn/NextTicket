@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import SpeechToText from "./SpeechToText";
 import MovieList from "./MovieList";
 import Network from "./Network";
+import { AuthUserContext } from "../Session";
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchValue: "",
-      searchResults: null
+      searchResults: null,
+      uid: null
     };
     super(props);
     this.onFinalTranscript = this.onFinalTranscript.bind(this);
@@ -38,20 +40,73 @@ class Search extends Component {
       });
     }
   }
-
-  onFinalTranscript(transcript) {
-    console.log(transcript);
-    const transcriptWordArray = transcript.toLowerCase().split(" ");
-    const indexOfSearch = transcriptWordArray.indexOf("search");
-    if (indexOfSearch >= 0) {
-      const nextVal = transcriptWordArray[indexOfSearch + 1];
-      if (nextVal) {
-        this.setState({
-          searchValue: nextVal
-        });
-        this.performSearch(nextVal);
+  async performAdd(name,uid){
+    let movieData = await this.network.getMovieFromMovieName(name)
+    console.log(movieData)
+    if(movieData){
+      console.log(this.authUser)
+      let resultData = await this.network.addMovieToWatchList(movieData._id, uid)
+      if(resultData){
+        alert("Watchlist added")
+        return resultData
+      }else{
+        alert("Try again. Couldn't find movie")
       }
+      
+      
     }
+    
+  }
+
+  async performRemove(name, uid) {
+    let movieData = await this.network.getMovieFromMovieName(name)
+    console.log(movieData)
+    if (movieData) {
+      
+      let resultData = await this.network.removeMovieFromWatchlist(uid, movieData._id)
+      alert("Removed from watchlist")
+      return resultData
+    } else {
+      alert("Removing failed")
+    }
+  }
+
+
+  onFinalTranscript(transcript,uid) {
+    console.log("here");
+    console.log(transcript)
+    let transcriptWordArray = transcript.toLowerCase().split(" ");
+    if(transcript.includes("search")){
+      
+      
+        transcriptWordArray.shift()
+        let nextVal = transcriptWordArray.join(" ")
+        if (nextVal) {
+          this.setState({
+            searchValue: nextVal
+          });
+          this.performSearch(nextVal);
+        }
+      
+    } else if(transcript.includes("add")){
+      transcriptWordArray.shift()
+      
+      let movieName = transcriptWordArray.join(" ")
+      console.log(movieName)
+      this.performAdd(movieName,uid)
+
+
+    } else if (transcript.includes("remove")) {
+
+      transcriptWordArray.shift()
+      console.log(transcriptWordArray)
+      let movieName = transcriptWordArray.join(" ")
+      console.log(movieName)
+      this.performRemove(movieName, uid)
+
+
+    }
+    
   }
 
   render() {
@@ -78,7 +133,24 @@ class Search extends Component {
             >
               Search
             </button>
-            <SpeechToText onFinalTranscript={this.onFinalTranscript} />
+             <AuthUserContext.Consumer>
+                  {
+                      authUser => {
+                        return (
+                          < SpeechToText onFinalTranscript = {(transcript) => {
+                            
+                             this.onFinalTranscript(transcript,authUser.uid)
+                          }}
+                            
+                          />
+                        )
+                      }
+                          
+                  }
+                  
+                  
+            </AuthUserContext.Consumer>
+            
           </div>
         </form>
         {searchResults && <MovieList movies={searchResults} />}

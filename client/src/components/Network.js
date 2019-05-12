@@ -19,9 +19,16 @@ class Network {
       return seachMoviesData.data;
     }
   }
+  async getMovieFromMovieName(name){
+    let searchData = await this.axiosInstance.get(`/movies/name/?text=${name}`)
+    console.log(searchData)
+    if(searchData && searchData.data){
+      return searchData.data
+    }
+  }
 
-  async addMovieToWatchList(uid, movieID) {
-    let watchListedMovieData = await this.axiosInstance.post("/movies", {
+  async addMovieToWatchList(movieID, uid) {
+    let watchListedMovieData = await this.axiosInstance.post("/movies/watchlist/", {
       movieid: movieID,
       uid: uid
     });
@@ -29,6 +36,18 @@ class Network {
       return watchListedMovieData.data;
     }
   }
+  async removeMovieFromWatchlist(uid, movieID) {
+    let watchListedMovieData = await this.axiosInstance.put("/movies/watchlist/", {
+      movieid: movieID,
+      uid: uid
+    });
+    if (watchListedMovieData && watchListedMovieData.data) {
+      return watchListedMovieData.data;
+    }
+  }
+  
 }
+
+
 
 export default Network;
