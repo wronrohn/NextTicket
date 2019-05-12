@@ -33,15 +33,19 @@ class Home extends Component {
     }
   }
   async onRecomemndationTapped(uid) {
-    const recomMovies = await this.network.getRecommendedMoviesForUser(uid);
-    if (recomMovies) {
-      this.setState({
-        movies: recomMovies,
-        searchText: "",
-        recommendation: true,
-        watchList: false
-      });
+    let recomMovies = [];
+    try {
+      recomMovies = await this.network.getRecommendedMoviesForUser(uid);
+    } catch (e) {
+      recomMovies = [];
+      console.log(e);
     }
+    this.setState({
+      movies: recomMovies,
+      searchText: "",
+      recommendation: true,
+      watchList: false
+    });
   }
   async componentDidMount() {
     const { uid: currentUserUID } = this.props.firebase.auth.currentUser;
@@ -71,7 +75,7 @@ class Home extends Component {
           onWatchListTapped={this.onWatchListTapped}
           onRecomemndationTapped={this.onRecomemndationTapped}
           recommendation={recommendation}
-          watchList={watchList}
+          watchlist={watchList}
         />
         {movies && <MovieList movies={movies} />}
       </div>
