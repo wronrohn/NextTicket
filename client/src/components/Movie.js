@@ -42,8 +42,8 @@ class Movie extends Component {
         }}
       >
         <div className="card mt-4">
-          <div className="col-md-4">
-            <div className="img-wrapper">
+          <div className="row movie-container-div">
+            <div className="img-wrapper col-md-4">
               <img
                 src="https://www.flightjournal.com/wp-content/uploads/2011/12/P-40flight.jpg"
                 alt="Placehoder"
@@ -56,9 +56,9 @@ class Movie extends Component {
                   style={{ textDecoration: "none", color: "black" }}
                 >
                   <div className="card-block px-2">
-                    <h2 className="card-title">{title}</h2>
-                    <p className="card-text">Theme:{theme}</p>
-                    <p className="card-text">Category:{category}</p>
+                    <h2 className="card-title movie-title">{title}</h2>
+                    <p className="card-text movie-theme">Theme:{theme}</p>
+                    <p className="card-text movie-category">Category:{category}</p>
                     <Rating
                       start={0}
                       stop={10}
@@ -75,7 +75,7 @@ class Movie extends Component {
                     if (watchlist && watchlist.includes(authUser.uid)) {
                       return (
                         <button
-                          className="btn btn-primary mt-3 ml-2"
+                          className="btn btn-primary wishlist-cta-btn"
                           onClick={e => {
                             this.removeFromWatchList(authUser.uid);
                           }}
@@ -86,7 +86,7 @@ class Movie extends Component {
                     } else {
                       return (
                         <button
-                          className="btn btn-primary mt-3 ml-2"
+                          className="btn btn-primary wishlist-cta-btn"
                           onClick={e => {
                             this.watchlistButtonClicked(authUser.uid);
                           }}
