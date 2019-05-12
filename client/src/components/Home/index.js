@@ -3,7 +3,7 @@ import Search from "../Search";
 import MovieList from "../MovieList";
 import RecommendWatchListMenu from "../RecommendWatchListMenu";
 
-import { withAuthorization, AuthUserContext } from "../../Session";
+import { withAuthorization } from "../../Session";
 import { withFirebase } from "../../Firebase";
 import Network from "../Network";
 
