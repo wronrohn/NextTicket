@@ -27,7 +27,7 @@ class Search extends Component {
 
   componentWillReceiveProps(props) {
     const { searchText } = props;
-    console.log(searchText);
+    console.log(`Search Text ${searchText}`);
     if (searchText !== undefined) {
       this.setState({
         searchValue: searchText
@@ -49,48 +49,43 @@ class Search extends Component {
       });
     }
   }
-  async performAdd(uid,name){
-    let movieData = await this.network.getMovieFromMovieName(name)
-    console.log(movieData)
-    if(movieData){
-      console.log(this.authUser)
-      
-     try{
-      let resultData = await this.network.addMovieToWatchList(uid, movieData._id)
-      console.log(resultData)
-      
-      alert("Added to watchlist")
-      return resultData
-      
-     }catch(e){
-       alert("Please try again. Couldn't get you accurately!")
-     }
-      
-      
+  async performAdd(uid, name) {
+    let movieData = await this.network.getMovieFromMovieName(name);
+    console.log(movieData);
+    if (movieData) {
+      console.log(this.authUser);
+
+      try {
+        let resultData = await this.network.addMovieToWatchList(
+          uid,
+          movieData._id
+        );
+        console.log(resultData);
+
+        alert("Added to watchlist");
+        return resultData;
+      } catch (e) {
+        alert("Please try again. Couldn't get you accurately!");
+      }
     }
   }
 
   async performRemove(name, uid) {
     let movieData = await this.network.getMovieFromMovieName(name);
     if (movieData) {
-      
-      
-       try {
-         let resultData = await this.network.removeMovieFromWatchlist(uid, movieData._id)
-         alert("Removed from watchlist")
-         return resultData
-         
-
-       } catch (e) {
-         alert("Please try again. Couldn't get you accurately!")
-       }
+      try {
+        let resultData = await this.network.removeMovieFromWatchlist(
+          uid,
+          movieData._id
+        );
+        alert("Removed from watchlist");
+        return resultData;
+      } catch (e) {
+        alert("Please try again. Couldn't get you accurately!");
+      }
     } else {
-      alert("Please try again. Couldn't get you accurately!")
-
-      
-      
+      alert("Please try again. Couldn't get you accurately!");
     }
-   
   }
 
   onFinalTranscript(transcript, uid) {

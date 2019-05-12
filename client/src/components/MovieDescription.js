@@ -25,7 +25,7 @@ class MovieDescription extends Component {
     const { movie } = this.state;
 
     if (movie) {
-      const { title, description, subgenre } = movie;
+      const { title, description, genre, subgenre, theme } = movie;
       return (
         <div className="container mt-5 mb-5">
           <div className="row">
@@ -38,7 +38,13 @@ class MovieDescription extends Component {
           <div className="row">
             <div className="offset-2 col-8 mt-3 text-white">
               <h1 className="display-4">{title}</h1>
-              <p>Genre: {subgenre}</p>
+              <div className="row">
+                <p>
+                  Genre: {genre} {subgenre && ` - ${subgenre}`}
+                </p>
+                {theme && <p>Theme:{theme}</p>}
+              </div>
+              {description && <h2>Description</h2>}
               <p className="lead">{description}</p>
             </div>
           </div>
