@@ -1,8 +1,8 @@
 
 # Final Project
 
-> Class:  CS-554-A  
-> Group:  1  
+> Class:  CS-554-A
+> Group:  1
 
 > Authors:
 > * P Athiban
@@ -26,7 +26,7 @@
 * redis
 * Additional NPM dependencies in `package.json`
 
-For Linux systems `python`, `pip`, `python3`, and `pip3` are different commands. As this project depends on __Python 3__, all commands where `pip` or `python` are mentioned must use `python3` or `pip3` respectively.
+For Linux and Mac systems `python`, `pip`, `python3`, and `pip3` are different commands. As this project depends on __Python 3__, all commands where `pip` or `python` are mentioned must use `python3` or `pip3` respectively.
 
 The following commands can be used to install dependencies for the server:
 
@@ -45,7 +45,7 @@ The following commands can be used to compile and run the server:
 npm start
 ```
 
-The server expects that a Redis process is already running and listening on the default port of `6379`.
+The server expects that a Redis process is already running and listening on the default port of `6379`. Additionally, in order to maintain cross platform compatibility the server will try to use the correct version of Python depending on the operating system. For Windows this is `py`, while for Linux and Mac this is `Python3`.
 
 # Client
 
