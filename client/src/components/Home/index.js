@@ -12,7 +12,9 @@ class Home extends Component {
     super(props);
     this.state = {
       movies: [],
-      searchText: ""
+      searchText: "",
+      recommendation: true,
+      watchList: false
     };
     this.onWatchListTapped = this.onWatchListTapped.bind(this);
     this.onRecomemndationTapped = this.onRecomemndationTapped.bind(this);
@@ -24,7 +26,9 @@ class Home extends Component {
     if (watchList) {
       this.setState({
         movies: watchList,
-        searchText: ""
+        searchText: "",
+        recommendation: false,
+        watchList: true
       });
     }
   }
@@ -33,7 +37,9 @@ class Home extends Component {
     if (recomMovies) {
       this.setState({
         movies: recomMovies,
-        searchText: ""
+        searchText: "",
+        recommendation: true,
+        watchList: false
       });
     }
   }
@@ -41,7 +47,6 @@ class Home extends Component {
     const { uid: currentUserUID } = this.props.firebase.auth.currentUser;
     console.log(this.props.firebase.auth.currentUser.uid);
     if (currentUserUID) {
-      console.log(`HEre`);
       this.onRecomemndationTapped(currentUserUID);
     }
   }
@@ -51,19 +56,22 @@ class Home extends Component {
     if (searchMovies) {
       this.setState({
         movies: searchMovies,
-        searchText: text
+        searchText: text,
+        recommendation: false,
+        watchList: false
       });
     }
   }
   render() {
-    const { movies, searchText } = this.state;
-    console.log(`Re-rendered`);
+    const { movies, searchText, recommendation, watchList } = this.state;
     return (
       <div className="container">
         <Search performSearch={this.performSearch} searchText={searchText} />
         <RecommendWatchListMenu
           onWatchListTapped={this.onWatchListTapped}
           onRecomemndationTapped={this.onRecomemndationTapped}
+          recommendation={recommendation}
+          watchList={watchList}
         />
         {movies && <MovieList movies={movies} />}
       </div>

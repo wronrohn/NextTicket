@@ -43,14 +43,13 @@ class Movie extends Component {
       >
         <div className="card mt-4">
           <div className="row no-gutters">
-            <div className="col-auto">
+            <div className="col-md-4 mr-3">
               <img
-                src="http://via.placeholder.com/250x250"
-                className="img-fluid"
+                src="https://www.flightjournal.com/wp-content/uploads/2011/12/P-40flight.jpg"
                 alt="Placehoder"
               />
             </div>
-            <div className="d-flex align-self-center">
+            <div className="col-md-8">
               <div className="align-self-center ml-2">
                 <Link
                   to={`/movie/${id}`}

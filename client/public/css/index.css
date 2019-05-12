@@ -57,9 +57,15 @@ body {
 
 .btn-primary,
 .btn-primary:hover,
-.btn-primary:disabled {
+.btn-primary:disabled,
+.btn-primary:active:focus,
+.btn-primary:focus {
   background-color: #01b01f;
   border-color: #01b01f;
+  outline: none;
+}
+.btn:focus {
+  outline: none;
 }
 
 .btn-link,
