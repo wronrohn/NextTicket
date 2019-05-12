@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Network from "./Network";
+import { withAuthorization } from "../Session";
+import { withFirebase } from "../Firebase";
 
 class MovieDescription extends Component {
   constructor(props) {
@@ -25,12 +27,12 @@ class MovieDescription extends Component {
     const { movie } = this.state;
 
     if (movie) {
-      const { title, description, genre, subgenre, theme } = movie;
+      const { title, description, genre, subgenre, theme, movie: name } = movie;
       return (
         <div className="container mt-5 mb-5">
           <div className="row">
             <img
-              src="https://www.flightjournal.com/wp-content/uploads/2011/12/P-40flight.jpg"
+              src={`http://localhost:3001/images/${name}.jpg`}
               className="offset-2 col-8"
               alt="Placehoder"
             />
@@ -57,4 +59,4 @@ class MovieDescription extends Component {
   }
 }
 
-export default MovieDescription;
+export default withAuthorization()(withFirebase(MovieDescription));

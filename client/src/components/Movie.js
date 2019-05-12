@@ -33,6 +33,7 @@ class Movie extends Component {
       rating,
       theme,
       _id: id,
+      movie: name,
       watchlist
     } = this.state.movie;
     return (
@@ -45,7 +46,7 @@ class Movie extends Component {
           <div className="row movie-container-div">
             <div className="img-wrapper col-md-4">
               <img
-                src="https://www.flightjournal.com/wp-content/uploads/2011/12/P-40flight.jpg"
+                src={`http://localhost:3001/images/${name}.jpg`}
                 alt="Placehoder"
               />
             </div>
