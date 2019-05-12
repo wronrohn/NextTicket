@@ -35,6 +35,7 @@ const python = isWin ? "py" : "python3";
 const pymovierec = proc.spawn(python, ["./pymovierec"], {
   stdio: [process.stdin, process.stdout, process.stderr]
 });
+const PORT = 3001;
 const app = express();
 app.use(cors());
 
@@ -67,7 +68,7 @@ app.use(
 
 configRoutes(app);
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("We've now got a server!");
-  console.log("Your routes will be running on http://localhost:3000");
+  console.log(`Your routes will be running on http://localhost:${PORT}`);
 });
