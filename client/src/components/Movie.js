@@ -57,8 +57,8 @@ class Movie extends Component {
                 >
                   <div className="card-block px-2">
                     <h2 className="card-title movie-title">{title}</h2>
-                    <p className="card-text movie-theme">Theme:{theme}</p>
-                    <p className="card-text movie-category">Category:{category}</p>
+                    <p className="card-text movie-theme">Theme: {theme}</p>
+                    <p className="card-text movie-category">Category: {category}</p>
                     <Rating
                       start={0}
                       stop={10}
