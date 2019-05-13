@@ -15,11 +15,17 @@ const withAuthentication = Component => {
     }
 
     componentDidMount() {
-      this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-        authUser
-          ? this.setState({ authUser, isLoading: false })
-          : this.setState({ authUser: null, isLoading: false });
-      });
+      try {
+        this.listener = this.props.firebase.auth.onAuthStateChanged(
+          authUser => {
+            authUser
+              ? this.setState({ authUser, isLoading: false })
+              : this.setState({ authUser: null, isLoading: false });
+          }
+        );
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     componentWillUnmount() {
@@ -28,7 +34,11 @@ const withAuthentication = Component => {
 
     render() {
       if (this.state.isLoading) {
-        return <div>Loading .... </div>;
+        return (
+          <div>
+            <p className="text-white">Loading .... </p>
+          </div>
+        );
       }
       return (
         <AuthUserContext.Provider value={this.state.authUser}>

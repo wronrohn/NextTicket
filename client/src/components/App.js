@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navigation from "./Navigation";
 import SignupPage from "./Signup";
 import SignInPage from "./SignIn";
@@ -35,7 +35,6 @@ const App = () => (
         );
       }}
     </AuthUserContext.Consumer>
-
     <Route exact path={ROUTES.HOME} component={Home} />
     <Route exact path={ROUTES.USER_PROFILE} component={UserProfile} />
     <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
