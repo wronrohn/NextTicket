@@ -1,11 +1,12 @@
 import React from "react";
 import Movie from "./Movie";
+import NoResultFound from "../NoResultFound";
 
-const MovieList = ({ movies, removeFromWatchList }) => {
+const MovieList = ({ movies, removeFromWatchList, error }) => {
 
   let seen = new Map();
 
-  if (movies) {
+  if (movies.length > 0) {
     return (
       <div className="mb-5 mt-5">
         {movies.map(movie => {
@@ -24,7 +25,12 @@ const MovieList = ({ movies, removeFromWatchList }) => {
       </div>
     );
   } else {
-    return null;
+    if (!error) {
+      console.log("here in no result");
+      return <NoResultFound />;
+    } else {
+      return null;
+    }
   }
 };
 

@@ -56,7 +56,6 @@ router.get("/recommendation/:id", async (req, res) => {
         );
         for (let j = 0; j < r_movie_ids.length; j++) {
           const movieId = r_movie_ids[j];
-          console.log(movieId);
           let movieData = await taskData.getMovieByMovieId(movieId);
           movieData.inWatchList = true;
           recomendedMovieArray.push(movieData);
@@ -73,7 +72,7 @@ router.get("/recommendation/:id", async (req, res) => {
     res.json(recomendedMovieArray);
 
   } catch (error) {
-    console.log(error.stack);
+    // console.log(error.stack);
     res.status(500).json({ error: error.message });
   }
 });
@@ -133,12 +132,10 @@ router.get("/name/", async (req, res) => {
   console.log("inside the route");
   try {
     let requestData = req.query.text;
-    console.log(requestData);
     if (!requestData) {
       throw "Provide movie name";
     }
     let r_moviesJSON = await taskData.getMovieByMovieName(requestData);
-    console.log(r_moviesJSON);
     res.json(r_moviesJSON);
   } catch (error) {
     res.status(500).json({
@@ -156,7 +153,6 @@ router.get("/:id", async (req, res) => {
       throw "Provide uid or Movie id";
     }
     let r_moviesJSON = await taskData.getMoviesByID(requestData.id);
-    console.log(`Moview JSOn ${r_moviesJSON}`);
     res.json(r_moviesJSON);
   } catch (error) {
     console.log(`Error ${e}`);

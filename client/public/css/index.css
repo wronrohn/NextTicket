@@ -138,34 +138,30 @@ body {
     margin: 0px;
   }
 }
-.content-align-left
-{
+.content-align-left {
   text-align: right;
 }
-.movie-description-img
-{
+.movie-description-img {
   width: 100%;
   height: auto;
   max-height: 500px;
 }
-.movie-description-inner{
+.no-result-div {
+  padding-top: 100px;
+}
+.movie-description-inner {
   padding-top: 20px;
   align-items: center;
 }
-.form-wrapper-container
-{
+.form-wrapper-container {
   max-width: 600px;
-  margin: 0px auto; 
+  margin: 0px auto;
 }
-.movie-title{
-  font-family: "myFirstFont";
-}
+
 .movie-description {
-  font-family: cursive;
   font-size: 22px;
 }
-.pad-10
-{
+.pad-10 {
   padding-bottom: 10px;
 }
 .center-content {

@@ -15,7 +15,6 @@ let exportedMethods = {
     const movies = await movieCollection
       .find({ $text: { $search: { $regex: `/${text}/` } } })
       .toArray();
-    console.log(`Movies ${movies}`);
     return movies;
   },
 
@@ -71,7 +70,6 @@ let exportedMethods = {
         }
         await jsonCache.set(requestData.uid, recomendedMovies.recomendations);
         const response = await jsonCache.get(requestData.uid);
-        // console.log(response);
       })
       .catch(function(err) {
         console.log(err);
@@ -87,12 +85,10 @@ let exportedMethods = {
     console.log(responseNew);
     const response = await jsonCache.get(userId);
     if (response) {
-      console.log(response);
       var responseArray = [];
       if (response) {
         for (key in response) {
           if (response.hasOwnProperty(key)) {
-            // console.log(key + " -> " + response[key]);
             response[key].inWatchList = true;
             responseArray.push(response[key]);
           }
@@ -110,7 +106,6 @@ let exportedMethods = {
       const movie = await movieCollection.findOne({
         movieid: movieId
       });
-      console.log(movie);
       if (!movie) {
         return "task does not exist";
       }
@@ -126,7 +121,6 @@ let exportedMethods = {
       const movie = await movieCollection.findOne({
         _id: id
       });
-      console.log(movie);
       if (!movie) {
         throw "task does not exist";
       }
@@ -181,7 +175,6 @@ let exportedMethods = {
 
         if (movie.watchlist) {
           if (movie["watchlist"].includes(uid)) {
-            //console.log("I am here")
             movie.watchlist = movie["watchlist"].filter(item => item != uid);
             if (movie["watchlist"].length == 0) {
               movie["inWatchList"] = false;
@@ -239,7 +232,6 @@ let exportedMethods = {
     const movies = await movieCollection
       .find({ $text: { $search: `${text}` } })
       .toArray();
-    console.log(`Movies ${movies}`);
     return movies;
   },
   /**
@@ -262,7 +254,6 @@ let exportedMethods = {
         }
       })
       .filter(item => item !== undefined);
-    // console.log(movies);
     if (movies) {
       return movies;
     } else {
@@ -279,7 +270,6 @@ let exportedMethods = {
           return string.charAt(0).toUpperCase() + string.slice(1);
         })
         .join(" ");
-      console.log(name);
       const movie = await movieCollection.findOne({
         movie: name
       });

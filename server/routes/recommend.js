@@ -33,7 +33,6 @@ async function recommendations(uid) {
         for (let i = 0; i < movieData.length; i++) {
 
             const elem = movieData[i];
-            console.log("movie : ", elem);
 
             // See what recommendations are on Redis.
             let resolvedData = await client.getAsync(elem);
