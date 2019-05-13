@@ -117,6 +117,7 @@ class Home extends Component {
           <MovieList
             movies={movies}
             removeFromWatchList={this.removeFromWatchList}
+            error={error}
           />
         )}
       </div>
