@@ -186,3 +186,11 @@ body {
 .user-avatar-wrapper {
   text-align: right;
 }
+.white-container {
+  background-color: white;
+  border-radius: 5px;
+  width: 350px;
+  margin: 0px auto;
+  padding: 13px;
+  margin-top: 75px;
+}
