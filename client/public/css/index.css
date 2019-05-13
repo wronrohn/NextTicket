@@ -149,6 +149,9 @@ body {
 .no-result-div {
   padding-top: 100px;
 }
+.watch-list-text {
+  color: #01b01f;
+}
 .movie-description-inner {
   padding-top: 20px;
   align-items: center;
