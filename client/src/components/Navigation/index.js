@@ -35,7 +35,7 @@ const NavigationAuth = () => (
           </Link>
         </li>
         <li className="nav-item">
-          <SignOutButton className="nav-link btn btn-link"/>
+          <SignOutButton className="nav-link btn btn-link" />
         </li>
       </ul>
     </div>
