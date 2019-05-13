@@ -45,8 +45,15 @@ class SpeechToTextButton extends Component {
     }
     return (
       <div>
-        <button className="btn btn-primary mb-2 start-btn" onClick={this.onClickSpeech}>
-          {this.state.isListening ? "Stop Listening" : "Voice Command"}
+        <button
+          className="btn btn-primary mb-2 start-btn"
+          onClick={this.onClickSpeech}
+        >
+          {this.state.isListening ? (
+            <i class="fas fa-microphone-slash" />
+          ) : (
+            <i class="fas fa-microphone" />
+          )}
         </button>
       </div>
     );
