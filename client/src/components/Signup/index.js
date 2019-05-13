@@ -6,7 +6,7 @@ import * as ROUTES from "../../constants/routes";
 import { compose } from "recompose";
 
 const SignupPage = () => (
-  <div className="container bg-light contentCenter w-50 rounded-lg">
+  <div className="">
     <SignUpForm />
   </div>
 );
@@ -75,12 +75,12 @@ class SignUpFormBase extends React.Component {
       <React.Fragment>
         {message && <p>{message}</p>}
         <div className="col-md-8 offset-md-2 mt-5">
-          <h1 className="m-4 text-center">Welcome to Next Ticket</h1>
-          <h3 className="m-5 text-center">
+          <h1 className="m-4 text-center text-white">Welcome to Next Ticket</h1>
+          <h3 className="m-5 text-center text-white">
             Sign Up and start getting recommendations for movies based on the
             ones you have already have in your watch list
           </h3>
-          <form onSubmit={this.onSubmit}>
+          <form className="form-wrapper-container" onSubmit={this.onSubmit}>
             <label
               className="text-white sr-only"
               htmlFor={CONSTANTS.FORMFIELDUSERNAME}
