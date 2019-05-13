@@ -11,10 +11,11 @@ import PasswordForgetPage from "./ForgetPassword";
 import Home from "./Home";
 import { AuthUserContext } from "../Session";
 import MovieDescription from "./MovieDescription";
+import UserProfile from "./UserProfile";
+
 /**
  * Main entrypoint for the client-side applicaiton.
  */
-
 const App = () => (
   <Router>
     <div>
@@ -34,6 +35,7 @@ const App = () => (
         }}
       </AuthUserContext.Consumer>
       <Route exact path={ROUTES.HOME} component={Home} />
+      <Route exact path={ROUTES.USER_PROFILE} component={UserProfile} />
       <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
       <Route exact path={ROUTES.SIGNIN} component={SignInPage} />
       <Route exact path={ROUTES.CHANGE_PASSWORD} component={PasswordChange} />
