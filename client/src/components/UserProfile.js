@@ -17,7 +17,7 @@ class UserProfile extends React.Component {
 
         let userEmail = this.props.firebase.auth.currentUser.email;
         let cmpUserEmail = (
-            <div className="row mt-1">
+            <div>
                 <h2>Email: {`${userEmail}`}</h2>
             </div>
         );
@@ -30,18 +30,18 @@ class UserProfile extends React.Component {
 
         return (
             <div className="mb-5 mt-5 container">
-                <div style={{ boxShadow: "5px 5px 5px 5px rgba(0,0,0,0.5)" }}>
-                    <div className="col card mt-4">
-                        <div className="row">
+                <div>
+                    <div className="text-white center-content">
+                        <div>
                             <h1>User Profile</h1>
                         </div>
 
                         { userName && cmpUserName }
                         { userEmail && cmpUserEmail }
 
-                        <div className="row mt-5">
-                            <div className="col-2 ">
-                                <Link className="btn btn-dark button-update-pass w-100"
+                        <div className="pad-10">
+                            <div className="">
+                                <Link className="btn btn-primary button-update-pass"
                                       to={ROUTES.CHANGE_PASSWORD}
                                 >
                                     Update Password
@@ -49,9 +49,9 @@ class UserProfile extends React.Component {
                             </div>
                         </div>
 
-                        <div className="row mt-1">
-                            <div className="col-2">
-                                <SignOutButton className="btn btn-dark button-sign-out w-100" />
+                        <div className="">
+                            <div className="">
+                                <SignOutButton className="btn btn-dark button-sign-out" />
                             </div>
                         </div>
 

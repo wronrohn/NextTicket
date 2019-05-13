@@ -7,7 +7,7 @@ import * as CONSTANTS from "./Constants";
 import { PasswordForgetLink } from "../ForgetPassword";
 
 const SignInPage = () => (
-  <div className="container bg-light contentCenter w-50 rounded-lg">
+  <div className="">
     <SignInForm />
     <PasswordForgetLink className="p-5 m-5" />
   </div>
@@ -48,9 +48,9 @@ class SignInFormBase extends Component {
     const isInvalid = password === "" || email === "";
     return (
       <div className="col-md-8 offset-md-2 mt-5">
-        <h1 className="m-4 text-center">Welcome to Next Ticket</h1>
-        <h2 className="m-5 text-center">Sign In with your existing details</h2>
-        <form className="mt-4 mb-5" onSubmit={this.onSubmit}>
+        <h1 className="m-4 text-center text-white">Welcome to Next Ticket</h1>
+        <h2 className="m-5 text-center text-white">Sign In with your existing details</h2>
+        <form className="mt-4 mb-5 form-wrapper-container" onSubmit={this.onSubmit}>
           <div className="form-group">
             <label
               className="text-white sr-only"
@@ -64,7 +64,7 @@ class SignInFormBase extends Component {
               value={email}
               onChange={this.onChange}
               type="text"
-              class="form-control form-control-lg mb-4"
+              className="form-control form-control-lg mb-4"
               placeholder="Email Address"
             />
           </div>
@@ -81,7 +81,7 @@ class SignInFormBase extends Component {
               id={CONSTANTS.FORMFIELDPASSWORD}
               onChange={this.onChange}
               type="password"
-              class="form-control form-control-lg"
+              className="form-control form-control-lg"
               placeholder="Password"
             />
           </div>
