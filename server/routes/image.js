@@ -1,21 +1,20 @@
-
 const express = require("express");
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const KEY_ACTION        = "action";
-const KEY_ADVENTURE     = "adventure";
-const KEY_COMEDY        = "comedy";
-const KEY_DRAMA         = "drama";
-const KEY_FANTASY       = "fantasy";
+const KEY_ACTION = "action";
+const KEY_ADVENTURE = "adventure";
+const KEY_COMEDY = "comedy";
+const KEY_DRAMA = "drama";
+const KEY_FANTASY = "fantasy";
 
-const ASSET_NOT_FOUND   = "../static/invariant/a_not_found.svg";
-const ASSET_ACTION      = "../static/invariant/a_action.svg";
-const ASSET_ADVENTURE   = "../static/invariant/a_adventure.svg";
-const ASSET_COMEDY      = "../static/invariant/a_comedy.svg";
-const ASSET_DRAMA       = "../static/invariant/a_drama.svg";
-const ASSET_FANTASY     = "../static/invariant/a_fantasy.svg";
+const ASSET_NOT_FOUND = "../static/invariant/a_not_found.svg";
+const ASSET_ACTION = "../static/invariant/a_action.svg";
+const ASSET_ADVENTURE = "../static/invariant/a_adventure.svg";
+const ASSET_COMEDY = "../static/invariant/a_comedy.svg";
+const ASSET_DRAMA = "../static/invariant/a_drama.svg";
+const ASSET_FANTASY = "../static/invariant/a_fantasy.svg";
 
 /**
  * Negotiates invariant images only.
@@ -40,39 +39,53 @@ const ASSET_FANTASY     = "../static/invariant/a_fantasy.svg";
  *                          image is always returned.
  */
 async function serveImage(req, res) {
+  let movieTitle = req.params.movieTitle;
+  let genre = req.params.genre.trim().toLowerCase();
 
-    let movieTitle = req.params.movieTitle;
-    let genre = req.params.genre;
+  // console.log(">>>>> Serve Image:", movieTitle, genre);
 
-    // console.log(">>>>> Serve Image:", movieTitle, genre);
+  let file = null;
 
-    let file = null;
-
-    if(genre) {
-        switch(genre) {
-            case KEY_ACTION:    file = ASSET_ACTION; break;
-            case KEY_ADVENTURE: file = ASSET_ADVENTURE; break;
-            case KEY_COMEDY:    file = ASSET_COMEDY; break;
-            case KEY_DRAMA:     file = ASSET_DRAMA; break;
-            case KEY_FANTASY:   file = ASSET_FANTASY; break;
-            default:            file = ASSET_NOT_FOUND; break;
-        }
-    }
-
-    if( ! genre && ! file) {
+  if (genre) {
+    switch (genre) {
+      case KEY_ACTION:
+        file = ASSET_ACTION;
+        break;
+      case KEY_ADVENTURE:
+        file = ASSET_ADVENTURE;
+        break;
+      case KEY_COMEDY:
+        file = ASSET_COMEDY;
+        break;
+      case KEY_DRAMA:
+        file = ASSET_DRAMA;
+        break;
+      case KEY_FANTASY:
+        file = ASSET_FANTASY;
+        break;
+      default:
         file = ASSET_NOT_FOUND;
+        break;
     }
+  }
 
-    // console.log(">>>>> Resloved on:", file);
+  if (!genre && !file) {
+    file = ASSET_NOT_FOUND;
+  }
 
-    file = path.join(__dirname, file);
-    if( ! fs.existsSync(file)) {
-        console.warn("WARNING: Couldn't find fall-back: ", file);
-        res.status(500).json( { error: "500" } );
-        return;
-    }
+  // console.log(">>>>> Resloved on:", file);
 
-    res.status(200).type('svg').sendFile(file);
+  file = path.join(__dirname, file);
+  if (!fs.existsSync(file)) {
+    console.warn("WARNING: Couldn't find fall-back: ", file);
+    res.status(500).json({ error: "500" });
+    return;
+  }
+
+  res
+    .status(200)
+    .type("svg")
+    .sendFile(file);
 }
 
 router.get("/:movieTitle", serveImage);

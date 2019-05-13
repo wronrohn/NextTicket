@@ -35,7 +35,8 @@ class Movie extends Component {
       theme,
       _id: id,
       movie: name,
-      watchlist
+      watchlist,
+      genre
     } = this.state.movie;
     return (
       <div
@@ -47,7 +48,14 @@ class Movie extends Component {
           <div className="row movie-container-div">
             <div className="img-wrapper col-md-4">
               <img
-                src={`http://localhost:3001/images/${name}.jpg`}
+                src={
+                  genre
+                    ? `http://localhost:3001/images/${genre.replace(
+                        "/",
+                        ""
+                      )}/${name}.jpg`
+                    : `http://localhost:3001/images/${name}.jpg`
+                }
                 alt="Placehoder"
               />
             </div>
