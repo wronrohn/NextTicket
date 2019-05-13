@@ -141,12 +141,9 @@ router.get("/:id", async (req, res) => {
     }
     let r_moviesJSON = await taskData.getMoviesByID(requestData.id);
     console.log(`Moview JSOn ${r_moviesJSON}`);
-    if (r_moviesJSON.length > 0) {
-      res.json(r_moviesJSON);
-    } else {
-      res.sendStatus(404);
-    }
+    res.json(r_moviesJSON);
   } catch (error) {
+    console.log(`Error ${e}`);
     res.status(404).json({
       error: error.message
     });

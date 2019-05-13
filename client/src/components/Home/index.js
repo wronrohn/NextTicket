@@ -15,7 +15,8 @@ class Home extends Component {
       movies: [],
       searchText: "",
       recommendation: true,
-      watchList: false
+      watchList: false,
+      error: null
     };
     this.onWatchListTapped = this.onWatchListTapped.bind(this);
     this.onRecomemndationTapped = this.onRecomemndationTapped.bind(this);
@@ -24,13 +25,24 @@ class Home extends Component {
     this.network = new Network();
   }
   async onWatchListTapped(uid) {
-    const watchList = await this.network.getWatchListForUser(uid);
-    if (watchList) {
+    try {
+      const watchList = await this.network.getWatchListForUser(uid);
+      if (watchList) {
+        this.setState({
+          movies: watchList,
+          searchText: "",
+          recommendation: false,
+          watchList: true,
+          error: null
+        });
+      }
+    } catch (e) {
       this.setState({
-        movies: watchList,
+        movies: [],
         searchText: "",
         recommendation: false,
-        watchList: true
+        watchList: true,
+        error: e
       });
     }
   }
@@ -39,18 +51,19 @@ class Home extends Component {
   }
   async onRecomemndationTapped(uid) {
     let recomMovies = [];
+    let error;
     try {
       recomMovies = await this.network.getRecommendedMoviesForUser(uid);
     } catch (e) {
       recomMovies = [];
-      console.log(e);
+      error = e;
     }
     this.setState({
       movies: recomMovies,
       searchText: "",
       recommendation: true,
       watchList: false,
-      error: null
+      error: error
     });
   }
   async componentDidMount() {
