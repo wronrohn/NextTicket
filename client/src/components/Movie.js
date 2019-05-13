@@ -58,7 +58,7 @@ class Movie extends Component {
                   style={{ textDecoration: "none", color: "black" }}
                 >
                   <div className="card-block">
-                    <h2 className="card-title movie-title">{title}</h2>
+                    <h1 className="card-title movie-title">{title}</h1>
                     <p className="card-text movie-theme">Theme:{theme}</p>
                     <p className="card-text movie-category">
                       Category:{category}

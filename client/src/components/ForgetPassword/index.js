@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import { withFirebase } from "../../Firebase";
 import * as ROUTES from "../../constants/routes";
+import { SignupPageLink } from "../Signup";
+import { SignInPageLink } from "../SignIn";
 
 const PasswordForgetPage = () => (
   <div style={{ paddingTop: "7rem" }}>
@@ -19,7 +21,6 @@ const INITIAL_STATE = {
 class PasswordForgetFormBase extends Component {
   constructor(props) {
     super(props);
-
     this.state = { ...INITIAL_STATE };
   }
 
@@ -29,10 +30,14 @@ class PasswordForgetFormBase extends Component {
     this.props.firebase
       .resetPassword(email)
       .then(message => {
-        this.setState({ ...INITIAL_STATE });
+        console.log(message);
+        this.setState({
+          message: "A reset password link is set to your email",
+          error: null
+        });
       })
       .catch(error => {
-        this.setState({ error });
+        this.setState({ error, message: null });
       });
 
     event.preventDefault();
@@ -43,7 +48,7 @@ class PasswordForgetFormBase extends Component {
   };
 
   render() {
-    const { email, error } = this.state;
+    const { email, error, message } = this.state;
 
     const isInvalid = email === "";
 
@@ -78,11 +83,13 @@ class PasswordForgetFormBase extends Component {
           >
             Reset My Password
           </button>
-
+          {message && <p className="text-white text-center mt-5">{message}</p>}
           {error && (
             <p className="text-white text-center mt-5">{error.message}</p>
           )}
         </form>
+        <SignInPageLink message="Login" />
+        <SignupPageLink />
       </div>
     );
   }

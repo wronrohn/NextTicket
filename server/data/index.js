@@ -1,4 +1,4 @@
-const taskData = require("./tasks");
+const taskData = require("./movies");
 
 module.exports = {
   tasks: taskData
