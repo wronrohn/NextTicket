@@ -41,6 +41,7 @@ const NavigationAuth = () => (
             color: "gray"
           }}
         />
+        <span className="text-hide">User Profile</span>
       </Link>
     </div>
   </div>
