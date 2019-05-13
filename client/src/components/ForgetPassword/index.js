@@ -5,14 +5,15 @@ import { withFirebase } from "../../Firebase";
 import * as ROUTES from "../../constants/routes";
 
 const PasswordForgetPage = () => (
-  <div className="">
+  <div style={{ paddingTop: "7rem" }}>
     <PasswordForgetForm />
   </div>
 );
 
 const INITIAL_STATE = {
   email: "",
-  error: null
+  error: null,
+  message: ""
 };
 
 class PasswordForgetFormBase extends Component {
@@ -27,7 +28,7 @@ class PasswordForgetFormBase extends Component {
 
     this.props.firebase
       .resetPassword(email)
-      .then(() => {
+      .then(message => {
         this.setState({ ...INITIAL_STATE });
       })
       .catch(error => {
@@ -49,12 +50,18 @@ class PasswordForgetFormBase extends Component {
     return (
       <div className="col-md-8 offset-md-2 mt-5">
         <h1 className="m-4 text-center text-white">Forgot your Password?</h1>
-        <h2 className="m-5 text-center text-white">Don't you worry! We got you</h2>
-        <form className="mt-4 mb-5 form-wrapper-container" onSubmit={this.onSubmit}>
+        <h2
+          className="m-5 text-center text-white"
+          style={{ fontWeight: "lighter", fontSize: "1.8rem" }}
+        >
+          Don't you worry! We got you
+        </h2>
+        <form
+          className="mt-4 mb-5 form-wrapper-container"
+          onSubmit={this.onSubmit}
+        >
           <div className="form-group">
-            <label className="text-white sr-only">
-              Email
-            </label>
+            <label className="text-white sr-only">Email</label>
             <input
               name="email"
               value={this.state.email}
@@ -64,14 +71,19 @@ class PasswordForgetFormBase extends Component {
               placeholder="Email Address"
             />
           </div>
-          <button disabled={isInvalid}  className="btn btn-primary mb-2 mt-3 form-control form-control-lg" type="submit">
+          <button
+            disabled={isInvalid}
+            className="btn btn-primary mb-2 mt-3 form-control form-control-lg"
+            type="submit"
+          >
             Reset My Password
           </button>
 
-          {error && <p>{error.message}</p>}
+          {error && (
+            <p className="text-white text-center mt-5">{error.message}</p>
+          )}
         </form>
       </div>
-
     );
   }
 }

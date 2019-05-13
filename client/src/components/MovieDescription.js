@@ -4,6 +4,7 @@ import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import Error from "./Error";
 import { AuthUserContext } from "../Session";
+import Rating from "react-rating";
 class MovieDescription extends Component {
   constructor(props) {
     super(props);
@@ -64,7 +65,9 @@ class MovieDescription extends Component {
         subgenre,
         theme,
         movie: name,
-        watchlist
+        watchlist,
+        rating,
+        releasedate
       } = movie;
       return (
         <div className="container">
@@ -80,7 +83,12 @@ class MovieDescription extends Component {
             <div className="col-md-12 col-sm-12 col-lg-6 col-xs-12">
               <div className="text-white">
                 <div>
-                  <h1 className="display-4 movie-title">{title}</h1>
+                  <h1
+                    className="display-4 movie-title"
+                    style={{ fontSize: "2em" }}
+                  >
+                    {title}
+                  </h1>
                 </div>
                 <div className="row">
                   <div className="col-md-12 col-lg-8 col-sm-8 col-xs-12">
@@ -104,6 +112,7 @@ class MovieDescription extends Component {
                           return (
                             <button
                               className="btn btn-primary wishlist-cta-btn"
+                              style={{ marginBottom: "1rem" }}
                               onClick={e => {
                                 this.removeFromWatchList(authUser.uid);
                               }}
@@ -115,6 +124,7 @@ class MovieDescription extends Component {
                           return (
                             <button
                               className="btn btn-primary wishlist-cta-btn"
+                              style={{ marginBottom: "1rem" }}
                               onClick={e => {
                                 this.watchlistButtonClicked(authUser.uid);
                               }}
@@ -127,8 +137,29 @@ class MovieDescription extends Component {
                     </AuthUserContext.Consumer>
                   </div>
                 </div>
-                {description && <h2>Description</h2>}
-                <p className="lead movie-description">{description}</p>
+                {releasedate && <p className="">Released On: {releasedate}</p>}
+                {/* {
+                  <div >
+                    <p> Rating:</p>
+                    <Rating
+                      start={0}
+                      stop={10}
+                      step={2}
+                      fractions={2}
+                      readonly={true}
+                      initialRating={rating}
+                    />
+                  </div>
+                } */}
+                {description && (
+                  <h2 style={{ fontSize: "1.5em" }}>Description</h2>
+                )}
+                <p
+                  className="lead movie-description"
+                  style={{ fontSize: "1rem" }}
+                >
+                  {description}
+                </p>
               </div>
             </div>
           </div>

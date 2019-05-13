@@ -1,16 +1,18 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { compose } from "recompose";
 import * as ROUTES from "../../constants/routes";
 import { withFirebase } from "../../Firebase";
 import * as CONSTANTS from "./Constants";
 import { PasswordForgetLink } from "../ForgetPassword";
 import Network from "../Network";
+import { SignupPageLink } from "../Signup";
 
 const SignInPage = () => (
-  <div className="">
+  <div style={{ paddingTop: "10rem" }}>
     <SignInForm />
     <PasswordForgetLink className="p-5 m-5" />
+    <SignupPageLink className="p-5 m-5" />
   </div>
 );
 
@@ -33,9 +35,12 @@ class SignInFormBase extends Component {
     const { email, password } = this.state;
     event.preventDefault();
     try {
-      let resolved = await this.props.firebase.signInWithEmailAndPassword(email, password);
-      if(resolved && resolved.user && resolved.user.uid) {
-          this.network.syncWatchlistForLogin(resolved.user.uid);
+      let resolved = await this.props.firebase.signInWithEmailAndPassword(
+        email,
+        password
+      );
+      if (resolved && resolved.user && resolved.user.uid) {
+        this.network.syncWatchlistForLogin(resolved.user.uid);
       }
       this.setState({ ...INITIAL_STATE });
       this.props.history.push(ROUTES.LANDING);
@@ -54,8 +59,16 @@ class SignInFormBase extends Component {
     return (
       <div className="col-md-8 offset-md-2 mt-5">
         <h1 className="m-4 text-center text-white">Welcome to Next Ticket</h1>
-        <h2 className="m-5 text-center text-white">Sign In with your existing details</h2>
-        <form className="mt-4 mb-5 form-wrapper-container" onSubmit={this.onSubmit}>
+        <h2
+          className="m-5 text-center text-white"
+          style={{ fontWeight: "lighter", fontSize: "1.8rem" }}
+        >
+          Sign In with your existing details
+        </h2>
+        <form
+          className="mt-4 mb-5 form-wrapper-container"
+          onSubmit={this.onSubmit}
+        >
           <div className="form-group">
             <label
               className="text-white sr-only"
@@ -97,7 +110,7 @@ class SignInFormBase extends Component {
           >
             Login
           </button>
-          {error && <p>{error.message}</p>}
+          {error && <p className="text-white">{error.message}</p>}
         </form>
       </div>
     );
@@ -109,6 +122,12 @@ const SignInForm = compose(
   withFirebase
 )(SignInFormBase);
 
+const SignInPageLink = () => (
+  <p className="text-center">
+    <Link to={ROUTES.SIGNIN}>Already a Member?</Link>
+  </p>
+);
+
 export default SignInPage;
 
-export { SignInForm };
+export { SignInForm, SignInPageLink };

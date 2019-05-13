@@ -1,12 +1,13 @@
 import React from "react";
 import * as CONSTANTS from "./Constants";
 import { withFirebase } from "../../Firebase";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import { compose } from "recompose";
+import { SignInPageLink } from "../SignIn";
 
 const SignupPage = () => (
-  <div className="">
+  <div style={{ paddingTop: "4rem" }}>
     <SignUpForm />
   </div>
 );
@@ -76,10 +77,13 @@ class SignUpFormBase extends React.Component {
         {message && <p>{message}</p>}
         <div className="col-md-8 offset-md-2 mt-5">
           <h1 className="m-4 text-center text-white">Welcome to Next Ticket</h1>
-          <h3 className="m-5 text-center text-white">
+          <h2
+            className="m-5 text-center text-white"
+            style={{ fontWeight: "lighter", fontSize: "1.8rem" }}
+          >
             Sign Up and start getting recommendations for movies based on the
             ones you have already have in your watch list
-          </h3>
+          </h2>
           <form className="form-wrapper-container" onSubmit={this.onSubmit}>
             <label
               className="text-white sr-only"
@@ -153,6 +157,7 @@ class SignUpFormBase extends React.Component {
             {error && <p>{error.message}</p>}
           </form>
         </div>
+        <SignInPageLink />
       </React.Fragment>
     );
   }
@@ -162,5 +167,10 @@ const SignUpForm = compose(
   withRouter,
   withFirebase
 )(SignUpFormBase);
+const SignupPageLink = () => (
+  <p className="text-center">
+    <Link to={ROUTES.SIGNUP}>Not a Member Join Now</Link>
+  </p>
+);
 export default SignupPage;
-export { SignUpForm };
+export { SignUpForm, SignupPageLink };
