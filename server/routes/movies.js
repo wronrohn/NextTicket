@@ -42,12 +42,11 @@ router.get("/recommendation/:id", async (req, res) => {
     let recomendedMovieArray = [];
     let userWatchListArray = await taskData.findUserWatchlist(uid);
 
-    client.on("connect", function () {
+    client.on("connect", function() {
       console.log("Connected to Redis...");
     });
 
     for (let i = 0; i < userWatchListArray.length; i++) {
-
       let recomendedMovies = await client.getAsync(userWatchListArray[i]);
 
       if (recomendedMovies) {
@@ -60,8 +59,7 @@ router.get("/recommendation/:id", async (req, res) => {
           movieData.inWatchList = true;
           recomendedMovieArray.push(movieData);
         }
-      }
-      else {
+      } else {
         // We may end up here if Redis has nothing cached but a request
         // is made anyway. Requests can leak this way if a user makes
         // a watchlist but the cache is cleared after.
@@ -70,7 +68,6 @@ router.get("/recommendation/:id", async (req, res) => {
     }
 
     res.json(recomendedMovieArray);
-
   } catch (error) {
     // console.log(error.stack);
     res.status(500).json({ error: error.message });
@@ -155,7 +152,7 @@ router.get("/:id", async (req, res) => {
     let r_moviesJSON = await taskData.getMoviesByID(requestData.id);
     res.json(r_moviesJSON);
   } catch (error) {
-    console.log(`Error ${e}`);
+    console.log(`Error 404 ${error}`);
     res.status(404).json({
       error: error.message
     });
