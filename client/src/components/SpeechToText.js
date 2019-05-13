@@ -10,15 +10,25 @@ class SpeechToTextButton extends Component {
     this.onClickSpeech = this.onClickSpeech.bind(this);
   }
   componentDidMount() {
+
+        console.log(">>>>> Speech did mount");
+
     this.props.resetTranscript();
     this.props.stopListening();
   }
   componentWillUnmount() {
+
+    console.log(">>>>> Speech will unmount");
+
     this.props.resetTranscript();
     this.props.abortListening();
   }
   onClickSpeech(event) {
     event.preventDefault();
+
+    console.log(">>>>> Speech on click", `${this.state.isListening}`);
+
+
     const {
       finalTranscript,
       onFinalTranscript,
@@ -47,7 +57,7 @@ class SpeechToTextButton extends Component {
       return (
         <div>
             <button className="btn btn-primary mb-2 start-btn" disabled>
-                <i class="fas fa-microphone" />
+                <i className="fas fa-microphone" />
             </button>
         </div>
       );
@@ -59,9 +69,9 @@ class SpeechToTextButton extends Component {
           onClick={this.onClickSpeech}
         >
           {this.state.isListening ? (
-            <i class="fas fa-microphone-slash" />
+            <i className="fas fa-microphone-slash" />
           ) : (
-            <i class="fas fa-microphone" />
+            <i className="fas fa-microphone" />
           )}
         </button>
       </div>

@@ -100,7 +100,11 @@ class Home extends Component {
     const { movies, searchText, recommendation, watchList, error } = this.state;
     return (
       <div className="container">
-        <Search performSearch={this.performSearch} searchText={searchText} />
+        <Search performSearch={this.performSearch}
+                searchText={searchText}
+                onRecomemndationTapped={this.onRecomemndationTapped}
+                onWatchListTapped={this.onWatchListTapped}
+        />
         <RecommendWatchListMenu
           onWatchListTapped={this.onWatchListTapped}
           onRecomemndationTapped={this.onRecomemndationTapped}
