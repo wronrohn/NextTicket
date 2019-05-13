@@ -39,6 +39,17 @@ class Network {
       return watchListedMovieData.data;
     }
   }
+
+  /**
+   * Synchronizes a user's watchlist when they fist log in. Ensures
+   * recommendations can be retrieved.
+   *
+   * @param {string} uid The user id.
+   */
+  async syncWatchlistForLogin(uid) {
+      await this.axiosInstance.post("/movies/sync", { uid: uid });
+  }
+
   async removeMovieFromWatchlist(uid, movieID) {
     let watchListedMovieData = await this.axiosInstance.put(
       "/movies/watchlist/",
