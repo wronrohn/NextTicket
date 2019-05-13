@@ -13,7 +13,7 @@ const NavigationAuth = () => (
   <div className="container" style={{ paddingTop: "50px" }}>
     <div className="row">
       <Link className="navbar-brand col-md-10" to={ROUTES.LANDING}>
-        Next Ticket
+        <h1>Next Ticket</h1>
       </Link>
       <Link to={ROUTES.USER_PROFILE} className="nav-link">
         <i
@@ -28,7 +28,7 @@ const NavigationAuth = () => (
 const NavigationNonAuth = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
     <Link className="navbar-brand" to={ROUTES.LANDING}>
-      Next Ticket
+        <h1>Next Ticket</h1>
     </Link>
     <button
       className="navbar-toggler"
