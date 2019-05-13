@@ -79,7 +79,6 @@ body {
 }
 
 .btn-primary:disabled {
-  text-decoration: line-through;
   background-color: #076209;
 }
 
