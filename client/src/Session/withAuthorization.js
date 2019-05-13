@@ -5,7 +5,6 @@ import { compose } from "recompose";
 import AuthUserContext from "./context";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../constants/routes";
-import { SignInForm } from "../components/SignIn";
 
 const withAuthorization = (condition = authUser => !!authUser) => Component => {
   class WithAuthorization extends React.Component {
@@ -16,6 +15,7 @@ const withAuthorization = (condition = authUser => !!authUser) => Component => {
       });
     }
     componentDidMount() {
+      console.log(`THis ${JSON.stringify(this.props.firebase)}`);
       this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
         this.setState({
           isLoading: false
