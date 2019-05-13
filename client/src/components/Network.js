@@ -47,7 +47,7 @@ class Network {
    * @param {string} uid The user id.
    */
   async syncWatchlistForLogin(uid) {
-      await this.axiosInstance.post("/movies/sync", { uid: uid });
+    await this.axiosInstance.post("/movies/sync", { uid: uid });
   }
 
   async removeMovieFromWatchlist(uid, movieID) {

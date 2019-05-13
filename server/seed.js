@@ -31,6 +31,7 @@ const main = async () => {
     console.log("Seeding database is done!");
     await db.serverConfig.close();
   });
+  const addMoviestoWatchListForTester = uid => {};
 };
 
 main().catch(console.log);
