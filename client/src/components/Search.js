@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import SpeechToText from "./SpeechToText";
 import Network from "./Network";
 import { AuthUserContext } from "../Session";
@@ -10,7 +11,10 @@ class Search extends Component {
     this.state = {
       searchValue: props.searchText ? props.searchText : "",
       uid: null,
-      transcript: ""
+      transcript: "",
+      redirectTo: null,
+      accepted: null,
+      error: null
     };
     super(props);
     this.onFinalTranscript = this.onFinalTranscript.bind(this);
@@ -53,7 +57,6 @@ class Search extends Component {
     let movieData = await this.network.getMovieFromMovieName(name);
     console.log(movieData);
     if (movieData) {
-      console.log(this.authUser);
 
       try {
         let resultData = await this.network.addMovieToWatchList(
@@ -62,10 +65,11 @@ class Search extends Component {
         );
         console.log(resultData);
 
-        alert("Added to watchlist");
+        this.setState( { accepted : `Added ${name} to watchlist.`} );
         return resultData;
-      } catch (e) {
-        alert("Please try again. Couldn't get you accurately!");
+
+    } catch (e) {
+        this.setState( { error : "Please try again. Couldn't get you accurately!"} );
       }
     }
   }
@@ -78,45 +82,93 @@ class Search extends Component {
           uid,
           movieData._id
         );
-        alert("Removed from watchlist");
+        this.setState( { accepted : `Removed ${name}.` } );
         return resultData;
       } catch (e) {
-        alert("Please try again. Couldn't get you accurately!");
+        this.setState( { error : "Please try again. Couldn't get you accurately!" } );
       }
     } else {
-      alert("Please try again. Couldn't get you accurately!");
+      this.setState( { error : "Please try again. Couldn't get you accurately!" } );
     }
   }
 
-  onFinalTranscript(transcript, uid) {
-    let transcriptWordArray = transcript.toLowerCase().split(" ");
-    if (transcript.includes("search")) {
-      transcriptWordArray.shift();
-      let nextVal = transcriptWordArray.join(" ");
-      if (nextVal) {
-        this.setState({
-          searchValue: nextVal
-        });
-        this.props.performSearch(nextVal);
-      }
-    } else if (transcript.includes("add")) {
-      transcriptWordArray.shift();
-      let movieName = transcriptWordArray.join(" ");
-      console.log(movieName);
-      this.performAdd(uid, movieName);
-    } else if (transcript.includes("remove")) {
-      transcriptWordArray.shift();
-      console.log(transcriptWordArray);
-      let movieName = transcriptWordArray.join(" ");
-      console.log(movieName);
-      this.performRemove(movieName, uid);
+    onFinalTranscript(transcript, uid) {
+
+        let transcriptWordArray = transcript.toLowerCase().split(" ");
+
+        if (transcript.includes("search")) {
+
+            transcriptWordArray.shift();
+            let nextVal = transcriptWordArray.join(" ");
+            if (nextVal) {
+                this.setState({
+                    searchValue: nextVal
+                });
+                this.props.performSearch(nextVal);
+            }
+        }
+        else if (transcript.includes("add")) {
+
+            transcriptWordArray.shift();
+            let movieName = transcriptWordArray.join(" ");
+
+            this.performAdd(uid, movieName);
+        }
+        else if (transcript.includes("remove")) {
+
+            console.log("")
+
+            transcriptWordArray.shift();
+
+            let movieName = transcriptWordArray.join(" ");
+            this.performRemove(movieName, uid);
+        }
+        else if (
+            transcript.includes("show") ||
+            transcript.includes("recommendations") ||
+            transcript.includes("recommend")  ||
+            transcript.includes("watchlist") ||
+            transcript.includes("watch") ||
+            transcript.includes("list")
+        ) {
+
+            if(
+                transcript.includes("recommendations") ||
+                transcript.includes("recommend")
+            ) {
+                this.props.onRecomemndationTapped(uid);
+            }
+            else if(
+                transcript.includes("watchlist") ||
+                transcript.includes("watch") ||
+                transcript.includes("list")
+            ) {
+                this.props.onWatchListTapped(uid);
+            }
+            else {
+                this.setState( { error : `Please try again. I heard ${transcript}` } );
+            }
+        }
+        else {
+            this.setState( { error : `Please try again. I heard ${transcript}` } );
+        }
     }
-  }
 
   render() {
     console.log("render search");
     const { searchValue } = this.state;
     console.log(`Search val ${searchValue}`);
+
+    const voiceActionPerformedLabel = ( ! this.state.accepted) ? null :
+        <div className="row alert alert-success alert-anim ml-2 mr-2" role="alert">
+            {`${this.state.accepted}`}
+        </div>
+
+    const voiceActionErrorLabel = ( ! this.state.error) ? null :
+        <div className="row alert alert-danger alert-anim ml-2 mr-2" role="alert">
+            {`${this.state.error}`}
+        </div>
+
     return (
       <div>
         <form className="mt-5 row no-gutters">
@@ -152,6 +204,8 @@ class Search extends Component {
             </AuthUserContext.Consumer>
           </div>
         </form>
+        {voiceActionPerformedLabel && voiceActionPerformedLabel}
+        {voiceActionErrorLabel && voiceActionErrorLabel}
       </div>
     );
   }
