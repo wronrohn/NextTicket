@@ -5,7 +5,7 @@ import { withRouter, Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import { compose } from "recompose";
 import { SignInPageLink } from "../SignIn";
-
+import Error from "../Error";
 const SignupPage = () => (
   <div style={{ paddingTop: "4rem" }}>
     <SignUpForm />
@@ -35,8 +35,8 @@ class SignUpFormBase extends React.Component {
   async onSubmit(event) {
     const { email, password } = this.state;
     event.preventDefault();
-    await this.props.firebase.createUserWithEmailAndPassword(email, password);
     try {
+      await this.props.firebase.createUserWithEmailAndPassword(email, password);
       this.setState(() => {
         return {
           email: "",
@@ -49,10 +49,8 @@ class SignUpFormBase extends React.Component {
       });
       this.props.history.push(ROUTES.LANDING);
     } catch (e) {
-      this.setState(() => {
-        return {
-          error: e
-        };
+      this.setState({
+        error: e
       });
     }
   }
@@ -74,7 +72,6 @@ class SignUpFormBase extends React.Component {
       userName === "";
     return (
       <React.Fragment>
-        {message && <p>{message}</p>}
         <div className="col-md-8 offset-md-2 mt-5">
           <h1 className="m-4 text-center text-white">Welcome to Next Ticket</h1>
           <h2
@@ -154,7 +151,7 @@ class SignUpFormBase extends React.Component {
             >
               Sign Up
             </button>
-            {error && <p>{error.message}</p>}
+            {error && <p className="text-white text-center">{error.message}</p>}
           </form>
         </div>
         <SignInPageLink />
