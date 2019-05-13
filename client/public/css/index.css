@@ -135,6 +135,13 @@ body {
     margin: 0px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .user-avatar-wrapper {
+    position: absolute;
+  }
+}
+
 .content-align-left {
   text-align: right;
 }
@@ -166,4 +173,7 @@ body {
 }
 .center-content {
   text-align: center;
+}
+.user-avatar-wrapper {
+  text-align: right;
 }
