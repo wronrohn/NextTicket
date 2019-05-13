@@ -69,7 +69,7 @@ class PasswordChangeForm extends Component {
           >
             Reset My Password
           </button>
-          {error && <p>{error.message}</p>}
+          {error && <p className="text-white text-center">{error.message}</p>}
         </form>
       </div>
     );
