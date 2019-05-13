@@ -2,30 +2,45 @@ import React, { Component } from "react";
 import Network from "./Network";
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
+import Error from "./Error";
 
 class MovieDescription extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: null
+      movie: null,
+      error: null
     };
     super(props);
     this.network = new Network();
   }
   async componentDidMount() {
     const { location } = this.props;
-    if (location) {
-      const pathName = location.pathname;
-      const movieID = pathName.substr(pathName.lastIndexOf("/") + 1);
-      const movie = await this.network.getMovieWithId(movieID);
+    try {
+      if (location) {
+        const pathName = location.pathname;
+        const movieID = pathName.substr(pathName.lastIndexOf("/") + 1);
+        const movie = await this.network.getMovieWithId(movieID);
+        this.setState({
+          movie: movie
+        });
+      }
+    } catch (e) {
       this.setState({
-        movie: movie
+        movie: null,
+        error: e
       });
     }
   }
   render() {
-    const { movie } = this.state;
-
+    const { movie, error } = this.state;
+    if (error) {
+      if (error.message) {
+        return <Error message={error.message} />;
+      } else {
+        return <Error message="Something Bad Happened" />;
+      }
+    }
     if (movie) {
       const { title, description, genre, subgenre, theme, movie: name } = movie;
       return (
