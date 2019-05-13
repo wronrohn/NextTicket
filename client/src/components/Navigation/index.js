@@ -9,7 +9,7 @@ const Navigation = () => (
   </AuthUserContext.Consumer>
 );
 
-const NavigationAuth = () => (
+const NavigationAuth = props => (
   <div className="container" style={{ paddingTop: "50px" }}>
     <div className="row">
       <div className="log-div-wrapper col-md-6">
@@ -44,6 +44,7 @@ const NavigationAuth = () => (
               color: "gray"
             }}
           />
+          <span className="text-hide">User Profile</span>
         </Link>
       </div>
     </div>
