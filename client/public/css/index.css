@@ -182,9 +182,28 @@ body {
 .center-content {
   text-align: center;
 }
+
+@keyframes fade-out-keys {
+    from {
+        visiblity: visible;
+        opacity: 1;
+    }
+    to {
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+
+.alert-anim {
+    animation-name: fade-out-keys;
+    animation-duration: 10s;
+    animation-fill-mode: forwards;
+}
+
 .user-avatar-wrapper {
   text-align: right;
 }
+
 .white-container {
   background-color: white;
   border-radius: 5px;
