@@ -49,7 +49,7 @@ class PasswordChangeForm extends Component {
           onChange={this.onChange}
           type="password"
           placeholder="New Password"
-          class="form-control form-control-lg"
+          className="form-control form-control-lg"
         />
         <br />
         <input
@@ -58,7 +58,7 @@ class PasswordChangeForm extends Component {
           onChange={this.onChange}
           type="password"
           placeholder="Confirm New Password"
-          class="form-control form-control-lg"
+          className="form-control form-control-lg"
         />
         <br />
         <button className="btn btn-primary mb-2 mt-3 form-control form-control-lg" disabled={isInvalid} type="submit">

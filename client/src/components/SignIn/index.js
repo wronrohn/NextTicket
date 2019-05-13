@@ -5,6 +5,7 @@ import * as ROUTES from "../../constants/routes";
 import { withFirebase } from "../../Firebase";
 import * as CONSTANTS from "./Constants";
 import { PasswordForgetLink } from "../ForgetPassword";
+import Network from "../Network";
 
 const SignInPage = () => (
   <div className="">
@@ -23,6 +24,7 @@ class SignInFormBase extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
+    this.network = new Network();
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
@@ -31,7 +33,10 @@ class SignInFormBase extends Component {
     const { email, password } = this.state;
     event.preventDefault();
     try {
-      await this.props.firebase.signInWithEmailAndPassword(email, password);
+      let resolved = await this.props.firebase.signInWithEmailAndPassword(email, password);
+      if(resolved && resolved.user && resolved.user.uid) {
+          this.network.syncWatchlistForLogin(resolved.user.uid);
+      }
       this.setState({ ...INITIAL_STATE });
       this.props.history.push(ROUTES.LANDING);
     } catch (error) {

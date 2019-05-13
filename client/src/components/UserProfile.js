@@ -12,9 +12,6 @@ import * as ROUTES from "../constants/routes";
 class UserProfile extends React.Component {
 
     render() {
-
-        console.log(this.props.firebase.auth.currentUser);
-
         let userEmail = this.props.firebase.auth.currentUser.email;
         let cmpUserEmail = (
             <div>

@@ -38,26 +38,42 @@ router.get("/recommendation/:id", async (req, res) => {
     if (!uid) {
       throw "uid - not given";
     }
+
     let recomendedMovieArray = [];
     let userWatchListArray = await taskData.findUserWatchlist(uid);
-    client.on("connect", function() {
+
+    client.on("connect", function () {
       console.log("Connected to Redis...");
     });
+
     for (let i = 0; i < userWatchListArray.length; i++) {
+
       let recomendedMovies = await client.getAsync(userWatchListArray[i]);
-      let r_movie_ids = Object.keys(JSON.parse(recomendedMovies)).map(item =>
-        parseInt(item)
-      );
-      for (let j = 0; j < r_movie_ids.length; j++) {
-        const movieId = r_movie_ids[j];
-        console.log(movieId);
-        let movieData = await taskData.getMovieByMovieId(movieId);
-        movieData.inWatchList = true;
-        recomendedMovieArray.push(movieData);
+
+      if (recomendedMovies) {
+        let r_movie_ids = Object.keys(JSON.parse(recomendedMovies)).map(item =>
+          parseInt(item)
+        );
+        for (let j = 0; j < r_movie_ids.length; j++) {
+          const movieId = r_movie_ids[j];
+          console.log(movieId);
+          let movieData = await taskData.getMovieByMovieId(movieId);
+          movieData.inWatchList = true;
+          recomendedMovieArray.push(movieData);
+        }
+      }
+      else {
+        // We may end up here if Redis has nothing cached but a request
+        // is made anyway. Requests can leak this way if a user makes
+        // a watchlist but the cache is cleared after.
+        recomendedMovies = [];
       }
     }
+
     res.json(recomendedMovieArray);
+
   } catch (error) {
+    console.log(error.stack);
     res.status(500).json({ error: error.message });
   }
 });
@@ -147,6 +163,27 @@ router.get("/:id", async (req, res) => {
     res.status(404).json({
       error: error.message
     });
+  }
+});
+
+/**
+ * A maintenance route that ensures requests for a watchlist are looked for
+ * in cache as soon as a user logs in.
+ *
+ * This way if a user makes a watchlist, logs out, clears redis, and logs
+ * back in, the watchlist will not disappear.
+ */
+router.post("/sync/", async (req, res) => {
+  try {
+    requestData = req.body;
+    if (!requestData.uid) {
+      throw "User id not provided.";
+    }
+    await recommendFunction(requestData.uid);
+  } catch (error) {
+    // Fails silently so as to not block client.
+    console.warn("WARNING: Exception while sync:", error.message);
+    res.status(200).json({ message: "Nothing to see here." });
   }
 });
 
