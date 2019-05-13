@@ -30,12 +30,12 @@ const NavigationAuth = () => (
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav mr-auto">
         <li className="nav-item">
-          <Link to={ROUTES.CHANGE_PASSWORD} className="nav-link">
-            Update Password
+          <Link to={ROUTES.USER_PROFILE} className="nav-link">
+            User Profile
           </Link>
         </li>
         <li className="nav-item">
-          <SignOutButton />
+          <SignOutButton className="nav-link btn btn-link"/>
         </li>
       </ul>
     </div>
