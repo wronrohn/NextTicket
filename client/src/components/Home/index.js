@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import Search from "../Search";
 import MovieList from "../MovieList";
 import RecommendWatchListMenu from "../RecommendWatchListMenu";
@@ -16,10 +17,12 @@ class Home extends Component {
       searchText: "",
       recommendation: true,
       watchList: false,
-      error: null
+      error: null,
+      voiceSelectMovie: null
     };
     this.onWatchListTapped = this.onWatchListTapped.bind(this);
     this.onRecomemndationTapped = this.onRecomemndationTapped.bind(this);
+    this.onShowMovieCard = this.onShowMovieCard.bind(this);
     this.performSearch = this.performSearch.bind(this);
     this.removeFromWatchList = this.removeFromWatchList.bind(this);
     this.network = new Network();
@@ -74,6 +77,19 @@ class Home extends Component {
     }
   }
 
+  /**
+   * Signals the Home page that the user has attempted to select a movie using
+   * the web voice api.
+   *
+   * NOTICE: The index page will be unmounted shortly after this method
+   *         completes. As a result the method must be synchronous otherwise
+   *         React will issue an exception.
+   * @param {string} movie_id
+   */
+  onShowMovieCard(movie_id) {
+      this.setState( { voiceSelectMovie: movie_id } );
+  }
+
   async performSearch(text) {
     try {
       const searchMovies = await this.network.getSearchResultForText(text);
@@ -98,12 +114,22 @@ class Home extends Component {
   }
   render() {
     const { movies, searchText, recommendation, watchList, error } = this.state;
-    return (
+
+    let retVal = null;
+
+    if(this.state.voiceSelectMovie) {
+        retVal = (
+            <Redirect to={`/movie/${this.state.voiceSelectMovie}`} />
+        );
+    }
+    else {
+        retVal = (
       <div className="container">
         <Search performSearch={this.performSearch}
                 searchText={searchText}
                 onRecomemndationTapped={this.onRecomemndationTapped}
                 onWatchListTapped={this.onWatchListTapped}
+                onShowMovieCard={this.onShowMovieCard}
         />
         <RecommendWatchListMenu
           onWatchListTapped={this.onWatchListTapped}
@@ -126,7 +152,10 @@ class Home extends Component {
         )}
       </div>
     );
+    }
+      return retVal;
   }
+
 }
 
 export default withAuthorization()(withFirebase(Home));

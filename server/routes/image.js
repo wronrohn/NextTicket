@@ -40,13 +40,14 @@ const ASSET_FANTASY = "../static/invariant/a_fantasy.svg";
  */
 async function serveImage(req, res) {
   let movieTitle = req.params.movieTitle;
-  let genre = req.params.genre.trim().toLowerCase();
+  let genre = req.params.genre;
 
   // console.log(">>>>> Serve Image:", movieTitle, genre);
 
   let file = null;
 
   if (genre) {
+    genre = genre.trim().toLowerCase();
     switch (genre) {
       case KEY_ACTION:
         file = ASSET_ACTION;

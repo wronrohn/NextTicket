@@ -74,7 +74,7 @@ class MovieDescription extends Component {
           <div className="row movie-description-inner">
             <div className="col-md-6 col-sm-12 col-lg-6 col-xs-12">
               <img
-                src={`http://localhost:3001/images/${name}.jpg`}
+                src={`http://localhost:3001/images/${genre.replace("/", "")}/${name}.jpg`}
                 className="movie-description-img"
                 alt="Placehoder"
               />
