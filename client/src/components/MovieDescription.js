@@ -57,7 +57,7 @@ class MovieDescription extends Component {
             <div className="col-md-12 col-sm-12 col-lg-6 col-xs-12">
               <div className="text-white">
                 <div>
-                  <h1 className="display-4">{title}</h1>
+                  <h1 className="display-4 movie-title">{title}</h1>
                 </div>
                 <div className="row">
                   <div className="col-md-12 col-lg-8 col-sm-8 col-xs-12">
@@ -73,7 +73,7 @@ class MovieDescription extends Component {
                   </div>
                 </div>
                 {description && <h2>Description</h2>}
-                <p className="lead">{description}</p>
+                <p className="lead movie-description">{description}</p>
               </div>
             </div>
           </div>
