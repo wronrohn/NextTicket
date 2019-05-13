@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import { withFirebase } from "../../Firebase";
 import * as ROUTES from "../../constants/routes";
+import { SignupPageLink } from "../Signup";
+import { SignInPageLink } from "../SignIn";
 
 const PasswordForgetPage = () => (
   <div style={{ paddingTop: "7rem" }}>
@@ -19,7 +21,6 @@ const INITIAL_STATE = {
 class PasswordForgetFormBase extends Component {
   constructor(props) {
     super(props);
-
     this.state = { ...INITIAL_STATE };
   }
 
@@ -87,6 +88,8 @@ class PasswordForgetFormBase extends Component {
             <p className="text-white text-center mt-5">{error.message}</p>
           )}
         </form>
+        <SignInPageLink message="Login" />
+        <SignupPageLink />
       </div>
     );
   }
