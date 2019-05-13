@@ -121,7 +121,11 @@ class Search extends Component {
       <div>
         <form className="mt-5 row no-gutters">
           <div className="input-group">
-            <label className="sr-only" htmlFor="search">
+            <label
+              className="sr-only"
+              htmlFor="search"
+              style={{ color: "#2f922f" }}
+            >
               Search
             </label>
             <input
