@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
-import SignOutButton from "../Signout";
+import logo from "./logo.png";
 import { AuthUserContext } from "../../Session";
 const Navigation = () => (
   <AuthUserContext.Consumer>
@@ -13,12 +13,33 @@ const NavigationAuth = () => (
   <div className="container" style={{ paddingTop: "50px" }}>
     <div className="row">
       <Link className="navbar-brand col-md-10" to={ROUTES.LANDING}>
-        Next Ticket
+        <img
+          style={{ height: "50px" }}
+          src={logo}
+          alt="logo"
+          className="mr-3"
+        />
+        <span
+          style={{
+            color: "white",
+            fontWeight: "bold",
+            fontSize: "2.4rem",
+            position: "relative",
+            top: "0.5rem",
+            fontVariant: "small-caps"
+          }}
+        >
+          Next Ticket
+        </span>
       </Link>
       <Link to={ROUTES.USER_PROFILE} className="nav-link">
         <i
           className="far fa-user-circle"
-          style={{ fontSize: "3.5rem", paddingLeft: "3.2rem", color: "gray" }}
+          style={{
+            fontSize: "3.5rem",
+            paddingLeft: "3.2rem",
+            color: "gray"
+          }}
         />
       </Link>
     </div>
