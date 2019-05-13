@@ -46,17 +46,19 @@ class SpeechToTextButton extends Component {
       // hint that web-speech exists.
       return (
         <div>
-            <button className="btn btn-primary mb-2 start-btn" disabled>
-                <i class="fas fa-microphone" />
-            </button>
+          <button className="btn btn-primary mb-2 start-btn" disabled>
+            <i class="fas fa-microphone" />
+          </button>
         </div>
       );
     }
     return (
       <div>
+        <label for="voicecommand" />
         <button
           className="btn btn-primary mb-2 start-btn"
           onClick={this.onClickSpeech}
+          id="voicecommand"
         >
           {this.state.isListening ? (
             <i class="fas fa-microphone-slash" />
