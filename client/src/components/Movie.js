@@ -11,7 +11,6 @@ class Movie extends Component {
     };
     this.watchlistButtonClicked = this.watchlistButtonClicked.bind(this);
     this.removeFromWatchList = this.removeFromWatchList.bind(this);
-
     this.network = new Network();
   }
 

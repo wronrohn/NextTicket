@@ -113,11 +113,11 @@ router.put("/watchlist/", async (req, res) => {
 
 // router.post("/recommendations/", recommendFunction);
 
-router.get("/name/", async(req, res) => {
+router.get("/name/", async (req, res) => {
   console.log("inside the route");
   try {
     let requestData = req.query.text;
-    console.log(requestData)
+    console.log(requestData);
     if (!requestData) {
       throw "Provide movie name";
     }
@@ -140,10 +140,11 @@ router.get("/:id", async (req, res) => {
       throw "Provide uid or Movie id";
     }
     let r_moviesJSON = await taskData.getMoviesByID(requestData.id);
-    console.log(r_moviesJSON);
+    console.log(`Moview JSOn ${r_moviesJSON}`);
     res.json(r_moviesJSON);
   } catch (error) {
-    res.status(500).json({
+    console.log(`Error ${e}`);
+    res.status(404).json({
       error: error.message
     });
   }
