@@ -30,7 +30,7 @@ class RecommendWatchListMenu extends Component {
                 <button
                   className={
                     recommendation
-                      ? `nav-link btn btn-link`
+                      ? `nav-link btn btn-link menu-link`
                       : `disable-button-nav nav-link btn btn-link`
                   }
                   onClick={e => {
@@ -54,7 +54,7 @@ class RecommendWatchListMenu extends Component {
                 <button
                   className={
                     watchlist
-                      ? `nav-link btn btn-link`
+                      ? `nav-link btn btn-link menu-link`
                       : `disable-button-nav nav-link btn btn-link`
                   }
                   onClick={e => {

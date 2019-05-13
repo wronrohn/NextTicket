@@ -70,12 +70,16 @@ body {
 .btn-primary:disabled,
 .btn-primary:active:focus,
 .btn-primary:focus {
-  background-color: #01b01f;
-  border-color: #01b01f;
+  background-color: #008b00;
+  border-color: #008b00;
   outline: none;
 }
 .btn:focus {
   outline: none;
+}
+
+.btn-primary:disabled {
+  background-color: #076209;
 }
 
 .img-wrapper {
@@ -90,7 +94,7 @@ body {
 .btn-link,
 .btn-link:hover,
 .btn-link:disabled {
-  color: #01b01f;
+  color: #008b00;
 }
 
 .disable-button-nav {
@@ -107,9 +111,13 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.menu-link {
+  color: #2f922f;
+}
 .start-btn {
   margin: 0px 5px;
 }
+
 .movie-title {
   padding-bottom: 5px;
 }
@@ -127,7 +135,7 @@ body {
 
 .btn-primary.focus,
 .btn-primary:focus {
-  box-shadow: 0 0 0 0.2rem #01b01f;
+  box-shadow: 0 0 0 0.2rem #008b00;
 }
 @media screen and (max-width: 767px) {
   .movie-details-wrapper {
@@ -135,6 +143,13 @@ body {
     margin: 0px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .user-avatar-wrapper {
+    position: absolute;
+  }
+}
+
 .content-align-left {
   text-align: right;
 }
@@ -147,7 +162,7 @@ body {
   padding-top: 100px;
 }
 .watch-list-text {
-  color: #01b01f;
+  color: #2f922f;
 }
 .movie-description-inner {
   padding-top: 20px;
@@ -183,4 +198,17 @@ body {
     animation-name: fade-out-keys;
     animation-duration: 10s;
     animation-fill-mode: forwards;
+}
+
+.user-avatar-wrapper {
+  text-align: right;
+}
+
+.white-container {
+  background-color: white;
+  border-radius: 5px;
+  width: 350px;
+  margin: 0px auto;
+  padding: 13px;
+  margin-top: 75px;
 }

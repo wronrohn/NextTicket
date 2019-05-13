@@ -122,9 +122,11 @@ const SignInForm = compose(
   withFirebase
 )(SignInFormBase);
 
-const SignInPageLink = () => (
+const SignInPageLink = ({ message }) => (
   <p className="text-center">
-    <Link to={ROUTES.SIGNIN}>Already a Member?</Link>
+    <Link to={ROUTES.SIGNIN}>
+      {message ? `${message}` : `Already a Member?`}
+    </Link>
   </p>
 );
 
