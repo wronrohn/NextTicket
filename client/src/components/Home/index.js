@@ -116,7 +116,7 @@ class Home extends Component {
         {movies && (
           <MovieList
             movies={movies}
-            removeFromWatchList={this.removeFromWatchList}
+            removeFromWatchList={watchList ? this.removeFromWatchList : null}
             error={error}
           />
         )}
