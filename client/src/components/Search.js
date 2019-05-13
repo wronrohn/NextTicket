@@ -116,6 +116,7 @@ class Search extends Component {
   render() {
     console.log("render search");
     const { searchValue } = this.state;
+    const isInvalid = searchValue === "";
     console.log(`Search val ${searchValue}`);
     return (
       <div>
@@ -139,6 +140,7 @@ class Search extends Component {
             <button
               type="submit"
               className="btn btn-primary mb-2"
+              disabled={isInvalid}
               onClick={this.onSubmittingSearch}
             >
               Search
