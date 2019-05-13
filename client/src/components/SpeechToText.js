@@ -41,7 +41,16 @@ class SpeechToTextButton extends Component {
   render() {
     const { browserSupportsSpeechRecognition } = this.props;
     if (!browserSupportsSpeechRecognition) {
-      return null;
+      // If the browser doesn't support speech, then return a disabled
+      // button. This way if you run it in Firefox by accident there's a
+      // hint that web-speech exists.
+      return (
+        <div>
+            <button className="btn btn-primary mb-2 start-btn" disabled>
+                <i class="fas fa-microphone" />
+            </button>
+        </div>
+      );
     }
     return (
       <div>
