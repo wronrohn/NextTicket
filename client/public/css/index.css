@@ -78,6 +78,11 @@ body {
   outline: none;
 }
 
+.btn-primary:disabled {
+  text-decoration: line-through;
+  background-color: #076209;
+}
+
 .img-wrapper {
   overflow: hidden;
 }
