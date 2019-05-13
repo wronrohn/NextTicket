@@ -28,10 +28,16 @@ const main = async () => {
       console.log(taskNew);
     }
     // await db.dropDatabase();
+    await addMoviestoWatchListForTester("r3VETwgRS2PqatOuE556MLIKzxx2");
     console.log("Seeding database is done!");
     await db.serverConfig.close();
   });
-  const addMoviestoWatchListForTester = uid => {};
+  const addMoviestoWatchListForTester = async uid => {
+    let tenMovies = await taskObj.getFirstTenMovies();
+    for (let movie of tenMovies) {
+      await taskObj.addToWatchList(movie._id, uid);
+    }
+  };
 };
 
 main().catch(console.log);

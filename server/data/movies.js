@@ -226,6 +226,15 @@ let exportedMethods = {
     return movies;
   },
 
+  async getFirstTenMovies() {
+    const taskCollection = await tasks();
+    const movies = taskCollection
+      .find({})
+      .limit(10)
+      .toArray();
+    return movies;
+  },
+
   async findMoviesInWhichTitleContains(text) {
     const movieCollection = await tasks();
     movieCollection.createIndex({ title: "text" });
