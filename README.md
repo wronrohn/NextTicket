@@ -68,34 +68,49 @@ The client expects that its complimentary server is already up and running befor
 
 ## Contributions:
 
-### Sumit Oberoi:
+### Sumit Oberoi
 
-Was tasked to worked on frontend. Ended up doing following
-1. Built all the react components (except for Speech to text)
-2. Integrated APIs and Routing on Frontend
-3. Integrated Firebase Authentication for email and Google Login Scheme
-4. Worked with Athiban on CSS for the complete app
-5. Made base component for web to speech which was refined by Davor, Chunli and Rohnit
-6. Built search movies API
-7. Added Tota11y across the app
-8. Created App logo and other static assets except for movie and genre placeholder images for the app
+Was tasked to worked on frontend. Ended up doing following:
 
-### Rohnit:
-Was asked to do WebSpeech api implementation and styling
+* Built all the react components (except for Speech to text)
+* Integrated APIs and Routing on Frontend
+* Integrated Firebase Authentication for email and Google Login Scheme
+* Worked with Athiban on CSS for the complete app
+* Made base component for web to speech which was refined by Davor, Chunli and Rohnit
+* Built search movies API
+* Added Tota11y across the app
+* Created App logo and other static assets except for movie and genre placeholder images for the app
 
-Did webspeech api, helped server sided api for watchlists and basic UI styling for forms
+### Rohnit Shetty
+
+Was taked to integrate WebSpeech api. Did the following:
+
+* Implemented webspeech api. Worked to refine it with Chunli and Davor.
+* Added basic UI styling for forms.
+* Helped add server sided api for watchlists.
+* Performed misc. implementation tasks.
+* Helped develop styling for client side app.
 
 ### Davor Risteski
 
 Taksed with working on server. Did the following:
 
-1. Rebuilt Python module into a persistent process with Redis pubsub.
-3. Setup recommendations route with separate Redis pubsub schema for Express.
-4. Setup synchronize/cache on login for Express.
-5. Setup image route that serves image placeholders for movies.
-6. Created and integrated User profile page.
-7. Refined webspeech with additional commands, fault tolerance, and tweaked behavior.
-8. Misc. Bug hunting, error checking, minor styling, and created placeholder images.
+* Rebuilt Python module into a persistent process with Redis pubsub.
+* Setup recommendations route with separate Redis pubsub schema for Express.
+* Setup synchronize/cache on login for Express.
+* Setup image route that serves image placeholders for movies.
+* Created and integrated User profile page.
+* Refined webspeech with additional commands, fault tolerance, and tweaked behavior.
+* Misc. Bug hunting, error checking, minor styling, and created placeholder images.
+
+### Chunli Liu
+
+Was taked to integrate WebSpeech api. Did the following:
+
+* Implemented webspeech api (shared responsibility with Rhonit). Worked to refine with Rhonit and Davor.
+* Worked to streamline user interface.
+* Performed extensive unit, route, and component testing for both server and client.
+* Performed extensive integration testing.
 
 # Works Cited & Consulted
 
