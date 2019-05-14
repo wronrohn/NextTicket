@@ -81,7 +81,19 @@ Was tasked to worked on frontend. Ended up doing following:
 * Added Tota11y across the app
 * Created App logo and other static assets except for movie and genre placeholder images for the app
 
-## Rohnit Shetty
+### Athiban P:
+
+Was tasked to work on creating API's. Did the following.
+
+* Created APIs for all the functionalities.
+* Setup Express server routes to serve all the APIs.
+* Created a seed.js script to populate the Database (MongoDB).
+* Worked on making the website responsive.
+* Coordinated with Sumit to updated APIs as bugs came in.
+* Created a python script to scrape images from https://www.allmovie.com/.
+* Misc: Bug fixing, handling edge conditions and styling.
+
+### Rohnit Shetty
 
 Was tasked to integrate WebSpeech api. Did the following:
 
