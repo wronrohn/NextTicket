@@ -80,6 +80,11 @@ Was tasked to worked on frontend. Ended up doing following
 7. Added Tota11y across the app
 8. Created App logo and other static assets except for movie and genre placeholder images for the app
 
+### Rohnit:
+Was asked to do WebSpeech api implementation and styling
+
+Did webspeech api, helped server sided api for watchlists and basic UI styling for forms
+
 # Works Cited & Consulted
 
 Hill, Patrick. "React Second Lecture/Firebase Auth" Computer Science 554. Stevens Institute of Technology, New Jersey. 21 Feb. 2019. Example Project.
