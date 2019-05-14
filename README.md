@@ -50,7 +50,7 @@ npm start
 
 The server expects that a Redis process is already running and listening on the default port of `6379`. Additionally, in order to maintain cross platform compatibility the server will try to use the correct version of Python depending on the operating system. For Windows this is `py`, while for Linux and Mac this is `Python3`.
 
-Note that the server will run on port 3000 by default.
+Note that the server will run on port 3001 by default.
 
 # Client
 
