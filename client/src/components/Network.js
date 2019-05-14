@@ -14,14 +14,12 @@ class Network {
   }
   async getMovieWithId(id) {
     let seachMoviesData = await this.axiosInstance.get(`/movies/${id}`);
-    console.log(seachMoviesData);
     if (seachMoviesData && seachMoviesData.data) {
       return seachMoviesData.data;
     }
   }
   async getMovieFromMovieName(name) {
     let searchData = await this.axiosInstance.get(`/movies/name/?text=${name}`);
-    console.log(searchData);
     if (searchData && searchData.data) {
       return searchData.data;
     }

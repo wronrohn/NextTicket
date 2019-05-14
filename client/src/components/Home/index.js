@@ -71,7 +71,6 @@ class Home extends Component {
   }
   async componentDidMount() {
     const { uid: currentUserUID } = this.props.firebase.auth.currentUser;
-    console.log(this.props.firebase.auth.currentUser.uid);
     if (currentUserUID) {
       this.onRecomemndationTapped(currentUserUID);
     }
@@ -87,7 +86,7 @@ class Home extends Component {
    * @param {string} movie_id
    */
   onShowMovieCard(movie_id) {
-      this.setState( { voiceSelectMovie: movie_id } );
+    this.setState({ voiceSelectMovie: movie_id });
   }
 
   async performSearch(text) {
@@ -117,45 +116,42 @@ class Home extends Component {
 
     let retVal = null;
 
-    if(this.state.voiceSelectMovie) {
-        retVal = (
-            <Redirect to={`/movie/${this.state.voiceSelectMovie}`} />
-        );
-    }
-    else {
-        retVal = (
-      <div className="container">
-        <Search performSearch={this.performSearch}
-                searchText={searchText}
-                onRecomemndationTapped={this.onRecomemndationTapped}
-                onWatchListTapped={this.onWatchListTapped}
-                onShowMovieCard={this.onShowMovieCard}
-        />
-        <RecommendWatchListMenu
-          onWatchListTapped={this.onWatchListTapped}
-          onRecomemndationTapped={this.onRecomemndationTapped}
-          recommendation={recommendation}
-          watchlist={watchList}
-        />
-        {error &&
-          (error.message ? (
-            <Error message={error.message} />
-          ) : (
-            <Error message={`Something bad happened`} />
-          ))}
-        {movies && (
-          <MovieList
-            movies={movies}
-            removeFromWatchList={watchList ? this.removeFromWatchList : null}
-            error={error}
+    if (this.state.voiceSelectMovie) {
+      retVal = <Redirect to={`/movie/${this.state.voiceSelectMovie}`} />;
+    } else {
+      retVal = (
+        <div className="container">
+          <Search
+            performSearch={this.performSearch}
+            searchText={searchText}
+            onRecomemndationTapped={this.onRecomemndationTapped}
+            onWatchListTapped={this.onWatchListTapped}
+            onShowMovieCard={this.onShowMovieCard}
           />
-        )}
-      </div>
-    );
+          <RecommendWatchListMenu
+            onWatchListTapped={this.onWatchListTapped}
+            onRecomemndationTapped={this.onRecomemndationTapped}
+            recommendation={recommendation}
+            watchlist={watchList}
+          />
+          {error &&
+            (error.message ? (
+              <Error message={error.message} />
+            ) : (
+              <Error message={`Something bad happened`} />
+            ))}
+          {movies && (
+            <MovieList
+              movies={movies}
+              removeFromWatchList={watchList ? this.removeFromWatchList : null}
+              error={error}
+            />
+          )}
+        </div>
+      );
     }
-      return retVal;
+    return retVal;
   }
-
 }
 
 export default withAuthorization()(withFirebase(Home));

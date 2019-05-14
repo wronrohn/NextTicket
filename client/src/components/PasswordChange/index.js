@@ -2,33 +2,36 @@ import React, { Component } from "react";
 
 import { withFirebase } from "../../Firebase";
 import { withAuthorization } from "../../Session";
-import { SignInPageLink } from "../SignIn";
 
 const INITIAL_STATE = {
   passwordOne: "",
   passwordTwo: "",
-  error: null
+  error: null,
+  message: ""
 };
 
 class PasswordChangeForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = { ...INITIAL_STATE };
   }
 
   onSubmit = event => {
     const { passwordOne } = this.state;
-
     this.props.firebase
       .passwordUpdate(passwordOne)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
+        this.setState({
+          passwordOne: "",
+          passwordTwo: "",
+          error: null,
+          message:
+            "Your password has been changed. Use this password for further login"
+        });
       })
       .catch(error => {
         this.setState({ error });
       });
-
     event.preventDefault();
   };
 

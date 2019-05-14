@@ -59,14 +59,7 @@ class SignUpFormBase extends React.Component {
   }
 
   render() {
-    const {
-      email,
-      password,
-      userName,
-      repeatPassword,
-      error,
-      message
-    } = this.state;
+    const { email, password, userName, repeatPassword, error } = this.state;
     const isInvalid =
       password !== repeatPassword ||
       password === "" ||

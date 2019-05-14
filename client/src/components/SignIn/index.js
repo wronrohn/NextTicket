@@ -53,19 +53,15 @@ class SignInFormBase extends Component {
   }
 
   onChange(event) {
-    console.log(`ON CHANGE`);
     this.setState({ [event.target.name]: event.target.value });
   }
 
   async signWithGmail(event) {
     //event.preventDefault();
-    console.log("here in signin");
     try {
-      const authUser = await this.props.firebase.signWithGmail();
-      console.log(`User -> Auth User ${JSON.stringify(authUser)}`);
+      await this.props.firebase.signWithGmail();
       this.props.history.push(ROUTES.LANDING);
     } catch (e) {
-      console.log(`ERRRO ON CLICK ${e}`);
       this.setState({
         error: e,
         message: null

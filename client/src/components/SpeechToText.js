@@ -10,48 +10,34 @@ class SpeechToTextButton extends Component {
     this.onClickSpeech = this.onClickSpeech.bind(this);
   }
   componentDidMount() {
-
-        console.log(">>>>> Speech did mount");
-
     this.props.resetTranscript();
     this.props.stopListening();
   }
   componentWillUnmount() {
-
-    console.log(">>>>> Speech will unmount");
-
     this.props.resetTranscript();
     this.props.abortListening();
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.finalTranscript && this.state.isListening) {
-        nextProps.stopListening && nextProps.stopListening();
-        nextProps.onFinalTranscript && nextProps.onFinalTranscript(nextProps.finalTranscript);
-        this.setState((state, _) => ( { isListening: false } ));
+    if (nextProps.finalTranscript && this.state.isListening) {
+      nextProps.stopListening && nextProps.stopListening();
+      nextProps.onFinalTranscript &&
+        nextProps.onFinalTranscript(nextProps.finalTranscript);
+      this.setState((state, _) => ({ isListening: false }));
     }
   }
 
   onClickSpeech(event) {
     event.preventDefault();
+    const { resetTranscript, startListening, stopListening } = this.props;
 
-    console.log(">>>>> Speech on click", `${this.state.isListening}`);
-
-    const {
-      finalTranscript,
-      onFinalTranscript,
-      resetTranscript,
-      startListening,
-      stopListening
-    } = this.props;
-
-    if ( ! this.state.isListening) {
+    if (!this.state.isListening) {
       resetTranscript();
       startListening();
-      this.setState((state, _) => ( { isListening: true } ));
+      this.setState((state, _) => ({ isListening: true }));
     } else {
       stopListening();
-      this.setState((state, _) => ( { isListening: false } ));
+      this.setState((state, _) => ({ isListening: false }));
     }
   }
 
@@ -63,9 +49,9 @@ class SpeechToTextButton extends Component {
       // hint that web-speech exists.
       return (
         <div>
-            <button className="btn btn-primary mb-2 start-btn" disabled>
-                <i className="fas fa-microphone" />
-            </button>
+          <button className="btn btn-primary mb-2 start-btn" disabled>
+            <i className="fas fa-microphone" />
+          </button>
         </div>
       );
     }

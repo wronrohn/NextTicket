@@ -23,9 +23,7 @@ const withAuthentication = Component => {
               : this.setState({ authUser: null, isLoading: false });
           }
         );
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     }
 
     componentWillUnmount() {

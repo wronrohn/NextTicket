@@ -4,7 +4,7 @@ import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import Error from "./Error";
 import { AuthUserContext } from "../Session";
-import Rating from "react-rating";
+
 class MovieDescription extends Component {
   constructor(props) {
     super(props);
@@ -66,7 +66,6 @@ class MovieDescription extends Component {
         theme,
         movie: name,
         watchlist,
-        rating,
         releasedate
       } = movie;
       return (
@@ -74,9 +73,15 @@ class MovieDescription extends Component {
           <div className="row movie-description-inner">
             <div className="col-md-6 col-sm-12 col-lg-6 col-xs-12">
               <img
-                src={`http://localhost:3001/images/${genre.replace("/", "")}/${name}.jpg`}
+                src={`http://localhost:3001/images/${genre.replace(
+                  "/",
+                  ""
+                )}/${name}.jpg`}
                 className="movie-description-img"
                 alt="Placehoder"
+                style={{
+                  objectFit: "cover"
+                }}
               />
             </div>
 
