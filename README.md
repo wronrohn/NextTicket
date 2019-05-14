@@ -70,6 +70,8 @@ npm start
 
 The client expects that its complimentary server is already up and running before it is executed.
 
+Note that the client will run on port 3000 by default.
+
 # Contributions:
 
 ## Sumit Oberoi
