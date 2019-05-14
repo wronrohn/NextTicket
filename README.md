@@ -35,6 +35,7 @@ In order to setup the server first navigate to the `server` directory using `cd 
 ```
 npm install
 npm run pip
+npm run seed
 ```
 
 __Note that `pip` and `npm` must be run separately as they depend on the end user's platform - as noted above `pip` must either be `pip3` or an alias for `pip3`.__
