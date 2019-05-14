@@ -16,6 +16,9 @@ class SignInGoogleBase extends Component {
       .then(socialAuthUser => {
         this.setState({ error: null });
         console.log(`User ${JSON.stringify(socialAuthUser)}`);
+        if (socialAuthUser && socialAuthUser.user.uid) {
+          this.network.syncWatchlistForLogin(socialAuthUser.user.uid);
+        }
         this.props.history.push(ROUTES.LANDING);
       })
       .catch(error => {
