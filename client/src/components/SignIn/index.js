@@ -7,10 +7,12 @@ import * as CONSTANTS from "./Constants";
 import { PasswordForgetLink } from "../ForgetPassword";
 import Network from "../Network";
 import { SignupPageLink } from "../Signup";
+import SignInWithGoogle from "../SignInWithGoogle";
 
 const SignInPage = () => (
   <div style={{ paddingTop: "10rem" }}>
     <SignInForm />
+    <SignInWithGoogle />
     <PasswordForgetLink className="p-5 m-5" />
     <SignupPageLink className="p-5 m-5" />
   </div>
@@ -29,6 +31,7 @@ class SignInFormBase extends Component {
     this.network = new Network();
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.signWithGmail = this.onChange.bind(this);
   }
 
   async onSubmit(event) {
@@ -50,7 +53,24 @@ class SignInFormBase extends Component {
   }
 
   onChange(event) {
+    console.log(`ON CHANGE`);
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  async signWithGmail(event) {
+    //event.preventDefault();
+    console.log("here in signin");
+    try {
+      const authUser = await this.props.firebase.signWithGmail();
+      console.log(`User -> Auth User ${JSON.stringify(authUser)}`);
+      this.props.history.push(ROUTES.LANDING);
+    } catch (e) {
+      console.log(`ERRRO ON CLICK ${e}`);
+      this.setState({
+        error: e,
+        message: null
+      });
+    }
   }
 
   render() {
@@ -104,7 +124,7 @@ class SignInFormBase extends Component {
             />
           </div>
           <button
-            className="btn btn-primary mb-2 mt-3 form-control form-control-lg"
+            className="btn btn-primary mb-1 mt-3 form-control form-control-lg"
             disabled={isInvalid}
             type="submit"
           >
