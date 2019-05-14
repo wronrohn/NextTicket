@@ -147,6 +147,9 @@ body {
 @media screen and (max-width: 767px) {
   .user-avatar-wrapper {
     position: absolute;
+    margin-left: 66%;
+    /* right: -15px; */
+    width: 60px;
   }
 }
 
@@ -184,20 +187,20 @@ body {
 }
 
 @keyframes fade-out-keys {
-    from {
-        visiblity: visible;
-        opacity: 1;
-    }
-    to {
-        visibility: hidden;
-        opacity: 0;
-    }
+  from {
+    visiblity: visible;
+    opacity: 1;
+  }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
 }
 
 .alert-anim {
-    animation-name: fade-out-keys;
-    animation-duration: 10s;
-    animation-fill-mode: forwards;
+  animation-name: fade-out-keys;
+  animation-duration: 10s;
+  animation-fill-mode: forwards;
 }
 
 .user-avatar-wrapper {

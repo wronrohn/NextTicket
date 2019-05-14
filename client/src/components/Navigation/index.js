@@ -44,7 +44,9 @@ const NavigationAuth = props => (
               color: "gray"
             }}
           />
-          <span className="text-hide">User Profile</span>
+          <span className="text-hide" style={{ width: "0px", height: "0px" }}>
+            User Profile
+          </span>
         </Link>
       </div>
     </div>
