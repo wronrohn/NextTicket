@@ -56,7 +56,7 @@ class Search extends Component {
   async performAdd(uid, name) {
     let movieData = await this.network.getMovieFromMovieName(name);
     console.log(movieData);
-    if (movieData) {
+    if (movieData && movieData._id) {
 
       try {
         let resultData = await this.network.addMovieToWatchList(
@@ -76,7 +76,7 @@ class Search extends Component {
 
   async performRemove(name, uid) {
     let movieData = await this.network.getMovieFromMovieName(name);
-    if (movieData) {
+    if (movieData && movieData._id) {
       try {
         let resultData = await this.network.removeMovieFromWatchlist(
           uid,
@@ -91,6 +91,17 @@ class Search extends Component {
       this.setState( { error : "Please try again. Couldn't get you accurately!" } );
     }
   }
+
+    async performShowMovieCard(movie) {
+        let movieData = await this.network.getMovieFromMovieName(movie);
+        console.log(">>>>> movieData", movieData);
+        if(movieData && movieData._id) {
+            this.props.onShowMovieCard(movieData._id);
+        }
+        else {
+            this.setState( { error : "Please try again. Couldn't get you accurately!" } );
+        }
+    }
 
     onFinalTranscript(transcript, uid) {
 
@@ -124,9 +135,22 @@ class Search extends Component {
             this.performRemove(movieName, uid);
         }
         else if (
+            // transcript.includes("What is <movie name> about")
+            transcript.includes("what is") ||
+            transcript.includes("about")
+        ) {
+            let snippet = transcript.toLowerCase().replace("what is", "");
+            snippet = snippet.replace("what", "");
+            snippet = snippet.replace(new RegExp("about$"), "");
+            snippet = snippet.trim();
+            this.performShowMovieCard(snippet);
+        }
+        else if (
             transcript.includes("show") ||
             transcript.includes("recommendations") ||
             transcript.includes("recommend")  ||
+            transcript.includes("what should") ||
+            transcript.includes("watch next") ||
             transcript.includes("watchlist") ||
             transcript.includes("watch") ||
             transcript.includes("list")
@@ -134,7 +158,9 @@ class Search extends Component {
 
             if(
                 transcript.includes("recommendations") ||
-                transcript.includes("recommend")
+                transcript.includes("recommend") ||
+                transcript.includes("what should") ||
+                transcript.includes("watch next")
             ) {
                 this.props.onRecomemndationTapped(uid);
             }
@@ -146,11 +172,11 @@ class Search extends Component {
                 this.props.onWatchListTapped(uid);
             }
             else {
-                this.setState( { error : `Please try again. I heard ${transcript}` } );
+                this.setState( { error : `Please try again. I heard '${transcript}'.` } );
             }
         }
         else {
-            this.setState( { error : `Please try again. I heard ${transcript}` } );
+            this.setState( { error : `Please try again. I heard '${transcript}'.` } );
         }
     }
 
