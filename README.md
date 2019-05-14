@@ -71,7 +71,7 @@ The client expects that its complimentary server is already up and running befor
 ### Sumit Oberoi:
 
 Was tasked to worked on frontend. Ended up doing following
-1. Made all the react components (except for Speech to text)
+1. Built all the react components (except for Speech to text)
 2. Integrated Firebase Authentication for email and Google Login Scheme
 3. Worked with Athiban on CSS for the complete app
 4. Made base component for web to speech which was refined by Davor, Chunli and Rohnit
