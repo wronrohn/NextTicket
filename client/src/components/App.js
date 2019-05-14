@@ -8,7 +8,6 @@ import { withAuthentication } from "../Session";
 import PasswordChange from "./PasswordChange";
 import PasswordForgetPage from "./ForgetPassword";
 import Home from "./Home";
-import { AuthUserContext } from "../Session";
 import MovieDescription from "./MovieDescription";
 import UserProfile from "./UserProfile";
 import NoResultFound from "../NoResultFound";
@@ -16,7 +15,7 @@ import NoResultFound from "../NoResultFound";
 /**
  * Main entrypoint for the client-side applicaiton.
  */
-const App = () => (
+const App = props => (
   <Router>
     <div>
       <link
@@ -25,23 +24,27 @@ const App = () => (
       />
       <Navigation />
     </div>
-    <AuthUserContext.Consumer>
-      {authUser => {
-        return authUser ? (
-          <Route exact path={ROUTES.LANDING} component={Home} />
-        ) : (
-          <Route exact path={ROUTES.LANDING} component={SignupPage} />
-        );
-      }}
-    </AuthUserContext.Consumer>
-
-    <Route exact path={ROUTES.HOME} component={Home} />
-    <Route exact path={ROUTES.USER_PROFILE} component={UserProfile} />
-    <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
-    <Route exact path={ROUTES.SIGNIN} component={SignInPage} />
-    <Route exact path={ROUTES.CHANGE_PASSWORD} component={PasswordChange} />
-    <Route exact path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-    <Route exact path={ROUTES.SPECIFIC_MOVIE} component={MovieDescription} />
+    <Switch>
+      {props.firebase &&
+      props.firebase.auth &&
+      props.firebase.auth.currentUser ? (
+        <Route exact path={ROUTES.LANDING} component={Home} />
+      ) : (
+        <Route exact path={ROUTES.LANDING} component={SignupPage} />
+      )}
+      <Route exact path={ROUTES.HOME} component={Home} />
+      <Route exact path={ROUTES.USER_PROFILE} component={UserProfile} />
+      <Route exact path={ROUTES.SIGNUP} component={SignupPage} />
+      <Route exact path={ROUTES.SIGNIN} component={SignInPage} />
+      <Route exact path={ROUTES.CHANGE_PASSWORD} component={PasswordChange} />
+      <Route
+        exact
+        path={ROUTES.PASSWORD_FORGET}
+        component={PasswordForgetPage}
+      />
+      <Route exact path={ROUTES.SPECIFIC_MOVIE} component={MovieDescription} />
+      <Route component={NoResultFound} />
+    </Switch>
   </Router>
 );
 
