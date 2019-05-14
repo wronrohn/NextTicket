@@ -85,6 +85,18 @@ Was asked to do WebSpeech api implementation and styling
 
 Did webspeech api, helped server sided api for watchlists and basic UI styling for forms
 
+### Davor Risteski
+
+Taksed with working on server. Did the following:
+
+1. Rebuilt Python module into a persistent process with Redis pubsub.
+3. Setup recommendations route with separate Redis pubsub schema for Express.
+4. Setup synchronize/cache on login for Express.
+5. Setup image route that serves image placeholders for movies.
+6. Created and integrated User profile page.
+7. Refined webspeech with additional commands, fault tolerance, and tweaked behavior.
+8. Misc. Bug hunting, error checking, minor styling, and created placeholder images.
+
 # Works Cited & Consulted
 
 Hill, Patrick. "React Second Lecture/Firebase Auth" Computer Science 554. Stevens Institute of Technology, New Jersey. 21 Feb. 2019. Example Project.
