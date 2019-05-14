@@ -23,11 +23,19 @@ class SpeechToTextButton extends Component {
     this.props.resetTranscript();
     this.props.abortListening();
   }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.finalTranscript && this.state.isListening) {
+        nextProps.stopListening && nextProps.stopListening();
+        nextProps.onFinalTranscript && nextProps.onFinalTranscript(nextProps.finalTranscript);
+        this.setState((state, _) => ( { isListening: false } ));
+    }
+  }
+
   onClickSpeech(event) {
     event.preventDefault();
 
     console.log(">>>>> Speech on click", `${this.state.isListening}`);
-
 
     const {
       finalTranscript,
@@ -36,16 +44,15 @@ class SpeechToTextButton extends Component {
       startListening,
       stopListening
     } = this.props;
-    if (!this.state.isListening) {
+
+    if ( ! this.state.isListening) {
       resetTranscript();
       startListening();
+      this.setState((state, _) => ( { isListening: true } ));
     } else {
       stopListening();
-      finalTranscript && onFinalTranscript(finalTranscript);
+      this.setState((state, _) => ( { isListening: false } ));
     }
-    this.setState((state, _) => ({
-      isListening: !state.isListening
-    }));
   }
 
   render() {
