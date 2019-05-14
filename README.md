@@ -66,9 +66,9 @@ npm start
 
 The client expects that its complimentary server is already up and running before it is executed.
 
-## Contributions:
+# Contributions:
 
-### Sumit Oberoi
+## Sumit Oberoi
 
 Was tasked to worked on frontend. Ended up doing following:
 
@@ -81,19 +81,19 @@ Was tasked to worked on frontend. Ended up doing following:
 * Added Tota11y across the app
 * Created App logo and other static assets except for movie and genre placeholder images for the app
 
-### Rohnit Shetty
+## Rohnit Shetty
 
-Was taked to integrate WebSpeech api. Did the following:
+Was tasked to integrate WebSpeech api. Did the following:
 
 * Implemented webspeech api. Worked to refine it with Chunli and Davor.
 * Added basic UI styling for forms.
-* Helped add server sided api for watchlists.
+* Helped add server sided api for watch lists.
 * Performed misc. implementation tasks.
 * Helped develop styling for client side app.
 
-### Davor Risteski
+## Davor Risteski
 
-Taksed with working on server. Did the following:
+Tasked with working on server. Did the following:
 
 * Rebuilt Python module into a persistent process with Redis pubsub.
 * Setup recommendations route with separate Redis pubsub schema for Express.
@@ -103,9 +103,9 @@ Taksed with working on server. Did the following:
 * Refined webspeech with additional commands, fault tolerance, and tweaked behavior.
 * Misc. Bug hunting, error checking, minor styling, and created placeholder images.
 
-### Chunli Liu
+## Chunli Liu
 
-Was taked to integrate WebSpeech api. Did the following:
+Was tasked to integrate WebSpeech api. Did the following:
 
 * Implemented webspeech api (shared responsibility with Rhonit). Worked to refine with Rhonit and Davor.
 * Worked to streamline user interface.
