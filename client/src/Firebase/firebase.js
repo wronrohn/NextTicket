@@ -13,6 +13,7 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
+    this.googleProvider = new app.auth.GoogleAuthProvider();
     this.createUserWithEmailAndPassword = this.createUserWithEmailAndPassword.bind(
       this
     );
@@ -20,6 +21,7 @@ class Firebase {
       this
     );
     this.signOut = this.signOut.bind(this);
+    this.signWithGmail = this.signWithGmail.bind(this);
   }
   createUserWithEmailAndPassword(email, password) {
     return this.auth.createUserWithEmailAndPassword(email, password);
@@ -35,6 +37,9 @@ class Firebase {
   }
   passwordUpdate(password) {
     return this.auth.currentUser.updatePassword(password);
+  }
+  signWithGmail() {
+    return this.auth.signInWithPopup(this.googleProvider);
   }
 }
 

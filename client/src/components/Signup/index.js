@@ -5,10 +5,13 @@ import { withRouter, Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import { compose } from "recompose";
 import { SignInPageLink } from "../SignIn";
-import Error from "../Error";
+import SignInGoogle from "../SignInWithGoogle";
+
 const SignupPage = () => (
   <div style={{ paddingTop: "4rem" }}>
     <SignUpForm />
+    <SignInGoogle />
+    <SignInPageLink />
   </div>
 );
 
@@ -145,7 +148,7 @@ class SignUpFormBase extends React.Component {
             />
             <br />
             <button
-              className="btn btn-primary mb-5 mt-3 form-control form-control-lg"
+              className="btn btn-primary mb-3 mt-3 form-control form-control-lg"
               disabled={isInvalid}
               type="submit"
             >
@@ -154,7 +157,6 @@ class SignUpFormBase extends React.Component {
             {error && <p className="text-white text-center">{error.message}</p>}
           </form>
         </div>
-        <SignInPageLink />
       </React.Fragment>
     );
   }
