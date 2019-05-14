@@ -66,6 +66,19 @@ npm start
 
 The client expects that its complimentary server is already up and running before it is executed.
 
+## Contributions:
+
+Sumit Oberoi
+
+Was tasked to worked on frontend. Ended up doing following
+1. Made all the react components (except for Speech to text)
+2. Integrated Firebase Authentication for email and Google Login Scheme
+3. Worked with Athiban on CSS for the complete app
+4. Made base component for web to speech which was refined by Davor, Chunli and Rohnit
+5. Made search movies API
+6. Added Tota11y across the app
+7. Create App logo and other static assets except for movie and genre placeholder images for the app
+
 # Works Cited & Consulted
 
 Hill, Patrick. "React Second Lecture/Firebase Auth" Computer Science 554. Stevens Institute of Technology, New Jersey. 21 Feb. 2019. Example Project.
