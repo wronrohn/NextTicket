@@ -9,18 +9,21 @@ import * as ROUTES from "../constants/routes";
  * The user profile page.
  */
 class UserProfile extends React.Component {
-
   render() {
     let userEmail = this.props.firebase.auth.currentUser.email;
     let cmpUserEmail = (
       <div>
-        <h2>Email: {`${userEmail}`}</h2>
+        <h2 style={{ fontSize: "1.5rem" }} className="m-2 p-2">
+          Email: {`${userEmail}`}
+        </h2>
       </div>
     );
     let userName = this.props.firebase.auth.currentUser.displayName;
     let cmpUserName = (
-      <div className="row mt-1 mb-5">
-        <h2>Display Name: {`${userName}`}</h2>;
+      <div>
+        <h2 style={{ fontSize: "1.5rem" }} className="m-2 p-2">
+          Display Name: {`${userName}`}
+        </h2>
       </div>
     );
 
