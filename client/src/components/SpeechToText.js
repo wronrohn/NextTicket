@@ -57,7 +57,7 @@ class SpeechToTextButton extends Component {
     }
     return (
       <div>
-        <label for="voicecommand" />
+        <label htmlFor="voicecommand" />
         <button
           className="btn btn-primary mb-2 start-btn"
           onClick={this.onClickSpeech}
