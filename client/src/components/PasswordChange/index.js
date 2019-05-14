@@ -40,7 +40,7 @@ class PasswordChangeForm extends Component {
   };
 
   render() {
-    const { passwordOne, passwordTwo, error } = this.state;
+    const { passwordOne, passwordTwo, error, message } = this.state;
 
     const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
 
@@ -73,6 +73,7 @@ class PasswordChangeForm extends Component {
             Reset My Password
           </button>
           {error && <p className="text-white text-center">{error.message}</p>}
+          {message && <p className="text-white text-center">{message}</p>}
         </form>
       </div>
     );
