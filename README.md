@@ -72,12 +72,13 @@ The client expects that its complimentary server is already up and running befor
 
 Was tasked to worked on frontend. Ended up doing following
 1. Built all the react components (except for Speech to text)
-2. Integrated Firebase Authentication for email and Google Login Scheme
-3. Worked with Athiban on CSS for the complete app
-4. Made base component for web to speech which was refined by Davor, Chunli and Rohnit
-5. Built search movies API
-6. Added Tota11y across the app
-7. Created App logo and other static assets except for movie and genre placeholder images for the app
+2. Integrated APIs and Routing on Frontend
+3. Integrated Firebase Authentication for email and Google Login Scheme
+4. Worked with Athiban on CSS for the complete app
+5. Made base component for web to speech which was refined by Davor, Chunli and Rohnit
+6. Built search movies API
+7. Added Tota11y across the app
+8. Created App logo and other static assets except for movie and genre placeholder images for the app
 
 # Works Cited & Consulted
 
