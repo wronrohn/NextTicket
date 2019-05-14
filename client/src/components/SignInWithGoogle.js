@@ -3,10 +3,11 @@ import { compose } from "recompose";
 import { withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../constants/routes";
+import Network from "./Network";
 class SignInGoogleBase extends Component {
   constructor(props) {
     super(props);
-
+    this.network = new Network();
     this.state = { error: null };
   }
 
@@ -15,7 +16,6 @@ class SignInGoogleBase extends Component {
       .signWithGmail()
       .then(socialAuthUser => {
         this.setState({ error: null });
-        console.log(`User ${JSON.stringify(socialAuthUser)}`);
         if (socialAuthUser && socialAuthUser.user.uid) {
           this.network.syncWatchlistForLogin(socialAuthUser.user.uid);
         }

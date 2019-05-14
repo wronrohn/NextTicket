@@ -15,7 +15,6 @@ const withAuthorization = (condition = authUser => !!authUser) => Component => {
       });
     }
     componentDidMount() {
-      console.log(`THis ${JSON.stringify(this.props.firebase)}`);
       this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
         this.setState({
           isLoading: false

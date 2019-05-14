@@ -30,7 +30,6 @@ class PasswordForgetFormBase extends Component {
     this.props.firebase
       .resetPassword(email)
       .then(message => {
-        console.log(message);
         this.setState({
           message: "A reset password link is set to your email",
           error: null

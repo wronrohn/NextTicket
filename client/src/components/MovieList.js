@@ -19,13 +19,14 @@ const MovieList = ({ movies, removeFromWatchList, error }) => {
                 removeFromWatchList={removeFromWatchList}
               />
             );
+          } else {
+            return null;
           }
         })}
       </div>
     );
   } else {
     if (!error) {
-      console.log("here in no result");
       return <NoResultFound />;
     } else {
       return null;

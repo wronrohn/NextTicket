@@ -20,7 +20,6 @@ class RecommendWatchListMenu extends Component {
   render() {
     const { onWatchListTapped, onRecomemndationTapped } = this.props;
     const { recommendation, watchlist } = this.state;
-    console.log(`Watch list ${watchlist}`);
     return (
       <ul className="nav justify-content-center m-3">
         <li className="nav-item">
