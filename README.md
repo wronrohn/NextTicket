@@ -68,7 +68,7 @@ The client expects that its complimentary server is already up and running befor
 
 ## Contributions:
 
-### Sumit Oberoi
+### Sumit Oberoi:
 
 Was tasked to worked on frontend. Ended up doing following
 1. Made all the react components (except for Speech to text)
