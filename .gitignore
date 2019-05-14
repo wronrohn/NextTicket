@@ -37,3 +37,6 @@ client-bad/
 server/static/images/**
 server/static/images/images.zip
 !server/static/images/a_placeholder.svg
+
+# Video
+VideoDemoNextTicket.mov
