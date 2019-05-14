@@ -40,7 +40,11 @@ class PasswordChangeForm extends Component {
   };
 
   render() {
+<<<<<<< HEAD
     const { passwordOne, passwordTwo, error, message } = this.state;
+=======
+    const { passwordOne, passwordTwo, error } = this.state;
+>>>>>>> e006271a5df86f0b498cacec80da7a8ed4d68801
 
     const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
 
@@ -73,7 +77,10 @@ class PasswordChangeForm extends Component {
             Reset My Password
           </button>
           {error && <p className="text-white text-center">{error.message}</p>}
+<<<<<<< HEAD
           {message && <p className="text-white text-center">{message}</p>}
+=======
+>>>>>>> e006271a5df86f0b498cacec80da7a8ed4d68801
         </form>
       </div>
     );
