@@ -108,7 +108,7 @@ Was tasked to integrate WebSpeech api. Did the following:
 * Added basic UI styling for forms.
 * Helped add server sided api for watch lists.
 * Performed misc. implementation tasks.
-* Helped develop styling for client side app.
+* Helped develop styling for client side app. 
 
 ## Davor Risteski
 
