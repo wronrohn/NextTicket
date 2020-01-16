@@ -11,7 +11,7 @@
 > * Davor Risteski
 > * Rohnit Shetty
 
-> REPO: https://github.com/edgesdarkly/cs554finalproject
+> REPO: https://github.com/wronrohn/NextTicket/
 
 # Server
 
@@ -73,65 +73,7 @@ The client expects that its complimentary server is already up and running befor
 
 Note that the client will run on port 3000 by default.
 
-# Contributions:
-
-## Sumit Oberoi
-
-Was tasked to worked on frontend. Ended up doing following:
-
-* Built all the react components (except for Speech to text)
-* Integrated APIs and Routing on Frontend
-* Integrated Firebase Authentication for email and Google Login Scheme
-* Worked with Athiban on CSS for the complete app
-* Made base component for web to speech which was refined by Davor, Chunli and Rohnit
-* Built search movies API
-* Added Tota11y across the app
-* Created App logo and other static assets except for movie and genre placeholder images for the app
-
-### Athiban P:
-
-Was tasked to work on creating API's. Did the following.
-
-* Created APIs for all the functionalities.
-* Setup Express server routes to serve all the APIs.
-* Created a seed.js script to populate the Database (MongoDB).
-* Worked on making the website responsive.
-* Coordinated with Sumit to updated APIs as bugs came in.
-* Created a python script to scrape images from https://www.allmovie.com/.
-* Misc: Bug fixing, handling edge conditions and styling.
-
-### Rohnit Shetty
-
-Was tasked to integrate WebSpeech api. Did the following:
-
-* Implemented webspeech api. Worked to refine it with Chunli and Davor.
-* Added basic UI styling for forms.
-* Helped add server sided api for watch lists.
-* Performed misc. implementation tasks.
-* Helped develop styling for client side app. 
-
-## Davor Risteski
-
-Tasked with working on server. Did the following:
-
-* Rebuilt Python module into a persistent process with Redis pubsub.
-* Setup recommendations route with separate Redis pubsub schema for Express.
-* Setup synchronize/cache on login for Express.
-* Setup image route that serves image placeholders for movies.
-* Created and integrated User profile page.
-* Refined webspeech with additional commands, fault tolerance, and tweaked behavior.
-* Misc. Bug hunting, error checking, minor styling, and created placeholder images.
-
-## Chunli Liu
-
-Was tasked to integrate WebSpeech api. Did the following:
-
-* Implemented webspeech api (shared responsibility with Rhonit). Worked to refine with Rhonit and Davor.
-* Worked to streamline user interface.
-* Performed extensive unit, route, and component testing for both server and client.
-* Performed extensive integration testing.
-
 # Works Cited & Consulted
 
 Hill, Patrick. "React Second Lecture/Firebase Auth" Computer Science 554. Stevens Institute of Technology, New Jersey. 21 Feb. 2019. Example Project.
-# NextTicket
+
