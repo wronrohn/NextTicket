@@ -5,7 +5,7 @@
   "description": "CS554 Final Project Client",
   "license": "",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "firebase": "^5.11.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
