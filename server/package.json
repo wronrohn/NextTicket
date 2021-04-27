@@ -23,7 +23,7 @@
     "node-redis-pubsub": "^4.0.0",
     "node-uuid": "^1.4.8",
     "npm": "^6.9.0",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "redis-json": "^2.2.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
